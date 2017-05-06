@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <drjava version="drjava-20160913-225446">
-  <project autorefresh="false" root="" work="">
-    <createjar file=""/>
+  <project autorefresh="false" main="Game" manifest="" root="" work="">
+    <createjar file="puzzle game" flags="12"/>
     <source>
-      <file name="Game.java" package="" timestamp="05-May-2017 19:09:54">
-        <select from="0" to="0"/>
-        <scroll column="0" row="0"/>
+      <file active="true" name="Game.java" package="" timestamp="05-May-2017 20:01:45">
+        <select from="2410" to="2410"/>
+        <scroll column="671" row="0"/>
       </file>
     </source>
     <included/>

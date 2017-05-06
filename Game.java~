@@ -16,85 +16,27 @@ public class Game extends JPanel implements KeyListener{
   int speed = 1;
   int[][] currentMap = new int[1][1];
   ArrayList<Point> players = new ArrayList<Point>();
-  
-  /*
-   * LEVEL DESIGN CODE:
-   * 
-   * 0 = empty
-   * 1 = wall
-   * 2 = finish
-   * 3 = lava
-   * 4 = 
-   * 5 =
-   * 6 = 
-   * 7 =
-   * 8 =
-   * 9 =
-   * 
-   * */
-  
   int[][][] levels = {
-    {
-      //level 0
+    {//level 0
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,7,0,1,1,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,7,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-      {1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,2,1,1,1,1,1},
-      {1,1,1,1,1,1,1,1,1,1,0,1,3,1,1,1,1,1,1,0,1,1,1,1,1},
-      {1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,0,1,1,1,1,1},
-      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1},
+      {1,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,0,7,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    },
-    {
-    //level 1
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,3,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,7,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,0,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  },
-    {
-    //level 2
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,7,0,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,0,7,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1},
-  {1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,2,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-},
+    }
   };
  
-  
-  
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
     if(key == KeyEvent.VK_D){
@@ -114,16 +56,10 @@ public class Game extends JPanel implements KeyListener{
       return;
     }
   }
-  
+ 
   public void keyReleased(KeyEvent e) {}
   public void keyTyped(KeyEvent e) {}
-  
-  public Game(){
-    addKeyListener(this);
-    setFocusable(true);
-    setFocusTraversalKeysEnabled(false);
-  }
-  
+ 
   public void initialize(){
     currentMap = levels[level];
     for(int i = 0;i<currentMap.length;i++){
@@ -133,11 +69,13 @@ public class Game extends JPanel implements KeyListener{
         }
       }
     }
-
+    addKeyListener(this);
+    setFocusable(true);
+    setFocusTraversalKeysEnabled(false);
   }
-  
-  
-  
+ 
+ 
+ 
   public void paint(Graphics g)
   {
     super.paint(g);
@@ -152,15 +90,21 @@ public class Game extends JPanel implements KeyListener{
       for(int x = 0; x < currentMap[0].length; x++)
       {
         int val = currentMap[y][x];
-        switch (val){
-          case (1):
-            g2d.setPaint(Color.gray);break;
-          case (2):
-            g2d.setPaint(Color.green);break;
-          case (3):
-            g2d.setPaint(Color.red);break;
-          default:
-            g2d.setPaint(Color.black);break;
+        if(val == 1)
+        {
+          g2d.setPaint(Color.white);
+        }
+        else if(val == 2)
+        {
+          g2d.setPaint(Color.blue);
+        }
+        else if(val ==0 || val == 7)
+        {
+          g2d.setPaint(Color.black);
+        }
+        else
+        {
+          System.out.println("Array has problems!!!");
         }
         g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
       }
@@ -168,14 +112,15 @@ public class Game extends JPanel implements KeyListener{
     for(int i = 0; i < players.size(); i++)
     {
       Point p = players.get(i);
-      g2d.setPaint(Color.white);
+      g2d.setPaint(Color.green);
       g2d.fillRect(offset+p.x*squareSize, offset+p.y*squareSize, squareSize, squareSize);
     }
   }
-  
+ 
   private void tick() throws InterruptedException {
     repaint();
-    Thread.sleep(200);
+    
+    Thread.sleep(100);
   }  
   private void changeAll(int x, int y){
     for(int i = 0; i < players.size(); i++){
@@ -187,13 +132,7 @@ public class Game extends JPanel implements KeyListener{
           p.y += y;
         }
         else if(val == 2){
-          players = new ArrayList<Point>();
-          level++;
-          initialize();
-        }
-        else if(val == 3){
-          players = new ArrayList<Point>();
-          initialize();
+          players.remove(p);
         }
       }
       catch(ArrayIndexOutOfBoundsException e){
@@ -215,5 +154,6 @@ public class Game extends JPanel implements KeyListener{
       game.tick();
     }
   }
-  
-  }
+ 
+ 
+}
