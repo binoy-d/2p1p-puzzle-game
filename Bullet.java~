@@ -1,0 +1,18 @@
+import java.awt.Point;
+/**
+ * Auto Generated Java Class.
+ */
+public class Bullet {
+  
+  /* ADD YOUR CODE HERE */
+  Point me;
+  double direction;
+  public Bullet(Point p, double dir){
+    me = p;
+    direction = dir;
+  }
+  public void tick(){
+   me.x+=Math.cos(direction);
+   me.y+=Math.sin(direction);
+  }
+}

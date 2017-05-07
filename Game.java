@@ -8,19 +8,21 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Game extends JPanel implements KeyListener{
-  int level = 0;
+import java.awt.MouseInfo;
+
+public class Game extends JPanel implements KeyListener,MouseListener{
+  int level = 3;
   static int squareSize = 20;
   static int offset = 20;
   int speed = 1;
   int[][] currentMap = new int[1][1];
   ArrayList<Point> players = new ArrayList<Point>();
   ArrayList<Point> enemies = new ArrayList<Point>();
+
   /*
    * LEVEL DESIGN CODE:
    * 
@@ -84,12 +86,12 @@ public class Game extends JPanel implements KeyListener{
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,7,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
-      {1,1,1,1,0,1,0,1,1,1,1,7,1,1,0,0,2,0,1,1,1,1,1,1,1},
+      {1,1,1,1,0,1,0,1,1,1,1,7,1,1,0,0,3,0,1,1,1,1,1,1,1},
       {1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1,1,1},
       {1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,1,1,1},
       {1,1,1,1,0,0,0,1,1,1,1,1,0,0,8,0,0,0,1,1,1,1,1,1,1},
       {1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1},
-      {1,1,1,1,0,1,0,1,1,1,1,3,0,0,0,0,0,1,1,1,1,1,1,1,1},
+      {1,1,1,1,0,1,0,1,1,1,1,3,0,0,0,0,2,1,1,1,1,1,1,1,1},
       {1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -129,6 +131,25 @@ public class Game extends JPanel implements KeyListener{
       {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,8,0,0,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,7,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+    },
+    {
+      //level 4
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,7,0,0,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,7,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,0,0,8,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -182,7 +203,13 @@ public class Game extends JPanel implements KeyListener{
     }
   }
   
-  
+  public void mouseExited(MouseEvent e){}
+  public void mousePressed(MouseEvent e){
+  }
+  public void mouseEntered(MouseEvent e){}
+  public void mouseReleased(MouseEvent e){}
+  public void mouseClicked(MouseEvent e){
+  }
   
   public void paint(Graphics g)
   {
@@ -226,10 +253,10 @@ public class Game extends JPanel implements KeyListener{
     for(Point e: enemies){
       
       for(Point p: players){
-          if(p.x == e.x &&p.y == e.y){
-           initialize(); 
-          }
+        if(p.x == e.x &&p.y == e.y){
+          initialize(); 
         }
+      }
       int dir = (int)(Math.random()*6-3);
       int x = 0;
       int y = 0;
@@ -277,9 +304,9 @@ public class Game extends JPanel implements KeyListener{
           initialize();
         }
         else if(val == 3){
-         initialize(); 
+          initialize(); 
         }
-
+        
       }
       catch(ArrayIndexOutOfBoundsException e){
         players.remove(p);
