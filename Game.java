@@ -204,6 +204,12 @@ public class Game extends JPanel implements KeyListener{
   }
   public void enemyTick(){
     for(Point e: enemies){
+      
+      for(Point p: players){
+          if(p.x == e.x &&p.y == e.y){
+           initialize(); 
+          }
+        }
       int dir = (int)(Math.random()*6-3);
       int x = 0;
       int y = 0;
@@ -253,6 +259,7 @@ public class Game extends JPanel implements KeyListener{
         else if(val == 3){
          initialize(); 
         }
+
       }
       catch(ArrayIndexOutOfBoundsException e){
         players.remove(p);
