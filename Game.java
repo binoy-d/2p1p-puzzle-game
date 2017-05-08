@@ -75,7 +75,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   public void initialize() {
     playersDone = 0;
     try{
-      Scanner s = new Scanner(new File("./map"+level));
+      Scanner s = new Scanner(new File("./maps/map"+level));
           ArrayList<String> list = new ArrayList<String>();
     while (s.hasNextLine()){
       list.add(s.nextLine());

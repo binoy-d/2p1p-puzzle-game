@@ -4,8 +4,8 @@
     <createjar file="puzzle game" flags="12"/>
     <source>
       <file active="true" name="Game.java" package="" timestamp="07-May-2017 17:52:13">
-        <select from="466" to="466"/>
-        <scroll column="0" row="0"/>
+        <select from="1655" to="1655"/>
+        <scroll column="912" row="0"/>
       </file>
     </source>
     <included/>
