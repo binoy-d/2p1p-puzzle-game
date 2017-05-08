@@ -22,24 +22,17 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   static int squareSize = 20;
   static int offset = 20;
   int speed = 1;
-  int[][] currentMap = new int[1][1];
+  String[][] currentMap = new String[1][1];
   ArrayList<Point> players = new ArrayList<Point>();
   ArrayList<Point> enemies = new ArrayList<Point>();
   
   /*
    * LEVEL DESIGN CODE:
-   * 
-   * 0 = empty
-   * 1 = wall
-   * 2 = finish
-   * 3 = lava
-   * 4 = 
-   * 5 =
-   * 6 = 
-   * 7 =
-   * 8 = enemy
-   * 9 =
-   * 
+   * # = wall
+   *  = empty
+   * P =player
+   * 1-9 = enemy(start @ 1, go to 9)
+   * x = lava
    * */
   int playersDone = 0;
   
@@ -63,7 +56,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     }
   }
   
-  public void keyReleased(KeyEvent e) {}
+  public void keyReleased(KeyEvent e) {enemyTick();}
   public void keyTyped(KeyEvent e) {}
   
   public Game(){
@@ -80,10 +73,10 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     while (s.hasNextLine()){
       list.add(s.nextLine());
     }
-    currentMap = new int[list.size()][list.get(0).length()];
+    currentMap = new String[list.size()][list.get(0).length()];
     for(int r = 0;r<list.size();r++){
       for(int c = 0;c<list.get(0).length();c++){
-       int kkk = Integer.parseInt(list.get(r).substring(c,c+1));
+       String kkk = list.get(r).substring(c,c+1);
        currentMap[r][c] = kkk;
       }
     }
@@ -95,10 +88,10 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     enemies = new ArrayList<Point>();
     for(int i = 0;i<currentMap.length;i++){
       for(int j = 0;j<currentMap[0].length;j++){
-        if(currentMap[i][j] == 7){
+        if(currentMap[i][j].equals("P")){
           players.add(new Point(j,i)) ;
         }
-        if(currentMap[i][j] == 8){
+        if(currentMap[i][j].equals("1")){
           enemies.add(new Point(j,i)) ;
         }
       }
@@ -126,16 +119,18 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     {
       for(int x = 0; x < currentMap[0].length; x++)
       {
-        int val = currentMap[y][x];
-        switch (val){
-          case (1):
-            g2d.setPaint(Color.gray);break;
-          case (2):
-            g2d.setPaint(Color.green);break;
-          case (3):
-            g2d.setPaint(Color.orange);break;
-          default:
-            g2d.setPaint(Color.black);break;
+        String val = currentMap[y][x];
+        if(val.equals("#")){
+          g2d.setPaint(Color.gray);
+        }else if(val.equals("!")){
+          g2d.setPaint(Color.green);
+        }else if(val.equals("x")){
+          g2d.setPaint(Color.orange);
+        }else if(val.equals(" ")){
+          g2d.setPaint(Color.black);
+        }
+        else{
+          g2d.setPaint(Color.black);
         }
         g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
       }
@@ -152,42 +147,41 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     }
   }
   public void enemyTick(){
-    for(Point e: enemies){
-      
+    for(Point e: enemies){   
       for(Point p: players){
         if(p.x == e.x &&p.y == e.y){
           initialize(); 
         }
       }
-      int dir = (int)(Math.random()*6-3);
-      int x = 0;
-      int y = 0;
-      while(dir == 0){
-        dir = (int)(Math.random()*6-3); 
-      }
-      if(dir == -2){
-        x = -1;
-      }
-      else if(dir == -1){
-        y = -1; 
-      }
-      else if(dir == 1){
-        y = 1; 
-      }
-      else if(dir == 2){
-        x = 1; 
-      }
-      int val = currentMap[e.y+y][e.x+x];
-      if(val == 0 || val == 7){
-        e.x += x;
-        e.y += y;
+      boolean moved = false;
+      int currentVal = Integer.parseInt(currentMap[e.y][e.x]);
+      for(int r= e.y-1;r<=e.y+1&&moved == false;r++){
+        for(int c= e.x-1;c<=e.x+1;c++){
+          int newVal = 0;
+          if(isInteger(currentMap[r][c]))
+            newVal = Integer.parseInt(currentMap[r][c]);
+          if(newVal>currentVal){
+           e.x = c;
+           e.y = r;
+           moved = true;
+          }
+        }
       }
     }
   }
-  
+  public static boolean isInteger(String s) {
+    try { 
+        Integer.parseInt(s); 
+    } catch(NumberFormatException e) { 
+        return false; 
+    } catch(NullPointerException e) {
+        return false;
+    }
+    // only got here if we didn't return false
+    return true;
+}
   private void tick() throws InterruptedException {
     repaint();
-    enemyTick();
     Thread.sleep(200);
   }  
   private void changeAll(int x, int y){
@@ -195,12 +189,12 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       Point p = players.get(i);
       
       try{
-        int val = currentMap[p.y+y][p.x+x];
-        if(val==0 || val == 7 || val == 8){
+        String val = currentMap[p.y+y][p.x+x];
+        if(val.equals(" ") || val.equals("P") || val.equals("1")|| val.equals("2")|| val.equals("3")|| val.equals("4")|| val.equals("5")|| val.equals("6")|| val.equals("7")|| val.equals("8")|| val.equals("9")){//I die a little every time
           p.x += x;
           p.y += y;
         }
-        else if(val == 2){
+        else if(val.equals("!")){
           playersDone++;
           players.remove(players.indexOf(p));
           if(playersDone >= 2){
@@ -208,7 +202,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
             initialize();
           }
         }
-        else if(val == 3){
+        else if(val.equals("x")){
           initialize(); 
         }
         
