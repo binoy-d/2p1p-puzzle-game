@@ -56,7 +56,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     }
   }
   
-  public void keyReleased(KeyEvent e) {enemyTick();}
+  public void keyReleased(KeyEvent e) {}
   public void keyTyped(KeyEvent e) {}
   
   public Game(){
@@ -136,8 +136,6 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         else if(isInteger(val)){
           g2d.setPaint(Color.red);
           g2d.fillOval(offset+x*squareSize+squareSize/3, offset+y*squareSize+squareSize/3, squareSize/4, squareSize/4);
-          g2d.setPaint(Color.white);
-          g2d.drawString(val,offset+x*squareSize,offset+y*squareSize);
         }
         
         
@@ -174,7 +172,9 @@ public class Game extends JPanel implements KeyListener,MouseListener{
            e.y = r;
            moved = true;
           }
-          
+          if(currentVal == 17){
+           currentVal = 1;
+          }
         }
       }
     }
@@ -200,9 +200,10 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       
       try{
         String val = currentMap[p.y+y][p.x+x];
-        if(val.equals(" ") || val.equals("P") || val.equals("1")|| val.equals("2")|| val.equals("3")|| val.equals("4")|| val.equals("5")|| val.equals("6")|| val.equals("7")|| val.equals("8")|| val.equals("9")){//I die a little every time
+        if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time
           p.x += x;
           p.y += y;
+          enemyTick();
         }
         else if(val.equals("!")){
           playersDone++;

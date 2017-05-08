@@ -122,17 +122,25 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         String val = currentMap[y][x];
         if(val.equals("#")){
           g2d.setPaint(Color.gray);
+          g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }else if(val.equals("!")){
           g2d.setPaint(Color.green);
+          g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }else if(val.equals("x")){
           g2d.setPaint(Color.orange);
+          g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }else if(val.equals(" ")){
           g2d.setPaint(Color.black);
+          g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }
-        else{
-          g2d.setPaint(Color.black);
+        else if(isInteger(val)){
+          g2d.setPaint(Color.red);
+          g2d.fillOval(offset+x*squareSize+squareSize/3, offset+y*squareSize+squareSize/3, squareSize/4, squareSize/4);
+          g2d.setPaint(Color.white);
+          g2d.drawString(val,offset+x*squareSize,offset+y*squareSize);
         }
-        g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
+        
+        
       }
     }
     for(int i = 0; i < players.size(); i++){
@@ -160,11 +168,13 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           int newVal = 0;
           if(isInteger(currentMap[r][c]))
             newVal = Integer.parseInt(currentMap[r][c]);
-          if(newVal>currentVal){
+          if(newVal-1==currentVal){
+           currentMap[e.y][e.x] = ""+(18-currentVal);
            e.x = c;
            e.y = r;
            moved = true;
           }
+          
         }
       }
     }
