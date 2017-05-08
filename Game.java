@@ -14,6 +14,9 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.awt.MouseInfo;
 import java.io.FileNotFoundException;
+
+
+
 public class Game extends JPanel implements KeyListener,MouseListener{
   int level = 0;
   static int squareSize = 20;
