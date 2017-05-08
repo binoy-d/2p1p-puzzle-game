@@ -129,6 +129,9 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         }else if(val.equals(" ")){
           g2d.setPaint(Color.black);
         }
+        else{
+          g2d.setPaint(Color.black);
+        }
         g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
       }
     }
