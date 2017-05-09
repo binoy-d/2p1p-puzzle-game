@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <drjava version="drjava-20140826-r5761">
-  <project autorefresh="false" main="Game" manifest="" root="" work="">
-    <createjar file="puzzle game" flags="12"/>
+  <project autorefresh="false" main="Game" root="" work="">
+    <createjar file=""/>
     <source>
-<<<<<<< Updated upstream
-      <file active="true" name="Game.java" package="" timestamp="09-May-2017 13:07:35">
-        <select from="5589" to="5589"/>
-        <scroll column="2643" row="0"/>
-=======
-      <file active="true" name="Game.java" package="" timestamp="08-May-2017 15:07:08">
-        <select from="0" to="0"/>
-        <scroll column="0" row="0"/>
->>>>>>> Stashed changes
+      <file active="true" name="Game.java" package="" timestamp="09-May-2017 15:17:39">
+        <select from="0" to="7248"/>
+        <scroll column="3431" row="0"/>
       </file>
     </source>
     <included/>
