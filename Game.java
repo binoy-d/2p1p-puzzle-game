@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
 
 
 public class Game extends JPanel implements KeyListener,MouseListener{
-  int level = 0;
+  int level = 2;
   static int squareSize = 20;
   static int offset = 20;
   int speed = 1;
@@ -40,18 +40,22 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     int key = e.getKeyCode();
     if(key == KeyEvent.VK_D){
       changeAll(speed,0);
+      enemyTick();
       return;
     }
     if(key == KeyEvent.VK_A){
       changeAll(-speed,0);
+      enemyTick();
       return;
     }
     if(key == KeyEvent.VK_S){
       changeAll(0,speed);
+      enemyTick();
       return;
     }
     if(key == KeyEvent.VK_W){
       changeAll(0,-speed);
+      enemyTick();
       return;
     }
   }
@@ -134,17 +138,17 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }
         else if(isInteger(val)){
-          g2d.setPaint(Color.red);
-          g2d.fillOval(offset+x*squareSize+squareSize/3, offset+y*squareSize+squareSize/3, squareSize/4, squareSize/4);
-        }
-        
-        
+          //g2d.setPaint(Color.red);
+          //g2d.fillOval(offset+x*squareSize+squareSize/3, offset+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
+          //g2d.drawString(val,offset+x*squareSize+squareSize/3,offset+y*squareSize+squareSize/3);
+        } 
       }
     }
     for(int i = 0; i < players.size(); i++){
       Point p = players.get(i);
       g2d.setPaint(Color.white);
       g2d.fillRect(offset+p.x*squareSize, offset+p.y*squareSize, squareSize, squareSize);
+      //g2d.drawString("("+p.x+","+p.y+")",offset+p.x*squareSize,offset+p.y*squareSize);
     }
     for(int i = 0; i < enemies.size(); i++){
       Point p = enemies.get(i);
@@ -179,6 +183,15 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       }
     }
   }
+  public void checkEnemyTouch(){
+    for(Point p: players){
+      for(Point e: enemies){
+        if(p.x == e.x && p.y == e.y){
+         initialize(); 
+        }
+      }
+    }
+  }
   public static boolean isInteger(String s) {
     try { 
         Integer.parseInt(s); 
@@ -192,6 +205,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
 }
   private void tick() throws InterruptedException {
     repaint();
+    checkEnemyTouch();
     Thread.sleep(200);
   }  
   private void changeAll(int x, int y){
@@ -203,7 +217,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time
           p.x += x;
           p.y += y;
-          enemyTick();
+          
         }
         else if(val.equals("!")){
           playersDone++;
@@ -216,7 +230,10 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         else if(val.equals("x")){
           initialize(); 
         }
-        
+        for(Point e:enemies){
+         if(p.x == e.x && e.y == p.y)
+           initialize();
+        }
       }
       catch(ArrayIndexOutOfBoundsException e){
         players.remove(p);
