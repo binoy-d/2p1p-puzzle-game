@@ -136,7 +136,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         if(val.equals("#")){
           g2d.setPaint(Color.gray);
           //g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
-          g2d.drawImage((Image)wall,offset+x*squareSize,offset+x*squareSize,null);
+          g2d.drawImage((Image)wall,offset+x*squareSize,offset+y*squareSize,null);
         }else if(val.equals("!")){
           g2d.setPaint(Color.green);
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
