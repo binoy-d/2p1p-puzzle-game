@@ -28,6 +28,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   ArrayList<Point> players = new ArrayList<Point>();
   ArrayList<Point> enemies = new ArrayList<Point>();
   BufferedImage wall = null;
+  BufferedImage lava = null;
   /*
    * LEVEL DESIGN CODE:
    * # = wall
@@ -75,9 +76,14 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     
     try {
       wall = ImageIO.read(new File("./images/wall.png"));
+      lava = ImageIO.read(new File("./images/lava.png"));
     } catch (IOException e) {
     }
-    
+    try {
+      
+      lava = ImageIO.read(new File("./images/lava.png"));
+    } catch (IOException e) {
+    }
     playersDone = 0;
     try{
       Scanner s = new Scanner(new File("./maps/map"+level));
@@ -148,7 +154,8 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }else if(val.equals("x")){
           g2d.setPaint(Color.orange);
-          g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
+          //g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
+          g2d.drawImage((Image)lava,offset+x*squareSize,offset+y*squareSize,null);
         }else if(val.equals(" ")){
           g2d.setPaint(Color.black);
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
