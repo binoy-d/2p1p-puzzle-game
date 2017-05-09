@@ -134,6 +134,12 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       {
         String val = currentMap[y][x];
         if(val.equals("#")){
+          try {
+            wall = ImageIO.read(new File("./images/wall"+((int)(Math.random()*3))+".png"));
+          } catch (IOException e) {
+          }
+          
+          
           g2d.setPaint(Color.gray);
           //g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
           g2d.drawImage((Image)wall,offset+x*squareSize,offset+y*squareSize,null);
