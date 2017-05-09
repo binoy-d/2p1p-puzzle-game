@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
 
 
 public class Game extends JPanel implements KeyListener,MouseListener{
-  int level = 2;
+  int level = 0;
   static int squareSize = 20;
   static int offset = 20;
   int speed = 1;
