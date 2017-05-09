@@ -138,8 +138,8 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }
         else if(isInteger(val)){
-          //g2d.setPaint(Color.red);
-          //g2d.fillOval(offset+x*squareSize+squareSize/3, offset+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
+          g2d.setPaint(Color.red);
+          g2d.fillOval(offset+x*squareSize+squareSize/3, offset+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
           //g2d.drawString(val,offset+x*squareSize+squareSize/3,offset+y*squareSize+squareSize/3);
         } 
       }

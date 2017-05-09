@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 
 public class Game extends JPanel implements KeyListener,MouseListener{
   int level = 0;
-  static int squareSize = 20;
+  static int squareSize = 32;
   static int offset = 20;
   int speed = 1;
   String[][] currentMap = new String[1][1];
@@ -112,6 +112,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   
   public void paint(Graphics g)
   {
+        
     super.paint(g);
     Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -127,6 +128,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         if(val.equals("#")){
           g2d.setPaint(Color.gray);
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
+          //g2d.drawImage(new Image(),offset+x*squareSize,offset+x*squareSize);
         }else if(val.equals("!")){
           g2d.setPaint(Color.green);
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
