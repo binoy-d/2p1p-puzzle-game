@@ -14,18 +14,20 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.awt.MouseInfo;
 import java.io.FileNotFoundException;
-
-
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
 public class Game extends JPanel implements KeyListener,MouseListener{
   int level = 0;
   static int squareSize = 32;
-  static int offset = 20;
+  static int offset = squareSize*2;
   int speed = 1;
   String[][] currentMap = new String[1][1];
   ArrayList<Point> players = new ArrayList<Point>();
   ArrayList<Point> enemies = new ArrayList<Point>();
-  
+  BufferedImage wall = null;
   /*
    * LEVEL DESIGN CODE:
    * # = wall
@@ -70,23 +72,29 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   }
   
   public void initialize() {
+    
+    try {
+      wall = ImageIO.read(new File("./images/wall.png"));
+    } catch (IOException e) {
+    }
+    
     playersDone = 0;
     try{
       Scanner s = new Scanner(new File("./maps/map"+level));
-          ArrayList<String> list = new ArrayList<String>();
-    while (s.hasNextLine()){
-      list.add(s.nextLine());
-    }
-    currentMap = new String[list.size()][list.get(0).length()];
-    for(int r = 0;r<list.size();r++){
-      for(int c = 0;c<list.get(0).length();c++){
-       String kkk = list.get(r).substring(c,c+1);
-       currentMap[r][c] = kkk;
+      ArrayList<String> list = new ArrayList<String>();
+      while (s.hasNextLine()){
+        list.add(s.nextLine());
       }
-    }
-    s.close();
+      currentMap = new String[list.size()][list.get(0).length()];
+      for(int r = 0;r<list.size();r++){
+        for(int c = 0;c<list.get(0).length();c++){
+          String kkk = list.get(r).substring(c,c+1);
+          currentMap[r][c] = kkk;
+        }
+      }
+      s.close();
     }catch(FileNotFoundException e){
-    System.out.println("Map not found");
+      System.out.println("Map not found");
     }
     players = new ArrayList<Point>();
     enemies = new ArrayList<Point>();
@@ -112,7 +120,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   
   public void paint(Graphics g)
   {
-        
+    
     super.paint(g);
     Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -127,8 +135,8 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         String val = currentMap[y][x];
         if(val.equals("#")){
           g2d.setPaint(Color.gray);
-          g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
-          //g2d.drawImage(new Image(),offset+x*squareSize,offset+x*squareSize);
+          //g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
+          g2d.drawImage((Image)wall,offset+x*squareSize,offset+x*squareSize,null);
         }else if(val.equals("!")){
           g2d.setPaint(Color.green);
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
@@ -173,13 +181,13 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           if(isInteger(currentMap[r][c]))
             newVal = Integer.parseInt(currentMap[r][c]);
           if(newVal-1==currentVal){
-           currentMap[e.y][e.x] = ""+(18-currentVal);
-           e.x = c;
-           e.y = r;
-           moved = true;
+            currentMap[e.y][e.x] = ""+(18-currentVal);
+            e.x = c;
+            e.y = r;
+            moved = true;
           }
           if(currentVal == 17){
-           currentVal = 1;
+            currentVal = 1;
           }
         }
       }
@@ -189,22 +197,22 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     for(Point p: players){
       for(Point e: enemies){
         if(p.x == e.x && p.y == e.y){
-         initialize(); 
+          initialize(); 
         }
       }
     }
   }
   public static boolean isInteger(String s) {
     try { 
-        Integer.parseInt(s); 
+      Integer.parseInt(s); 
     } catch(NumberFormatException e) { 
-        return false; 
+      return false; 
     } catch(NullPointerException e) {
-        return false;
+      return false;
     }
     // only got here if we didn't return false
     return true;
-}
+  }
   private void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
@@ -233,8 +241,8 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           initialize(); 
         }
         for(Point e:enemies){
-         if(p.x == e.x && e.y == p.y)
-           initialize();
+          if(p.x == e.x && e.y == p.y)
+            initialize();
         }
       }
       catch(ArrayIndexOutOfBoundsException e){
@@ -249,7 +257,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     
     game.initialize();
     frame.add(game);
-    frame.setSize(squareSize*27+offset, 400);
+    frame.setSize(squareSize*27+offset, squareSize*18+offset);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     while (true)
