@@ -27,14 +27,15 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   static int offset = squareSize*2;
   int speed = 1;
   String[][] currentMap = new String[1][1];
-  ArrayList<Point> players = new ArrayList<Point>();
-  ArrayList<Point> enemies = new ArrayList<Point>();
+  ArrayList<Player> players = new ArrayList<Player>();
+  ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   double worldSpeed = 0;
   int wallNum = 0;
   BufferedImage wall = null;
   BufferedImage lava = null;
   int offsetX = offset;
   int offsetY = offset;
+  static Game game;
   /*
    * LEVEL DESIGN CODE:
    * # = wall
@@ -47,6 +48,9 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
+    try{
+    game.tick();
+    }catch(java.lang.InterruptedException jkk){}
     moves++;
     if(worldSpeed<=squareSize*2){
       worldSpeed+=0.5;
@@ -56,7 +60,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       if(offsetX>=-(2*squareSize)){
         offsetX-=((int)worldSpeed);
       }
-      enemyTick();
+      
       return;
     }
     if(key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT){
@@ -64,7 +68,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       if(offsetX<=(2*squareSize)){
         offsetX+=((int)worldSpeed);
       }
-      enemyTick();
+
       return;
     }
     if(key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN){
@@ -72,7 +76,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       if(offsetY>=-(2*squareSize)){
         offsetY-=((int)worldSpeed);
       }
-      enemyTick();
+
       return;
     }
     if(key == KeyEvent.VK_W || key == KeyEvent.VK_UP){
@@ -80,7 +84,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       if(offsetY<=(2*squareSize)){
         offsetY+=((int)worldSpeed);
       }
-      enemyTick();
+
       return;
     }
   }
@@ -100,7 +104,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     worldSpeed = 0;
     offsetX = offset;
     offsetY = offset;
-
+    
     playersDone = 0;
     try{
       Scanner s = new Scanner(new File("./maps/map"+level));
@@ -119,26 +123,21 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     }catch(FileNotFoundException e){
       System.out.println("Map not found");
     }
-    players = new ArrayList<Point>();
-    enemies = new ArrayList<Point>();
+    players = new ArrayList<Player>();
+    enemies = new ArrayList<Enemy>();
     for(int i = 0;i<currentMap.length;i++){
       for(int j = 0;j<currentMap[0].length;j++){
         if(currentMap[i][j].equals("P")){
-          players.add(new Point(j,i)) ;
+          players.add(new Player(j,i,this)) ;
           totalPlayers++;
         }
         if(currentMap[i][j].equals("1")){
-          enemies.add(new Point(j,i)) ;
+          enemies.add(new Enemy(j,i,this)) ;
         }
       }
     }
-    
-    
   }
-  public void drawWalls(Graphics2D g2d){
-    
-    
-  }
+  
   public void mouseExited(MouseEvent e){}
   public void mousePressed(MouseEvent e){
   }
@@ -204,41 +203,20 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       g2d.fillRect(offsetX+p.x*squareSize, offsetY+p.y*squareSize, squareSize, squareSize);
     }
   }
-  public void enemyTick(){
-    for(Point e: enemies){   
-      for(Point p: players){
-        if(p.x == e.x &&p.y == e.y){
-          initialize(); 
-        }
-      }
-      boolean moved = false;
-      int currentVal = Integer.parseInt(currentMap[e.y][e.x]);
-      for(int r= e.y-1;r<=e.y+1&&moved == false;r++){
-        for(int c= e.x-1;c<=e.x+1;c++){
-          int newVal = 0;
-          if(isInteger(currentMap[r][c]))
-            newVal = Integer.parseInt(currentMap[r][c]);
-          if(newVal-1==currentVal){
-            currentMap[e.y][e.x] = ""+(18-currentVal);
-            e.x = c;
-            e.y = r;
-            moved = true;
-          }
-          if(currentVal == 17){
-            currentVal = 1;
-          }
-        }
-      }
-    }
-  }
   public void checkEnemyTouch(){
-    for(Point p: players){
-      for(Point e: enemies){
+    for(Player p: players){
+      for(Enemy e: enemies){
         if(p.x == e.x && p.y == e.y){
           initialize(); 
         }
       }
     }
+  }
+  public ArrayList<Player> getPlayers(){
+   return players; 
+  }
+  public String[][] getCurrentMap(){
+   return currentMap; 
   }
   public static boolean isInteger(String s) {
     try { 
@@ -251,57 +229,49 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     // only got here if we didn't return false
     return true;
   }
+  public int getPlayersDone(){
+   return playersDone; 
+  }
+  public void setPlayersDone(int s){
+   playersDone = s;
+  }
+  public int getLevel(){
+    return level;
+  }
+  public void setLevel(int l){
+   level = l; 
+  }
+  public int getTotalPlayers(){
+   return totalPlayers; 
+  }
+  public ArrayList<Enemy> getEnemies(){
+   return enemies; 
+  }
   private void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
-    Thread.sleep(200);
+    for(Enemy e: enemies){
+     e.tick(); 
+    }
   }  
   private void changeAll(int x, int y){
-    for(int i = 0; i < players.size(); i++){
-      Point p = players.get(i);
-      
-      try{
-        String val = currentMap[p.y+y][p.x+x];
-        if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time
-          
-          p.x += x;
-          p.y += y;
-          
-        }
-        else if(val.equals("!")){
-          playersDone++;
-          players.remove(players.indexOf(p));
-          if(playersDone >= totalPlayers){
-            level++;
-            initialize();
-          }
-        }
-        else if(val.equals("x")){
-          initialize(); 
-        }
-        for(Point e:enemies){
-          if(p.x == e.x && e.y == p.y)
-            initialize();
-        }
-      }
-      catch(ArrayIndexOutOfBoundsException e){
-        players.remove(p);
-      }
+    for(Player p: players){
+      p.move(x,y);
     }
   }
   public static void main(String[] args) throws Exception {
     JFrame frame = new JFrame("boi");
-    Game game = new Game();
-    
+    game = new Game();
     game.initialize();
     frame.add(game);
     frame.setSize(squareSize*27+offset, squareSize*18+offset);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    while (true)
-    {
-      game.tick();
+    while(true){
+      for(Player p: game.players){
+       p.checkEnemyTouch(); 
+      }
+      Thread.sleep(100);
     }
   }
-  
 }
