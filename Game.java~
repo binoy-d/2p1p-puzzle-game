@@ -27,7 +27,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   String[][] currentMap = new String[1][1];
   ArrayList<Point> players = new ArrayList<Point>();
   ArrayList<Point> enemies = new ArrayList<Point>();
-  int worldSpeed = 0;
+  double worldSpeed = 0;
   int wallNum = 0;
   BufferedImage wall = null;
   BufferedImage lava = null;
@@ -45,28 +45,38 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
-    worldSpeed++;
-    if(key == KeyEvent.VK_D){
+    if(worldSpeed<=squareSize*2){
+      worldSpeed+=0.5;
+    }
+    if(key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT){
       changeAll(speed,0);
-      offsetX-=worldSpeed;
+      if(offsetX>=-(2*squareSize)){
+        offsetX-=((int)worldSpeed);
+      }
       enemyTick();
       return;
     }
-    if(key == KeyEvent.VK_A){
+    if(key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT){
       changeAll(-speed,0);
-      offsetX+=worldSpeed;
+      if(offsetX<=(2*squareSize)){
+        offsetX+=((int)worldSpeed);
+      }
       enemyTick();
       return;
     }
-    if(key == KeyEvent.VK_S){
+    if(key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN){
       changeAll(0,speed);
-      offsetY-=worldSpeed;
+      if(offsetY>=-(2*squareSize)){
+        offsetY-=((int)worldSpeed);
+      }
       enemyTick();
       return;
     }
-    if(key == KeyEvent.VK_W){
+    if(key == KeyEvent.VK_W || key == KeyEvent.VK_UP){
       changeAll(0,-speed);
-      offsetY+=worldSpeed;
+      if(offsetY<=(2*squareSize)){
+        offsetY+=((int)worldSpeed);
+      }
       enemyTick();
       return;
     }
@@ -125,11 +135,11 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         }
       }
     }
-
+    
     
   }
   public void drawWalls(Graphics2D g2d){
-
+    
     
   }
   public void mouseExited(MouseEvent e){}
@@ -151,8 +161,8 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     g2d.setPaint(Color.white);
     g2d.drawString("LEVEL: " +level , 10, 10);
     
-
-      for(int y = 0; y < currentMap.length; y++)
+    
+    for(int y = 0; y < currentMap.length; y++)
     {
       for(int x = 0; x < currentMap[0].length; x++)
       {
@@ -180,9 +190,9 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           //g2d.drawString(val,offset+x*squareSize+squareSize/3,offset+y*squareSize+squareSize/3);
         } 
       }
-
+      
     }
-
+    
     
     for(int i = 0; i < players.size(); i++){
       Point p = players.get(i);
@@ -292,10 +302,10 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     frame.setSize(squareSize*27+offset, squareSize*18+offset);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-   while (true)
+    while (true)
     {
       game.tick();
-   }
+    }
   }
   
 }

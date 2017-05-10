@@ -22,6 +22,7 @@ import java.io.IOException;
 public class Game extends JPanel implements KeyListener,MouseListener{
   int level = 0;
   static int squareSize = 32;
+  int moves = 0;
   static int offset = squareSize*2;
   int speed = 1;
   String[][] currentMap = new String[1][1];
@@ -45,6 +46,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
+    moves++;
     if(worldSpeed<=squareSize*2){
       worldSpeed+=0.5;
     }
@@ -92,6 +94,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   }
   
   public void initialize() {
+    moves = 0;
     worldSpeed = 0;
     offsetX = offset;
     offsetY = offset;
@@ -159,7 +162,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
                          RenderingHints.VALUE_ANTIALIAS_ON);
     setBackground(Color.black);
     g2d.setPaint(Color.white);
-    g2d.drawString("LEVEL: " +level , 10, 10);
+    g2d.drawString("LEVEL : " +level +"    MOVES : "+moves, 10, 10);
     
     
     for(int y = 0; y < currentMap.length; y++)
@@ -292,7 +295,6 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       }
     }
   }
-  
   public static void main(String[] args) throws Exception {
     JFrame frame = new JFrame("boi");
     Game game = new Game();
