@@ -253,7 +253,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       
       try{
         String val = currentMap[p.y+y][p.x+x];
-        if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time
+        if((" 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time
           p.x += x;
           p.y += y;
           
