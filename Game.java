@@ -23,6 +23,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   int level = 0;
   static int squareSize = 32;
   int moves = 0;
+  int totalPlayers = 0;
   static int offset = squareSize*2;
   int speed = 1;
   String[][] currentMap = new String[1][1];
@@ -94,20 +95,12 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   }
   
   public void initialize() {
+    totalPlayers = 0;
     moves = 0;
     worldSpeed = 0;
     offsetX = offset;
     offsetY = offset;
-    try {
-      wall = ImageIO.read(new File("./images/wall.png"));
-      lava = ImageIO.read(new File("./images/lava.png"));
-    } catch (IOException e) {
-    }
-    try {
-      
-      lava = ImageIO.read(new File("./images/lava.png"));
-    } catch (IOException e) {
-    }
+
     playersDone = 0;
     try{
       Scanner s = new Scanner(new File("./maps/map"+level));
@@ -132,6 +125,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       for(int j = 0;j<currentMap[0].length;j++){
         if(currentMap[i][j].equals("P")){
           players.add(new Point(j,i)) ;
+          totalPlayers++;
         }
         if(currentMap[i][j].equals("1")){
           enemies.add(new Point(j,i)) ;
@@ -277,7 +271,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         else if(val.equals("!")){
           playersDone++;
           players.remove(players.indexOf(p));
-          if(playersDone >= 2){
+          if(playersDone >= totalPlayers){
             level++;
             initialize();
           }
