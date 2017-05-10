@@ -27,6 +27,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   String[][] currentMap = new String[1][1];
   ArrayList<Point> players = new ArrayList<Point>();
   ArrayList<Point> enemies = new ArrayList<Point>();
+  int worldSpeed = 0;
   int wallNum = 0;
   BufferedImage wall = null;
   BufferedImage lava = null;
@@ -44,27 +45,28 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
+    worldSpeed++;
     if(key == KeyEvent.VK_D){
       changeAll(speed,0);
-      offsetX--;
+      offsetX-=worldSpeed;
       enemyTick();
       return;
     }
     if(key == KeyEvent.VK_A){
       changeAll(-speed,0);
-      offsetX++;
+      offsetX+=worldSpeed;
       enemyTick();
       return;
     }
     if(key == KeyEvent.VK_S){
       changeAll(0,speed);
-      offsetY--;
+      offsetY-=worldSpeed;
       enemyTick();
       return;
     }
     if(key == KeyEvent.VK_W){
       changeAll(0,-speed);
-      offsetY++;
+      offsetY+=worldSpeed;
       enemyTick();
       return;
     }
@@ -80,6 +82,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   }
   
   public void initialize() {
+    worldSpeed = 0;
     offsetX = offset;
     offsetY = offset;
     try {
