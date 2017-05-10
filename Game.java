@@ -145,21 +145,9 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     {
       for(int x = 0; x < currentMap[0].length; x++)
       {
-        int jk = (int)(Math.random()*5)+80;
+        int jk = (int)(Math.random()*10)+60;
         String val = currentMap[y][x];      
         if(val.equals("#")){
-          /*
-          try {
-            wall = ImageIO.read(new File("./images/wall"+wallNum+".png"));
-            wallNum++;
-            if(wallNum == 3){
-              wallNum = 0;
-            }
-          } catch (IOException e) {
-          }
-          */
-          
-          
           g2d.setPaint(new Color(jk,jk,jk));
           g2d.fillRect(offset+x*squareSize,offset+y*squareSize,squareSize,squareSize);
         }else if(val.equals("!")){
@@ -169,11 +157,13 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           g2d.setPaint(new Color(jk+100,jk+10,0));
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
           //g2d.drawImage((Image)lava,offset+x*squareSize,offset+y*squareSize,null);
-        }else if(val.equals(" ")){
-          g2d.setPaint(Color.black);
+        }else if(val.equals(" ") || val.equals("P")){
+          g2d.setPaint(new Color(jk/6,jk/6,jk/6));
           g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
         }
         else if(isInteger(val)){
+          g2d.setPaint(new Color(jk/6,jk/6,jk/6));
+          g2d.fillRect(offset+x*squareSize, offset+y*squareSize, squareSize, squareSize);
           g2d.setPaint(Color.red);
           g2d.fillOval(offset+x*squareSize+squareSize/3, offset+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
           //g2d.drawString(val,offset+x*squareSize+squareSize/3,offset+y*squareSize+squareSize/3);
