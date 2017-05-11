@@ -165,11 +165,32 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         int jk = (int)(Math.random()*10)+60;
         String val = currentMap[y][x];      
         if(val.equals("#")){
-          g2d.setPaint(new Color(jk,jk,jk));
+          
+          double bright = getBrightness(x,y);
+          int swop = 255-(int)(bright*6);
+          swop/=10;
+          if(swop<= 30){
+           swop -= 5; 
+          }
+          else if(swop<=15){
+           swop -= 10; 
+          }
+          
+          swop*=2;
+          if(swop>=255){
+            swop = 255;
+          }
+          if(swop<=0){
+           swop = 0; 
+          }
+          g2d.setPaint(new Color(swop,swop,swop));
           g2d.fillRect(offsetX+x*squareSize,offsetY+y*squareSize,squareSize,squareSize);
         }else if(val.equals("!")){
-          g2d.setPaint(new Color(0,jk+50,0));
+          g2d.setPaint(new Color(0,170+jk,0));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
+          g2d.setPaint(new Color(0,250,0));
+          g2d.fillRect(offsetX+x*squareSize+(squareSize/4), offsetY+y*squareSize+(squareSize/4), squareSize/2, squareSize/2);
+          
         }else if(val.equals("x")){
           g2d.setPaint(new Color(jk+100,jk+10,0));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
@@ -199,8 +220,10 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     for(int i = 0; i < enemies.size(); i++){
       int jk = (int)(Math.random()*10)+60;
       Point p = enemies.get(i);
-      g2d.setPaint(new Color(jk*3,0,0));
+      g2d.setPaint(new Color(200,0,0));
       g2d.fillRect(offsetX+p.x*squareSize, offsetY+p.y*squareSize, squareSize, squareSize);
+      g2d.setPaint(new Color(250,0,0));
+      g2d.fillRect(offsetX+p.x*squareSize+(squareSize/4), offsetY+p.y*squareSize+(squareSize/4), squareSize/2, squareSize/2);
     }
   }
   public void checkEnemyTouch(){
@@ -212,6 +235,15 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       }
     }
   }
+  public double getBrightness(int x, int y){
+    double sum = 0;
+    for(Player p: players){
+     sum+=Math.sqrt((x-p.x)*(x-p.x)+(y-p.y)*(y-p.y)); 
+    }
+    //System.out.println(sum);
+    return sum;
+  }
+  
   public ArrayList<Player> getPlayers(){
    return players; 
   }
@@ -271,6 +303,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       for(Player p: game.players){
        p.checkEnemyTouch(); 
       }
+      game.repaint();
       Thread.sleep(100);
     }
   }
