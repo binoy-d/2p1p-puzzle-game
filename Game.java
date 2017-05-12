@@ -21,7 +21,7 @@ import java.io.IOException;
 public class Game extends JPanel implements KeyListener{
   int playerSize = 20;
   int playerState = 0;
-  int level = 8;
+  int level = 0;
   int where = 0;
   static int squareSize = 32;
   int moves = 0;

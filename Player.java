@@ -45,13 +45,22 @@ public class Player extends Point{
     // only got here if we didn't return false
     return true;
   }
+  public boolean playerVal(int v, int j){
+  for(Player p: parentGame.getPlayers()){
+    if(!p.equals(this)){
+      if( p.x == v && p.y == j){
+        return true; 
+      }
+    }
+  }
+  return false;
+  }
   public void move(int vx,int vy){
    try{
         String val = currentMap[y+vy][x+vx];
-        if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time          
+        if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1 &&!playerVal(vx+x,vy+y)){//I die a little every time          
           x += vx;
           y += vy;
-
         }
         else if(val.equals("!")){
           parentGame.setPlayersDone(parentGame.getPlayersDone()+1);

@@ -27,9 +27,6 @@ public class Player extends Point{
    parentGame = g;
    currentMap = parentGame.getCurrentMap();
   }
-  public void tick(){
-    
-  }
   public void checkEnemyTouch(){
     for(Enemy e: parentGame.getEnemies()){
       if(x == e.x && y == e.y){
