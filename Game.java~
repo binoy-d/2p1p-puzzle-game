@@ -195,7 +195,13 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         }else if(val.equals("x")){
           g2d.setPaint(new Color(jk+100,jk+10,0));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
-          //g2d.drawImage((Image)lava,offset+x*squareSize,offset+y*squareSize,null);
+          for(int i=0;i<4;i++){
+            for(int j=0;j<4;j++){
+              jk = (int)(Math.random()*40)+30;
+              g2d.setPaint(new Color(jk+180,jk+10,0));
+              g2d.fillRect(offsetX+x*squareSize+(i*squareSize/4), offsetY+y*squareSize+(j*squareSize/4), squareSize/4, squareSize/4);
+            }
+          }
         }else if(val.equals(" ") || val.equals("P")){
           g2d.setPaint(new Color(swop/4,swop/4,swop/4));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
@@ -242,7 +248,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       sum+=Math.sqrt((x-p.x)*(x-p.x)+(y-p.y)*(y-p.y)); 
     }
     //System.out.println(sum);
-    return sum;
+    return sum/(((double)(players.size()+1))/2);
   }
   
   public ArrayList<Player> getPlayers(){

@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 
 public class Game extends JPanel implements KeyListener,MouseListener{
-  
+  int bpm = 200;
   int level = 0;
   int numLoops = 5;
   static int squareSize = 32;
@@ -195,7 +195,13 @@ public class Game extends JPanel implements KeyListener,MouseListener{
         }else if(val.equals("x")){
           g2d.setPaint(new Color(jk+100,jk+10,0));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
-          //g2d.drawImage((Image)lava,offset+x*squareSize,offset+y*squareSize,null);
+          for(int i=0;i<4;i++){
+            for(int j=0;j<4;j++){
+              jk = (int)(Math.random()*40)+30;
+              g2d.setPaint(new Color(jk+180,jk+10,0));
+              g2d.fillRect(offsetX+x*squareSize+(i*squareSize/4), offsetY+y*squareSize+(j*squareSize/4), squareSize/4, squareSize/4);
+            }
+          }
         }else if(val.equals(" ") || val.equals("P")){
           g2d.setPaint(new Color(swop/4,swop/4,swop/4));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
@@ -204,7 +210,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           g2d.setPaint(new Color(swop/4,swop/4,swop/4));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
           g2d.setPaint(Color.red);
-          g2d.fillOval(offsetX+x*squareSize+squareSize/3, offsetY+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
+          g2d.fillRect(offsetX+x*squareSize+squareSize/3, offsetY+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
           //g2d.drawString(val,offset+x*squareSize+squareSize/3,offset+y*squareSize+squareSize/3);
         } 
       }
@@ -280,7 +286,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   public ArrayList<Enemy> getEnemies(){
     return enemies; 
   }
-  private void tick() throws InterruptedException {
+  public void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
     for(Enemy e: enemies){
@@ -294,23 +300,16 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   }
   public static void main(String[] args) throws Exception {
     
-    JFrame frame = new JFrame("boi");
+    JFrame frame = new JFrame("A E S T H E T I C S");
     
     game = new Game();
     game.initialize();
-    AudioPlayerExample1 musac = new AudioPlayerExample1();
+    AudioPlayerExample1 musac = new AudioPlayerExample1(game);
     frame.add(game);
     frame.setSize(squareSize*27+offset, squareSize*18+offset);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     musac.play("./music.wav");
-    while(true){
-      for(Player p: game.players){
-        p.checkEnemyTouch(); 
-      }
-      
-      game.repaint();
-      Thread.sleep(200);
-    }
+    
   }
 }

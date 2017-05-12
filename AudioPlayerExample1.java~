@@ -19,6 +19,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class AudioPlayerExample1 implements LineListener {
      int p = 0;
+       int bpm = 370;
+     Game parent;
     /**
      * this flag indicates whether the playback completes or not.
      */
@@ -28,6 +30,9 @@ public class AudioPlayerExample1 implements LineListener {
      * Play a given audio file.
      * @param audioFilePath Path of the audio file.
      */
+    public AudioPlayerExample1(Game g){
+     parent = g; 
+    }
     void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
  
@@ -49,7 +54,9 @@ public class AudioPlayerExample1 implements LineListener {
             while (!playCompleted) {
                 // wait for the playback completes
                 try {
+                  
                   Thread.sleep(100);
+                  
                 } catch (InterruptedException ex) {
                 }
             }
@@ -70,7 +77,7 @@ public class AudioPlayerExample1 implements LineListener {
             System.out.println("Playback started.");
              
         } else if (type == LineEvent.Type.STOP) {
-            playCompleted = true;
+            //playCompleted = true;
             System.out.println("Playback completed.");
             
         }

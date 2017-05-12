@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 
 public class Enemy extends Point{
+
   Game parentGame;
   String[][] currentMap;
   public Enemy(int x, int y, Game g){

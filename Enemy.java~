@@ -19,223 +19,36 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Game extends JPanel implements KeyListener,MouseListener{
-  int level = 0;
-  static int squareSize = 32;
-  int moves = 0;
-  int totalPlayers = 0;
-  static int offset = squareSize*2;
-  int speed = 1;
-  String[][] currentMap = new String[1][1];
-  ArrayList<Point> players = new ArrayList<Point>();
-  ArrayList<Point> enemies = new ArrayList<Point>();
-  double worldSpeed = 0;
-  int wallNum = 0;
-  BufferedImage wall = null;
-  BufferedImage lava = null;
-  int offsetX = offset;
-  int offsetY = offset;
-  /*
-   * LEVEL DESIGN CODE:
-   * # = wall
-   *  = empty
-   * P =player
-   * 1-9 = enemy(start @ 1, go to 9)
-   * x = lava
-   * */
-  int playersDone = 0;
-  
-  public void keyPressed(KeyEvent e) {
-    int key = e.getKeyCode();
-    moves++;
-    if(worldSpeed<=squareSize*2){
-      worldSpeed+=0.5;
-    }
-    if(key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT){
-      changeAll(speed,0);
-      if(offsetX>=-(2*squareSize)){
-        offsetX-=((int)worldSpeed);
-      }
-      enemyTick();
-      return;
-    }
-    if(key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT){
-      changeAll(-speed,0);
-      if(offsetX<=(2*squareSize)){
-        offsetX+=((int)worldSpeed);
-      }
-      enemyTick();
-      return;
-    }
-    if(key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN){
-      changeAll(0,speed);
-      if(offsetY>=-(2*squareSize)){
-        offsetY-=((int)worldSpeed);
-      }
-      enemyTick();
-      return;
-    }
-    if(key == KeyEvent.VK_W || key == KeyEvent.VK_UP){
-      changeAll(0,-speed);
-      if(offsetY<=(2*squareSize)){
-        offsetY+=((int)worldSpeed);
-      }
-      enemyTick();
-      return;
-    }
+public class Enemy extends Point{
+  Game parentGame;
+  String[][] currentMap;
+  public Enemy(int x, int y, Game g){
+    super(x,y); 
+    currentMap = g.getCurrentMap();
+    parentGame = g;
+    
   }
-  
-  public void keyReleased(KeyEvent e) {}
-  public void keyTyped(KeyEvent e) {}
-  
-  public Game(){
-    addKeyListener(this);
-    setFocusable(true);
-    setFocusTraversalKeysEnabled(false);
-  }
-  
-  public void initialize() {
-    totalPlayers = 0;
-    moves = 0;
-    worldSpeed = 0;
-    offsetX = offset;
-    offsetY = offset;
-
-    playersDone = 0;
-    try{
-      Scanner s = new Scanner(new File("./maps/map"+level));
-      ArrayList<String> list = new ArrayList<String>();
-      while (s.hasNextLine()){
-        list.add(s.nextLine());
+  public void tick(){
+    for(Player p: parentGame.getPlayers()){
+      if(p.x == x &&p.y == y){
+        parentGame.initialize(); 
       }
-      currentMap = new String[list.size()][list.get(0).length()];
-      for(int r = 0;r<list.size();r++){
-        for(int c = 0;c<list.get(0).length();c++){
-          String kkk = list.get(r).substring(c,c+1);
-          currentMap[r][c] = kkk;
+    }
+    boolean moved = false;
+    int currentVal = Integer.parseInt(currentMap[y][x]);
+    for(int r= y-1;r<=y+1&&moved == false;r++){
+      for(int c= x-1;c<=x+1;c++){
+        int newVal = 0;
+        if(isInteger(currentMap[r][c]))
+          newVal = Integer.parseInt(currentMap[r][c]);
+        if(newVal-1==currentVal){
+          currentMap[y][x] = ""+(18-currentVal);
+          x = c;
+          y = r;
+          moved = true;
         }
-      }
-      s.close();
-    }catch(FileNotFoundException e){
-      System.out.println("Map not found");
-    }
-    players = new ArrayList<Point>();
-    enemies = new ArrayList<Point>();
-    for(int i = 0;i<currentMap.length;i++){
-      for(int j = 0;j<currentMap[0].length;j++){
-        if(currentMap[i][j].equals("P")){
-          players.add(new Point(j,i)) ;
-          totalPlayers++;
-        }
-        if(currentMap[i][j].equals("1")){
-          enemies.add(new Point(j,i)) ;
-        }
-      }
-    }
-    
-    
-  }
-  public void drawWalls(Graphics2D g2d){
-    
-    
-  }
-  public void mouseExited(MouseEvent e){}
-  public void mousePressed(MouseEvent e){
-  }
-  public void mouseEntered(MouseEvent e){}
-  public void mouseReleased(MouseEvent e){}
-  public void mouseClicked(MouseEvent e){
-  }
-  
-  public void paint(Graphics g)
-  {
-    
-    super.paint(g);
-    Graphics2D g2d = (Graphics2D) g;
-    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                         RenderingHints.VALUE_ANTIALIAS_ON);
-    setBackground(Color.black);
-    g2d.setPaint(Color.white);
-    g2d.drawString("LEVEL : " +level +"    MOVES : "+moves, 10, 10);
-    
-    
-    for(int y = 0; y < currentMap.length; y++)
-    {
-      for(int x = 0; x < currentMap[0].length; x++)
-      {
-        int jk = (int)(Math.random()*10)+60;
-        String val = currentMap[y][x];      
-        if(val.equals("#")){
-          g2d.setPaint(new Color(jk,jk,jk));
-          g2d.fillRect(offsetX+x*squareSize,offsetY+y*squareSize,squareSize,squareSize);
-        }else if(val.equals("!")){
-          g2d.setPaint(new Color(0,jk+50,0));
-          g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
-        }else if(val.equals("x")){
-          g2d.setPaint(new Color(jk+100,jk+10,0));
-          g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
-          //g2d.drawImage((Image)lava,offset+x*squareSize,offset+y*squareSize,null);
-        }else if(val.equals(" ") || val.equals("P")){
-          g2d.setPaint(new Color(jk/6,jk/6,jk/6));
-          g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
-        }
-        else if(isInteger(val)){
-          g2d.setPaint(new Color(jk/6,jk/6,jk/6));
-          g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
-          g2d.setPaint(Color.red);
-          g2d.fillOval(offsetX+x*squareSize+squareSize/3, offsetY+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
-          //g2d.drawString(val,offset+x*squareSize+squareSize/3,offset+y*squareSize+squareSize/3);
-        } 
-      }
-      
-    }
-    
-    
-    for(int i = 0; i < players.size(); i++){
-      Point p = players.get(i);
-      g2d.setPaint(Color.white);
-      g2d.fillRect(offsetX+p.x*squareSize, offsetY+p.y*squareSize, squareSize, squareSize);
-      //g2d.drawString("("+p.x+","+p.y+")",offset+p.x*squareSize,offset+p.y*squareSize);
-    }
-    for(int i = 0; i < enemies.size(); i++){
-      int jk = (int)(Math.random()*10)+60;
-      Point p = enemies.get(i);
-      g2d.setPaint(new Color(jk*3,0,0));
-      g2d.fillRect(offsetX+p.x*squareSize, offsetY+p.y*squareSize, squareSize, squareSize);
-    }
-  }
-  public void enemyTick(){
-    for(Point e: enemies){   
-      for(Point p: players){
-        if(p.x == e.x &&p.y == e.y){
-          initialize(); 
-        }
-      }
-      boolean moved = false;
-      int currentVal = Integer.parseInt(currentMap[e.y][e.x]);
-      for(int r= e.y-1;r<=e.y+1&&moved == false;r++){
-        for(int c= e.x-1;c<=e.x+1;c++){
-          int newVal = 0;
-          if(isInteger(currentMap[r][c]))
-            newVal = Integer.parseInt(currentMap[r][c]);
-          if(newVal-1==currentVal){
-            currentMap[e.y][e.x] = ""+(18-currentVal);
-            e.x = c;
-            e.y = r;
-            moved = true;
-          }
-          if(currentVal == 17){
-            currentVal = 1;
-          }
-        }
-      }
-    }
-  }
-  public void checkEnemyTouch(){
-    for(Point p: players){
-      for(Point e: enemies){
-        if(p.x == e.x && p.y == e.y){
-          initialize(); 
+        if(currentVal == 17){
+          currentVal = 1;
         }
       }
     }
@@ -251,57 +64,4 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     // only got here if we didn't return false
     return true;
   }
-  private void tick() throws InterruptedException {
-    repaint();
-    checkEnemyTouch();
-    Thread.sleep(200);
-  }  
-  private void changeAll(int x, int y){
-    for(int i = 0; i < players.size(); i++){
-      Point p = players.get(i);
-      
-      try{
-        String val = currentMap[p.y+y][p.x+x];
-        if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time
-          
-          p.x += x;
-          p.y += y;
-          
-        }
-        else if(val.equals("!")){
-          playersDone++;
-          players.remove(players.indexOf(p));
-          if(playersDone >= totalPlayers){
-            level++;
-            initialize();
-          }
-        }
-        else if(val.equals("x")){
-          initialize(); 
-        }
-        for(Point e:enemies){
-          if(p.x == e.x && e.y == p.y)
-            initialize();
-        }
-      }
-      catch(ArrayIndexOutOfBoundsException e){
-        players.remove(p);
-      }
-    }
-  }
-  public static void main(String[] args) throws Exception {
-    JFrame frame = new JFrame("boi");
-    Game game = new Game();
-    
-    game.initialize();
-    frame.add(game);
-    frame.setSize(squareSize*27+offset, squareSize*18+offset);
-    frame.setVisible(true);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    while (true)
-    {
-      game.tick();
-    }
-  }
-  
 }
