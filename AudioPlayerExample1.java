@@ -43,10 +43,11 @@ public class AudioPlayerExample1 implements LineListener {
  
             DataLine.Info info = new DataLine.Info(Clip.class, format);
  
-            Clip audioClip = (Clip) AudioSystem.getLine(info);
- 
+            Clip audioswoop = (Clip) AudioSystem.getLine(info);
+            BigClip audioClip = new BigClip(audioswoop);
+            
             audioClip.addLineListener(this);
-            int length = audioClip.getFrameLength();
+
             audioClip.open(audioStream);
              
             audioClip.loop(-1);
@@ -54,18 +55,25 @@ public class AudioPlayerExample1 implements LineListener {
             while (!playCompleted) {
                 // wait for the playback completes
                 try {
+                  parent.where = 0;
                   parent.tick();
+                  
                   Thread.sleep(bpm);
                   
                 } catch (InterruptedException ex) {
+                  //System.out.println("kill the jews");
                 }
             }
              
             audioClip.close();
              
         } catch (UnsupportedAudioFileException ex) {
+          System.out.println("file type");
         } catch (LineUnavailableException ex) {
-        } catch (IOException ex) {}
+          ex.printStackTrace();
+        } catch (IOException ex) {
+          System.out.println("io");
+        }
          
     }
 

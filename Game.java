@@ -9,8 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.event.KeyListener;
 import java.util.Scanner;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.awt.MouseInfo;
 import java.io.FileNotFoundException;
@@ -19,10 +17,12 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Game extends JPanel implements KeyListener,MouseListener{
-  int bpm = 200;
-  int level = 0;
-  int numLoops = 5;
+
+public class Game extends JPanel implements KeyListener{
+  int playerSize = 20;
+  int playerState = 0;
+  int level = 7;
+  int where = 0;
   static int squareSize = 32;
   int moves = 0;
   int totalPlayers = 0;
@@ -51,6 +51,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
     try{
+      where = 1;
       game.tick();
     }catch(java.lang.InterruptedException jkk){}
     moves++;
@@ -140,14 +141,6 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     }
   }
   
-  public void mouseExited(MouseEvent e){}
-  public void mousePressed(MouseEvent e){
-  }
-  public void mouseEntered(MouseEvent e){}
-  public void mouseReleased(MouseEvent e){}
-  public void mouseClicked(MouseEvent e){
-  }
-  
   public void paint(Graphics g)
   {
     
@@ -216,14 +209,26 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       }
       
     }
-    
-    
-    for(int i = 0; i < players.size(); i++){
-      Point p = players.get(i);
-      g2d.setPaint(Color.white);
-      g2d.fillRect(offsetX+p.x*squareSize, offsetY+p.y*squareSize, squareSize, squareSize);
-      //g2d.drawString("("+p.x+","+p.y+")",offset+p.x*squareSize,offset+p.y*squareSize);
+    if(where  ==0){
+      if(playerState == 0){
+        playerState = 1; 
+      }
+      else{
+        playerState = 0; 
+      }
     }
+    for(int i = 0; i < players.size(); i++){
+      
+      Point p = players.get(i);
+      
+      g2d.setPaint(Color.white);
+      
+      if(playerState == 0)
+        g2d.fillRect(offsetX+p.x*squareSize, offsetY+p.y*squareSize, squareSize, squareSize);
+      else
+        g2d.fillRect(offsetX+p.x*squareSize+(squareSize-playerSize)/2, offsetY+p.y*squareSize+(squareSize-playerSize)/2, playerSize, playerSize);
+    }
+    
     for(int i = 0; i < enemies.size(); i++){
       int jk = (int)(Math.random()*10)+60;
       Point p = enemies.get(i);
@@ -289,9 +294,13 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   public void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
-    for(Enemy e: enemies){
-      e.tick(); 
+    if(where == 0){
+      for(Enemy e: enemies){
+        e.tick(); 
+        checkEnemyTouch();
+      }
     }
+    checkEnemyTouch();
   }  
   private void changeAll(int x, int y){
     for(Player p: players){
@@ -309,7 +318,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     frame.setSize(squareSize*27+offset, squareSize*18+offset);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    musac.play("./music.wav");
+    musac.play("musac.wav");
     
   }
 }
