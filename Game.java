@@ -20,7 +20,9 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 
 public class Game extends JPanel implements KeyListener,MouseListener{
+  
   int level = 0;
+  int numLoops = 5;
   static int squareSize = 32;
   int moves = 0;
   int totalPlayers = 0;
@@ -49,7 +51,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
     try{
-    game.tick();
+      game.tick();
     }catch(java.lang.InterruptedException jkk){}
     moves++;
     if(worldSpeed<=squareSize*2){
@@ -68,7 +70,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       if(offsetX<=(2*squareSize)){
         offsetX+=((int)worldSpeed);
       }
-
+      
       return;
     }
     if(key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN){
@@ -76,7 +78,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       if(offsetY>=-(2*squareSize)){
         offsetY-=((int)worldSpeed);
       }
-
+      
       return;
     }
     if(key == KeyEvent.VK_W || key == KeyEvent.VK_UP){
@@ -84,7 +86,7 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       if(offsetY<=(2*squareSize)){
         offsetY+=((int)worldSpeed);
       }
-
+      
       return;
     }
   }
@@ -163,26 +165,25 @@ public class Game extends JPanel implements KeyListener,MouseListener{
       for(int x = 0; x < currentMap[0].length; x++)
       {
         int jk = (int)(Math.random()*10)+60;
-        String val = currentMap[y][x];      
+        String val = currentMap[y][x];  
+        double bright = getBrightness(x,y);
+        int swop = 255-(int)(bright*6);
+        swop/=10;
+        if(swop<= 30){
+          swop -= 5; 
+        }
+        else if(swop<=15){
+          swop -= 10; 
+        }
+        swop*=2;
+        if(swop>=255){
+          swop = 255;
+        }
+        if(swop<=0){
+          swop = 0; 
+        }
         if(val.equals("#")){
           
-          double bright = getBrightness(x,y);
-          int swop = 255-(int)(bright*6);
-          swop/=10;
-          if(swop<= 30){
-           swop -= 5; 
-          }
-          else if(swop<=15){
-           swop -= 10; 
-          }
-          
-          swop*=2;
-          if(swop>=255){
-            swop = 255;
-          }
-          if(swop<=0){
-           swop = 0; 
-          }
           g2d.setPaint(new Color(swop,swop,swop));
           g2d.fillRect(offsetX+x*squareSize,offsetY+y*squareSize,squareSize,squareSize);
         }else if(val.equals("!")){
@@ -196,11 +197,11 @@ public class Game extends JPanel implements KeyListener,MouseListener{
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
           //g2d.drawImage((Image)lava,offset+x*squareSize,offset+y*squareSize,null);
         }else if(val.equals(" ") || val.equals("P")){
-          g2d.setPaint(new Color(jk/6,jk/6,jk/6));
+          g2d.setPaint(new Color(swop/4,swop/4,swop/4));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
         }
         else if(isInteger(val)){
-          g2d.setPaint(new Color(jk/6,jk/6,jk/6));
+          g2d.setPaint(new Color(swop/4,swop/4,swop/4));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
           g2d.setPaint(Color.red);
           g2d.fillOval(offsetX+x*squareSize+squareSize/3, offsetY+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
@@ -238,17 +239,17 @@ public class Game extends JPanel implements KeyListener,MouseListener{
   public double getBrightness(int x, int y){
     double sum = 0;
     for(Player p: players){
-     sum+=Math.sqrt((x-p.x)*(x-p.x)+(y-p.y)*(y-p.y)); 
+      sum+=Math.sqrt((x-p.x)*(x-p.x)+(y-p.y)*(y-p.y)); 
     }
     //System.out.println(sum);
-    return sum;
+    return sum/(((double)(players.size()+1))/2);
   }
   
   public ArrayList<Player> getPlayers(){
-   return players; 
+    return players; 
   }
   public String[][] getCurrentMap(){
-   return currentMap; 
+    return currentMap; 
   }
   public static boolean isInteger(String s) {
     try { 
@@ -262,28 +263,28 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     return true;
   }
   public int getPlayersDone(){
-   return playersDone; 
+    return playersDone; 
   }
   public void setPlayersDone(int s){
-   playersDone = s;
+    playersDone = s;
   }
   public int getLevel(){
     return level;
   }
   public void setLevel(int l){
-   level = l; 
+    level = l; 
   }
   public int getTotalPlayers(){
-   return totalPlayers; 
+    return totalPlayers; 
   }
   public ArrayList<Enemy> getEnemies(){
-   return enemies; 
+    return enemies; 
   }
   private void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
     for(Enemy e: enemies){
-     e.tick(); 
+      e.tick(); 
     }
   }  
   private void changeAll(int x, int y){
@@ -292,19 +293,24 @@ public class Game extends JPanel implements KeyListener,MouseListener{
     }
   }
   public static void main(String[] args) throws Exception {
+    
     JFrame frame = new JFrame("boi");
+    
     game = new Game();
     game.initialize();
+    AudioPlayerExample1 musac = new AudioPlayerExample1();
     frame.add(game);
     frame.setSize(squareSize*27+offset, squareSize*18+offset);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    musac.play("./music.wav");
     while(true){
       for(Player p: game.players){
-       p.checkEnemyTouch(); 
+        p.checkEnemyTouch(); 
       }
+      
       game.repaint();
-      Thread.sleep(100);
+      Thread.sleep(200);
     }
   }
 }

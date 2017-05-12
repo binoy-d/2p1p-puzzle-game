@@ -27,9 +27,6 @@ public class Player extends Point{
    parentGame = g;
    currentMap = parentGame.getCurrentMap();
   }
-  public void tick(){
-    
-  }
   public void checkEnemyTouch(){
     for(Enemy e: parentGame.getEnemies()){
       if(x == e.x && y == e.y){
@@ -54,6 +51,7 @@ public class Player extends Point{
         if((" P 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18").indexOf(val) != -1){//I die a little every time          
           x += vx;
           y += vy;
+
         }
         else if(val.equals("!")){
           parentGame.setPlayersDone(parentGame.getPlayersDone()+1);
