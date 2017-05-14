@@ -294,7 +294,7 @@ public class Game extends JPanel implements KeyListener{
   public void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
-    if(where == 0){
+    if(where == 1){
       for(Enemy e: enemies){
         e.tick(); 
         checkEnemyTouch();

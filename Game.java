@@ -152,7 +152,8 @@ public class Game extends JPanel implements KeyListener{
     g2d.setPaint(Color.white);
     g2d.drawString("LEVEL : " +level +"    MOVES : "+moves, 10, 10);
     
-    
+    offsetX = ((getParent().getWidth())-(squareSize*currentMap[0].length))/2;
+    offsetY = ((getParent().getHeight())-(squareSize*currentMap.length))/2;
     for(int y = 0; y < currentMap.length; y++)
     {
       for(int x = 0; x < currentMap[0].length; x++)

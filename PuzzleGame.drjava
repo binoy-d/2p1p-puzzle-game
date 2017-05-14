@@ -3,25 +3,25 @@
   <project autorefresh="false" main="Game" manifest="" root="" work="">
     <createjar file="two.jar" flags="12"/>
     <source>
-      <file active="true" name="Game.java" package="" timestamp="13-May-2017 18:21:14">
-        <select from="8476" to="8476"/>
-        <scroll column="3989" row="0"/>
+      <file active="true" name="Game.java" package="" timestamp="13-May-2017 21:13:45">
+        <select from="4081" to="4081"/>
+        <scroll column="2079" row="0"/>
       </file>
       <file name="Enemy.java" package="" timestamp="12-May-2017 09:26:04">
-        <select from="8476" to="8476"/>
-        <scroll column="3989" row="0"/>
+        <select from="4081" to="4081"/>
+        <scroll column="2079" row="0"/>
       </file>
       <file name="Player.java" package="" timestamp="12-May-2017 18:02:57">
-        <select from="8476" to="8476"/>
-        <scroll column="3989" row="0"/>
+        <select from="4081" to="4081"/>
+        <scroll column="2079" row="0"/>
       </file>
       <file name="BigClip.java" package="" timestamp="12-May-2017 18:07:50">
-        <select from="8476" to="8476"/>
-        <scroll column="3989" row="0"/>
+        <select from="4081" to="4081"/>
+        <scroll column="2079" row="0"/>
       </file>
       <file name="AudioPlayerExample1.java" package="" timestamp="13-May-2017 18:20:10">
-        <select from="8476" to="8476"/>
-        <scroll column="3989" row="0"/>
+        <select from="4081" to="4081"/>
+        <scroll column="2079" row="0"/>
       </file>
     </source>
     <included/>
