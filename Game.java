@@ -150,7 +150,7 @@ public class Game extends JPanel implements KeyListener{
                          RenderingHints.VALUE_ANTIALIAS_ON);
     setBackground(Color.black);
     g2d.setPaint(Color.white);
-    g2d.drawString("LEVEL : " +level +"    MOVES : "+moves, 10, 10);
+    g2d.drawString("LEVEL : " +level +"    MOVES : "+moves, 10,10);
     
     offsetX = ((getParent().getWidth())-(squareSize*currentMap[0].length))/2;
     offsetY = ((getParent().getHeight())-(squareSize*currentMap.length))/2;
