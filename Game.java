@@ -294,7 +294,7 @@ public class Game extends JPanel implements KeyListener{
   public void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
-    if(where == 0){
+    if(where == 1){
       for(Enemy e: enemies){
         e.tick(); 
         checkEnemyTouch();
@@ -318,7 +318,7 @@ public class Game extends JPanel implements KeyListener{
     frame.setSize(squareSize*27+offset, squareSize*18+offset);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    musac.play("musac.wav");
+    musac.play("./musac.wav");
     
   }
 }

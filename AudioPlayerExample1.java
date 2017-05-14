@@ -43,8 +43,8 @@ public class AudioPlayerExample1 implements LineListener {
  
             DataLine.Info info = new DataLine.Info(Clip.class, format);
  
-            Clip audioswoop = (Clip) AudioSystem.getLine(info);
-            BigClip audioClip = new BigClip(audioswoop);
+            Clip audioClip = (Clip) AudioSystem.getLine(info);
+            //BigClip audioClip = new BigClip(audioswoop);
             
             audioClip.addLineListener(this);
 
@@ -57,7 +57,6 @@ public class AudioPlayerExample1 implements LineListener {
                 try {
                   parent.where = 0;
                   parent.tick();
-                  
                   Thread.sleep(bpm);
                   
                 } catch (InterruptedException ex) {
