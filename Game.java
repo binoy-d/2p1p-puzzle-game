@@ -23,7 +23,7 @@ public class Game extends JPanel implements KeyListener{
   int playerState = 0;
   int level = 0;
   int where = 0;
-  static int squareSize = 32;
+  static int squareSize = 64;
   int moves = 0;
   int totalPlayers = 0;
   static int offset = squareSize*2;
@@ -47,7 +47,7 @@ public class Game extends JPanel implements KeyListener{
    * x = lava
    * */
   int playersDone = 0;
-  
+
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
     try{
@@ -63,7 +63,7 @@ public class Game extends JPanel implements KeyListener{
       if(offsetX>=-(2*squareSize)){
         offsetX-=((int)worldSpeed);
       }
-      
+
       return;
     }
     if(key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT){
@@ -71,7 +71,7 @@ public class Game extends JPanel implements KeyListener{
       if(offsetX<=(2*squareSize)){
         offsetX+=((int)worldSpeed);
       }
-      
+
       return;
     }
     if(key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN){
@@ -79,7 +79,7 @@ public class Game extends JPanel implements KeyListener{
       if(offsetY>=-(2*squareSize)){
         offsetY-=((int)worldSpeed);
       }
-      
+
       return;
     }
     if(key == KeyEvent.VK_W || key == KeyEvent.VK_UP){
@@ -87,27 +87,27 @@ public class Game extends JPanel implements KeyListener{
       if(offsetY<=(2*squareSize)){
         offsetY+=((int)worldSpeed);
       }
-      
+
       return;
     }
   }
-  
+
   public void keyReleased(KeyEvent e) {}
   public void keyTyped(KeyEvent e) {}
-  
+
   public Game(){
     addKeyListener(this);
     setFocusable(true);
     setFocusTraversalKeysEnabled(false);
   }
-  
+
   public void initialize() {
     totalPlayers = 0;
     moves = 0;
     worldSpeed = 0;
     offsetX = offset;
     offsetY = offset;
-    
+
     playersDone = 0;
     try{
       Scanner s = new Scanner(new File("./maps/map"+level));
@@ -140,10 +140,10 @@ public class Game extends JPanel implements KeyListener{
       }
     }
   }
-  
+
   public void paint(Graphics g)
   {
-    
+
     super.paint(g);
     Graphics2D g2d = (Graphics2D) g;
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -151,7 +151,7 @@ public class Game extends JPanel implements KeyListener{
     setBackground(Color.black);
     g2d.setPaint(Color.white);
     g2d.drawString("LEVEL : " +level +"    MOVES : "+moves, 10,10);
-    
+
     offsetX = ((getParent().getWidth())-(squareSize*currentMap[0].length))/2;
     offsetY = ((getParent().getHeight())-(squareSize*currentMap.length))/2;
     for(int y = 0; y < currentMap.length; y++)
@@ -159,25 +159,25 @@ public class Game extends JPanel implements KeyListener{
       for(int x = 0; x < currentMap[0].length; x++)
       {
         int jk = (int)(Math.random()*10)+60;
-        String val = currentMap[y][x];  
+        String val = currentMap[y][x];
         double bright = getBrightness(x,y);
         int swop = 255-(int)(bright*6);
         swop/=10;
         if(swop<= 30){
-          swop -= 5; 
+          swop -= 5;
         }
         else if(swop<=15){
-          swop -= 10; 
+          swop -= 10;
         }
         swop*=2;
         if(swop>=255){
           swop = 255;
         }
         if(swop<=0){
-          swop = 0; 
+          swop = 0;
         }
         if(val.equals("#")){
-          
+
           g2d.setPaint(new Color(swop,swop,swop));
           g2d.fillRect(offsetX+x*squareSize,offsetY+y*squareSize,squareSize,squareSize);
         }else if(val.equals("!")){
@@ -185,7 +185,7 @@ public class Game extends JPanel implements KeyListener{
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
           g2d.setPaint(new Color(0,250,0));
           g2d.fillRect(offsetX+x*squareSize+(squareSize/4), offsetY+y*squareSize+(squareSize/4), squareSize/2, squareSize/2);
-          
+
         }else if(val.equals("x")){
           g2d.setPaint(new Color(jk+100,jk+10,0));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
@@ -204,32 +204,32 @@ public class Game extends JPanel implements KeyListener{
           g2d.setPaint(new Color(swop/4,swop/4,swop/4));
           g2d.fillRect(offsetX+x*squareSize, offsetY+y*squareSize, squareSize, squareSize);
           g2d.setPaint(Color.red);
-          g2d.fillRect(offsetX+x*squareSize+squareSize/3, offsetY+y*squareSize+squareSize/3, squareSize/4, squareSize/4); 
+          g2d.fillRect(offsetX+x*squareSize+squareSize/3, offsetY+y*squareSize+squareSize/3, squareSize/4, squareSize/4);
           //g2d.drawString(val,offset+x*squareSize+squareSize/3,offset+y*squareSize+squareSize/3);
-        } 
+        }
       }
-      
+
     }
     if(where  ==0){
       if(playerState == 0){
-        playerState = 1; 
+        playerState = 1;
       }
       else{
-        playerState = 0; 
+        playerState = 0;
       }
     }
     for(int i = 0; i < players.size(); i++){
-      
+
       Point p = players.get(i);
-      
+
       g2d.setPaint(Color.white);
-      
+
       if(playerState == 0)
         g2d.fillRect(offsetX+p.x*squareSize, offsetY+p.y*squareSize, squareSize, squareSize);
       else
         g2d.fillRect(offsetX+p.x*squareSize+(squareSize-playerSize)/2, offsetY+p.y*squareSize+(squareSize-playerSize)/2, playerSize, playerSize);
     }
-    
+
     for(int i = 0; i < enemies.size(); i++){
       int jk = (int)(Math.random()*10)+60;
       Point p = enemies.get(i);
@@ -243,7 +243,7 @@ public class Game extends JPanel implements KeyListener{
     for(Player p: players){
       for(Enemy e: enemies){
         if(p.x == e.x && p.y == e.y){
-          initialize(); 
+          initialize();
         }
       }
     }
@@ -251,23 +251,23 @@ public class Game extends JPanel implements KeyListener{
   public double getBrightness(int x, int y){
     double sum = 0;
     for(Player p: players){
-      sum+=Math.sqrt((x-p.x)*(x-p.x)+(y-p.y)*(y-p.y)); 
+      sum+=Math.sqrt((x-p.x)*(x-p.x)+(y-p.y)*(y-p.y));
     }
     //System.out.println(sum);
     return sum/(((double)(players.size()+1))/2);
   }
-  
+
   public ArrayList<Player> getPlayers(){
-    return players; 
+    return players;
   }
   public String[][] getCurrentMap(){
-    return currentMap; 
+    return currentMap;
   }
   public static boolean isInteger(String s) {
-    try { 
-      Integer.parseInt(s); 
-    } catch(NumberFormatException e) { 
-      return false; 
+    try {
+      Integer.parseInt(s);
+    } catch(NumberFormatException e) {
+      return false;
     } catch(NullPointerException e) {
       return false;
     }
@@ -275,7 +275,7 @@ public class Game extends JPanel implements KeyListener{
     return true;
   }
   public int getPlayersDone(){
-    return playersDone; 
+    return playersDone;
   }
   public void setPlayersDone(int s){
     playersDone = s;
@@ -284,34 +284,34 @@ public class Game extends JPanel implements KeyListener{
     return level;
   }
   public void setLevel(int l){
-    level = l; 
+    level = l;
   }
   public int getTotalPlayers(){
-    return totalPlayers; 
+    return totalPlayers;
   }
   public ArrayList<Enemy> getEnemies(){
-    return enemies; 
+    return enemies;
   }
   public void tick() throws InterruptedException {
     repaint();
     checkEnemyTouch();
     if(where == 1){
       for(Enemy e: enemies){
-        e.tick(); 
+        e.tick();
         checkEnemyTouch();
       }
     }
     checkEnemyTouch();
-  }  
+  }
   private void changeAll(int x, int y){
     for(Player p: players){
       p.move(x,y);
     }
   }
   public static void main(String[] args) throws Exception {
-    
+
     JFrame frame = new JFrame("A E S T H E T I C S");
-    
+
     game = new Game();
     game.initialize();
     AudioPlayerExample1 musac = new AudioPlayerExample1(game);
@@ -320,6 +320,6 @@ public class Game extends JPanel implements KeyListener{
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     musac.play("./musac.wav");
-    
+
   }
 }
