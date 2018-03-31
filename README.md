@@ -19,7 +19,7 @@ Black = Empty
 to create a map for level n, create a file in the maps directory called 'map'+n. ex. map12
 maps are 26*16 characters
  LEVEL DESIGN CODE:
-   * # = wall
+   * /# = wall
    *  = empty
    * P =player
    * 1-9 = enemy(start @ 1, go to 9)
