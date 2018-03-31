@@ -21,7 +21,7 @@ import java.io.IOException;
 public class Game extends JPanel implements KeyListener{
   int playerSize = 20;
   int playerState = 0;
-  int level = 10;
+  int level = 0;
   int where = 0;
   static int squareSize = 64;
   int moves = 0;
@@ -182,7 +182,7 @@ public class Game extends JPanel implements KeyListener{
         }
         if(val.equals("#")){
 
-          g2d.setPaint(new Color(swop,swop,swop));
+          g2d.setPaint(new Color(swop*2,swop*2,swop*2));
           g2d.fillRect(offsetX+x*squareSize,offsetY+y*squareSize,squareSize,squareSize);
         }else if(val.equals("!")){
           g2d.setPaint(new Color(0,170+jk,0));
