@@ -1,11 +1,11 @@
-#Puzzle Game
+# Puzzle Game
 A game in which the player controls multiple characters(white squares) with wasd or arrow keys. Avoid lava and enemies to reach the green square. Have fun!
 
-#Controls
+# Controls
 wasd or arrow keys to move
 escape or p to close/quit
 
-#Colors
+# Colors
 White = player(pulse with music)
 Orange = lava
 Red = enemy
@@ -13,4 +13,3 @@ Red = enemy
 Green = final goal
 Grey = Wall
 Black = Empty
-
