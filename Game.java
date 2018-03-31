@@ -21,7 +21,7 @@ import java.io.IOException;
 public class Game extends JPanel implements KeyListener{
   int playerSize = 20;
   int playerState = 0;
-  int level = 0;
+  int level = 10;
   int where = 0;
   static int squareSize = 64;
   int moves = 0;
@@ -90,6 +90,10 @@ public class Game extends JPanel implements KeyListener{
 
       return;
     }
+    if(key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_P){
+      System.exit(0);
+      return;
+    }
   }
 
   public void keyReleased(KeyEvent e) {}
@@ -150,7 +154,7 @@ public class Game extends JPanel implements KeyListener{
                          RenderingHints.VALUE_ANTIALIAS_ON);
     setBackground(Color.black);
     g2d.setPaint(Color.white);
-    g2d.drawString("LEVEL : " +level +"    MOVES : "+moves, 10,10);
+    g2d.drawString("PRESS ESCAPE TO CLOSE                                      LEVEL : " +level +"    MOVES : "+moves, 10,10);
 
     offsetX = ((getParent().getWidth())-(squareSize*currentMap[0].length))/2;
     offsetY = ((getParent().getHeight())-(squareSize*currentMap.length))/2;
@@ -316,7 +320,8 @@ public class Game extends JPanel implements KeyListener{
     game.initialize();
     AudioPlayerExample1 musac = new AudioPlayerExample1(game);
     frame.add(game);
-    frame.setSize(squareSize*27+offset, squareSize*18+offset);
+    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    frame.setUndecorated(true);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     musac.play("./musac.wav");
