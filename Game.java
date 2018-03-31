@@ -50,16 +50,18 @@ public class Game extends JPanel implements KeyListener{
 
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
-    try{
-      where = 1;
-      game.tick();
-    }catch(java.lang.InterruptedException jkk){}
+
     moves++;
     if(worldSpeed<=squareSize*2){
       worldSpeed+=0.5;
     }
     if(key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT){
+      try{
+        where = 1;
+        game.tick();
+      }catch(java.lang.InterruptedException jkk){}
       changeAll(speed,0);
+
       if(offsetX>=-(2*squareSize)){
         offsetX-=((int)worldSpeed);
       }
@@ -67,6 +69,10 @@ public class Game extends JPanel implements KeyListener{
       return;
     }
     if(key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT){
+      try{
+        where = 1;
+        game.tick();
+      }catch(java.lang.InterruptedException jkk){}
       changeAll(-speed,0);
       if(offsetX<=(2*squareSize)){
         offsetX+=((int)worldSpeed);
@@ -75,6 +81,10 @@ public class Game extends JPanel implements KeyListener{
       return;
     }
     if(key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN){
+      try{
+        where = 1;
+        game.tick();
+      }catch(java.lang.InterruptedException jkk){}
       changeAll(0,speed);
       if(offsetY>=-(2*squareSize)){
         offsetY-=((int)worldSpeed);
@@ -83,6 +93,10 @@ public class Game extends JPanel implements KeyListener{
       return;
     }
     if(key == KeyEvent.VK_W || key == KeyEvent.VK_UP){
+      try{
+        where = 1;
+        game.tick();
+      }catch(java.lang.InterruptedException jkk){}
       changeAll(0,-speed);
       if(offsetY<=(2*squareSize)){
         offsetY+=((int)worldSpeed);
