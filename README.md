@@ -16,3 +16,7 @@ Red = enemy
 Green = final goal
 Grey = Wall
 Black = Empty
+
+# Pretty GIF
+
+![Pretty Gif](https://i.imgur.com/Ux3uFo4.gifv)
