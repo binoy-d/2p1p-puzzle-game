@@ -2,7 +2,7 @@
 A game in which the player controls multiple characters(white squares) with wasd or arrow keys. Avoid lava and enemies to reach the green square. Have fun!
 
 # Download
-[Download Here!](https://nofile.io/f/JgBf9DERpag "Download Link")
+[Download Here!](https://nofile.io/f/py2VfBVu0zo "Download Link")
 
 # Controls
 wasd or arrow keys to move
