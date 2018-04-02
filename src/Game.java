@@ -20,7 +20,7 @@ import java.io.IOException;
 public class Game extends JPanel implements KeyListener {
 	int playerSize = 20;
 	int playerState = 0;
-	int level = 0;
+	int level = 5;
 	int where = 0;
 	static int squareSize = 64;
 	int moves = 0;
@@ -344,7 +344,6 @@ public class Game extends JPanel implements KeyListener {
 	public static void main(String[] args) throws Exception {
 
 		JFrame frame = new JFrame("A E S T H E T I C S");
-
 		game = new Game();
 		game.initialize();
 		AudioPlayerExample1 musac = new AudioPlayerExample1(game);
