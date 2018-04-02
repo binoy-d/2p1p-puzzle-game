@@ -20,7 +20,7 @@ import java.io.IOException;
 public class Game extends JPanel implements KeyListener {
 	int playerSize = 20;
 	int playerState = 0;
-	int level = 5;
+	int level = 0;
 	int where = 0;
 	static int squareSize = 64;
 	int moves = 0;
@@ -130,19 +130,24 @@ public class Game extends JPanel implements KeyListener {
 
 		playersDone = 0;
 		try {
-			Scanner s = new Scanner(new File("./maps/map" + level));
-			ArrayList<String> list = new ArrayList<String>();
-			while (s.hasNextLine()) {
-				list.add(s.nextLine());
-			}
-			currentMap = new String[list.size()][list.get(0).length()];
-			for (int r = 0; r < list.size(); r++) {
-				for (int c = 0; c < list.get(0).length(); c++) {
-					String kkk = list.get(r).substring(c, c + 1);
-					currentMap[r][c] = kkk;
+			File f = new File("./maps/map" + level);
+			if(f.canRead()){
+				Scanner s = new Scanner(f);
+				ArrayList<String> list = new ArrayList<String>();
+				while (s.hasNextLine()) {
+					list.add(s.nextLine());
 				}
+				currentMap = new String[list.size()][list.get(0).length()];
+				for (int r = 0; r < list.size(); r++) {
+					for (int c = 0; c < list.get(0).length(); c++) {
+						String kkk = list.get(r).substring(c, c + 1);
+						currentMap[r][c] = kkk;
+					}
+				}
+				s.close();
+			}else{
+				System.out.println("o o f \ni cant read!");
 			}
-			s.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Map not found");
 		}
