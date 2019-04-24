@@ -19,4 +19,4 @@ Black = Empty
 
 # Pretty GIF
 
-![It may be small and blurry, but size doesnt matter](https://media.giphy.com/media/SKxGJQ7l79CGfGbG8B/giphy.gif)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/biRar_lbAP4/0.jpg)](https://www.youtube.com/watch?v=biRar_lbAP4
