@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <drjava version="drjava-20160913-225446">
-  <project autorefresh="false" main="Game" root="" work="">
-    <createjar file=""/>
+  <project autorefresh="false" main="Game" manifest="" root="" work="">
+    <createjar file="game3.jar" flags="13"/>
     <source>
-      <file active="true" name="Player.java" package="" timestamp="24-Apr-2019 01:05:32">
-        <select from="463" to="463"/>
-        <scroll column="0" row="0"/>
-      </file>
-      <file name="Game.java" package="" timestamp="24-Apr-2019 01:05:32">
-        <select from="463" to="463"/>
-        <scroll column="0" row="0"/>
+      <file active="true" name="Game.java" package="" timestamp="24-Apr-2019 01:05:32">
+        <select from="2891" to="2891"/>
+        <scroll column="2078" row="0"/>
       </file>
       <file name="Enemy.java" package="" timestamp="24-Apr-2019 01:05:32">
-        <select from="463" to="463"/>
-        <scroll column="0" row="0"/>
+        <select from="2891" to="2891"/>
+        <scroll column="2078" row="0"/>
       </file>
       <file name="BigClip.java" package="" timestamp="24-Apr-2019 01:05:32">
-        <select from="463" to="463"/>
-        <scroll column="0" row="0"/>
+        <select from="2891" to="2891"/>
+        <scroll column="2078" row="0"/>
       </file>
       <file name="AudioPlayerExample1.java" package="" timestamp="24-Apr-2019 01:05:32">
-        <select from="463" to="463"/>
-        <scroll column="0" row="0"/>
+        <select from="2891" to="2891"/>
+        <scroll column="2078" row="0"/>
+      </file>
+      <file name="Player.java" package="" timestamp="24-Apr-2019 09:40:18">
+        <select from="2891" to="2891"/>
+        <scroll column="2078" row="0"/>
       </file>
     </source>
     <included/>
