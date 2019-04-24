@@ -17,6 +17,6 @@ Green = final goal
 Grey = Wall
 Black = Empty
 
-# Pretty GIF
-
+# Video
+Click the image below to watch a youtube video of me playing through the first few levels.
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/biRar_lbAP4/0.jpg)](https://www.youtube.com/watch?v=biRar_lbAP4)
