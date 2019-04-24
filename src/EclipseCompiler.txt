@@ -1,0 +1,1640 @@
+24 Apr 2019 17:28:14 GMT: Log 'EclipseCompiler.txt' opened: 24 Apr 2019 17:28:14 GMT with name C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\EclipseCompiler.txt
+24 Apr 2019 17:28:48 GMT: diagnostics = javax.tools.DiagnosticCollector@7be02619
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@29605787
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java]
+24 Apr 2019 17:28:48 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@1cf57779' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:28:49 GMT: Compiler call returned
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2aee5fe1
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3d431920
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@650a483e
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@210f6436
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2ac8b27f
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@fe7241f
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@381bc665
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@62ef3b84
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@ddb36ec
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3baa3c94
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5d64fd6a
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@46ccce59
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@12f4fc3a
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@78d02c6c
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2a501b1
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@223ba9ba
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@179b84eb
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6ed17938
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@44d345da
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3bda4283
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@70ad25cf
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@15d09a5b
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4bf3e0ae
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@22d47d09
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3bceb7c1
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2addf0a1
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7eff93c4
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7fc28527
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@31fc55a1
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7461e3c7
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@76023f3c
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1d026766
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4e00783a
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3504c5e6
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5298f7a5
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5c2f83c7
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1123e1d0
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@29b2de7
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@17abd7ce
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@37ba5f47
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@39191501
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6236e3d0
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2b6a5dff
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4ecf7fb2
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3f0fca77
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:28:49 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6af29625
+24 Apr 2019 17:28:49 GMT:  Kind = WARNING
+24 Apr 2019 17:28:49 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 258 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:30:04 GMT: diagnostics = javax.tools.DiagnosticCollector@1f8b9e0b
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@284aadb6
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java]
+24 Apr 2019 17:30:04 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@5e5249' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:30:04 GMT: Compiler call returned
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@74859b0
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@9160466
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@55a1506d
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7acfd0e
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@42eca192
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7be0b89d
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@249dbdb4
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@44b960a4
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@63fea990
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1d24d122
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@541daf2f
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5bae4948
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4d8ac984
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@769cacd6
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4fc101fd
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@668cf544
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7d51d6f8
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6eb83f98
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@29b1155b
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2896f3fc
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5b831600
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7468a617
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@55526e0c
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4a446e49
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@9345217
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@38dd0538
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7eb92e21
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@17663199
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3ce96d88
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6ccd4be8
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5bb2a876
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7dfea060
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@a8c077a
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@c188fc8
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@42a77725
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4ad232b1
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@208f5b46
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@68a1e650
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1146ba3e
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4ada451d
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1055626b
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@77219557
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@539256c7
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4b781305
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7085763b
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:30:04 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@bf5de51
+24 Apr 2019 17:30:04 GMT:  Kind = WARNING
+24 Apr 2019 17:30:04 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 258 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:32:25 GMT: diagnostics = javax.tools.DiagnosticCollector@664e034c
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@4c34457d
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java]
+24 Apr 2019 17:32:25 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@42690e24' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:32:25 GMT: Compiler call returned
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1a96bee
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@dff70b4
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@565cff9b
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@391d414b
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@73a1bb9d
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5ad0f8d
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@343c9884
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@67788051
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@19fbb270
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@74c707a5
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@246f5901
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7363fd5
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@439a7571
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@faca888
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@51d54f2d
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@672b1a55
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@778ada3c
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1d88c4ad
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@66df4c16
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@59191b2a
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@78e3610f
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@23156f12
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3fb6289a
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2e67a40d
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4def53d7
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@450ac887
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4b76da44
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@582258eb
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6f64c9d3
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7cb97a48
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1e03b61
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4b4fdeb6
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@22cac5d
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3570fd6a
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@354bf396
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@c421e7
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@67ed2be6
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@55c411dc
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3f799fb1
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1e935aa0
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@102fe08f
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@659049a7
+24 Apr 2019 17:32:25 GMT:  Kind = ERROR
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 133 ColNo = 13 Msg = 'Type mismatch: cannot convert from java.io.InputStream to java.io.File'
+24 Apr 2019 17:32:25 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1667d6b3
+24 Apr 2019 17:32:25 GMT:  Kind = WARNING
+24 Apr 2019 17:32:25 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 258 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:35:10 GMT: diagnostics = javax.tools.DiagnosticCollector@461e14ee
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@7c58f069
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java]
+24 Apr 2019 17:35:10 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@7ef28f1e' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:35:10 GMT: Compiler call returned
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@40984b81
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@398bac6b
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@76b045e
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@777ec729
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@75b85e04
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@11b45c2c
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4e22e3b0
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4f6432d2
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@781b1d44
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4bfd6b57
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@121b3efb
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7c077cc8
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5cd6bf31
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7cd1c02f
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3776d5a8
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@70d01eb2
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@191618ae
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6bb4731b
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6a6e3050
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1a3b9621
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@33412ea0
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7ba5bf78
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6052ecec
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@261ef459
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1c90fa14
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4a98d881
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3d5a68b2
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6cb7ff7c
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@776cf8a4
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7bbc7a18
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@15cd8225
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@46d2c3ff
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@566baa59
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4e1f6636
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@373a097a
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@67a7f959
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6c15ae96
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@590e4bf4
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3e98f876
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@66ada3cd
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@278dd090
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@c776e7e
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@75d56cce
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7e6d1a72
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@372d4c7f
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1ed07a
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5e737fab
+24 Apr 2019 17:35:10 GMT:  Kind = ERROR
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 146 ColNo = 12 Msg = 'Unreachable catch block for java.io.FileNotFoundException. This exception is never thrown from the try statement body'
+24 Apr 2019 17:35:10 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@48db509d
+24 Apr 2019 17:35:10 GMT:  Kind = WARNING
+24 Apr 2019 17:35:10 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 253 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:35:22 GMT: diagnostics = javax.tools.DiagnosticCollector@72dd1409
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@4f36dff4
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java]
+24 Apr 2019 17:35:22 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@592b91c7' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:35:23 GMT: Compiler call returned
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@66ba1ef1
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3f65e386
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7cc9c333
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@14abb745
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@22506eb7
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3239d0a8
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5b4d87
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4903c356
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@68073917
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@14c7182f
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4e2a5845
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@19642ba5
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@48fa761f
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@64d0094f
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@78a48de0
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4025b852
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5b7464c7
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3f8a9497
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@631dc50b
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@e171612
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@763d194b
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1df81537
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@10c0ae1e
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@26d19d92
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@38b82f42
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@65b4c4cf
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@70913639
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5a0608b4
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@23bdee89
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@606cd48d
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@19b51647
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@731cfe6d
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3f998f21
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@39d7ece3
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@861c2b0
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1c9aaa47
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6f09de72
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@693f8784
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6fcdbc51
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@264cfb7d
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7175b88
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1281ff49
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@102cf67c
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@517a7017
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6c0cbaab
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@71ea7bd4
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@602ec83
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:35:23 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4face9c
+24 Apr 2019 17:35:23 GMT:  Kind = WARNING
+24 Apr 2019 17:35:23 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 250 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:37:33 GMT: diagnostics = javax.tools.DiagnosticCollector@1c246d86
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@2ca1261e
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java]
+24 Apr 2019 17:37:33 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@643a9647' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:37:33 GMT: Compiler call returned
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@319ddec1
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@324233f6
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6eb530e9
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@634709a5
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3cf3a8da
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1f0df131
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5878b841
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3a998ca
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@22bd451d
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5249bc02
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4f6ebcba
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@ce0255
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@48933afc
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@57252640
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6d14db72
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1db8a02f
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4cad3dbe
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3244054d
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7940973c
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2121f9e3
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@44460b4
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@16b8731c
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6b3cff80
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@457cfde5
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@629a643e
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@376fdbe2
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3b23f270
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1992b324
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@28989fbc
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@61e1f186
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@45753fb8
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@49f2afa1
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@25fbac5c
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4bf814a4
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@279c7a9c
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7b4f5669
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3ae8c10
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@8f8e5f5
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4c7436ec
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4d89cd15
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3a3016b8
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@75289b46
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@18860059
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1be48739
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@215bc72b
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@10988aed
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3834d46f
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@756511f
+24 Apr 2019 17:37:33 GMT:  Kind = WARNING
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 250 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:37:33 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@784bac41
+24 Apr 2019 17:37:33 GMT:  Kind = ERROR
+24 Apr 2019 17:37:33 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 39 ColNo = 56 Msg = 'The method getAudioInputStream(java.io.InputStream) in the type javax.sound.sampled.AudioSystem is not applicable for the arguments (java.lang.String)'
+24 Apr 2019 17:38:07 GMT: diagnostics = javax.tools.DiagnosticCollector@48b297b4
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@118fcca6
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java]
+24 Apr 2019 17:38:07 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@7b105983' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:38:07 GMT: Compiler call returned
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@789b670e
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@31122427
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1ecac483
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@50206ca9
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@73a0c2b4
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5333f3fb
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1b15cbc2
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4883b92d
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3dc367eb
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@71a3f783
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@44dd69ae
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@11c2fac9
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@37983b25
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@59e9ddba
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@76d64f30
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@70c4e791
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6f3bbbf
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1160b2d6
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@550bc005
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2a45d5a
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@191130f2
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@d73d704
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6733547
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@261df65e
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@369bc4cf
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@25c3feef
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3a853e1d
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@73e39015
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1bb68f1a
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@21383e05
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@325e89e9
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5dd2c48f
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@72b35e70
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@121b9e35
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@544c5c5e
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1f710ce4
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@775991a4
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@39fd434c
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@fe54681
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@18646db5
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@230b0bac
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@703fdba2
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@554b4a6a
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6e799cb3
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@15d4bcbb
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1bb89768
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@142f866f
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@36911c5d
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 250 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:38:07 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6104f50
+24 Apr 2019 17:38:07 GMT:  Kind = WARNING
+24 Apr 2019 17:38:07 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 1 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:18 GMT: diagnostics = javax.tools.DiagnosticCollector@109c87ae
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@562cce74
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java]
+24 Apr 2019 17:38:18 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@6f90fa0a' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:38:18 GMT: Compiler call returned
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@8cf77cd
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@a067a76
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3431140b
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@394daf1c
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4a4fd6e7
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@73a3d012
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4f8e1321
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1b6f6083
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2f2365e7
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@42ed0351
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7dc51736
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1d4e1b75
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@29764966
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@32b3092
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5682fb66
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3b7ad770
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@20dc9400
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7aa98f29
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3bb112d1
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@569d8380
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@12a571c7
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2443747d
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@17d7ddbe
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2d6cdd47
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@14feba64
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2ba1d41a
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@232c6fd
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@49ffb519
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@28b31bd8
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@d970bd0
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@198631b1
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2de508e5
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1db8ab5a
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2844fab6
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@e75db6
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5c0df6f
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5d7a56f6
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@526496a5
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@68547bb2
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6becea70
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@642edc1d
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 1 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1289af83
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@59cbdf8b
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@55f801a8
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@47a4e13e
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@188eabfe
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1fbe08e3
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@a5eaffd
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:38:18 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6a930299
+24 Apr 2019 17:38:18 GMT:  Kind = WARNING
+24 Apr 2019 17:38:18 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 250 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:41:30 GMT: diagnostics = javax.tools.DiagnosticCollector@764b3b58
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@19e45fa8
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java]
+24 Apr 2019 17:41:30 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@1752aaaa' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:41:30 GMT: Compiler call returned
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7cfa8280
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1d2b02ee
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2704685a
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7bd3d53c
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5395a644
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@16ece2aa
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@12ae1e95
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@77b153c9
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@9e87cfd
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@786026d8
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1a58d5f7
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@678af26e
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2d4f65f6
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@54e0c061
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@84b5067
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3862ca82
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6ed478ad
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3c654ede
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6efff95d
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@40e708da
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@dbb117b
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1b3eadac
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@a1a8a87
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7243f2c6
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2726153c
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@499b9fb9
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@170b6abf
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7a336f5a
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6d2b1ad5
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@78d8369e
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@344af5a8
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@55e215c4
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@60aa501f
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@597fe652
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3a7bbf60
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7f72d1de
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4dea4c87
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6b017e1e
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@ce65ca1
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@657390c2
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7ae2769f
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1af31653
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@244e42f8
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5dc22333
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@347de09a
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@36be29c8
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6031e465
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2c2688eb
+24 Apr 2019 17:41:30 GMT:  Kind = WARNING
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 250 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7784d4c5
+24 Apr 2019 17:41:30 GMT:  Kind = ERROR
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 39 ColNo = 11 Msg = 'URL cannot be resolved to a type'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@30334394
+24 Apr 2019 17:41:30 GMT:  Kind = ERROR
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 42 ColNo = 34 Msg = 'audioStream cannot be resolved'
+24 Apr 2019 17:41:30 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5fce9b3b
+24 Apr 2019 17:41:30 GMT:  Kind = ERROR
+24 Apr 2019 17:41:30 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 51 ColNo = 28 Msg = 'audioStream cannot be resolved to a variable'
+24 Apr 2019 17:41:57 GMT: diagnostics = javax.tools.DiagnosticCollector@cab2353
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@35c9cab3
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java]
+24 Apr 2019 17:41:57 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@6a27e4ec' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:41:57 GMT: Compiler call returned
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@47897c12
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@118a0ca2
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7d19475e
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@50a86156
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5c4deebd
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1de3068a
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2a7781df
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@39c6f716
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@a4dce95
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@f1f5e00
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@19f05f45
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1780752a
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@735d3829
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@647871c
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1d56eae6
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@9ebf543
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@13ed1827
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@29281221
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@303cc38
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@551460f6
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2ec36653
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4713d0b0
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5a6ca666
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2c897e0d
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@19cd7431
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4002a1e8
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7fe27018
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@18fc10ff
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6a62832d
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3fba7268
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@53b4a737
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2b373e56
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@55b2bbf6
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3977aa1a
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4f0c2f1c
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5ddb6d25
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1d760063
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@19554ead
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@370fe654
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@313b07d5
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1c636c89
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2f70698e
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@67851772
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@e69a1f8
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@9698398
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@25f9a722
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6a080a68
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@292d00b0
+24 Apr 2019 17:41:57 GMT:  Kind = WARNING
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 250 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6c1d334e
+24 Apr 2019 17:41:57 GMT:  Kind = ERROR
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 44 ColNo = 34 Msg = 'audioStream cannot be resolved'
+24 Apr 2019 17:41:57 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4b54958
+24 Apr 2019 17:41:57 GMT:  Kind = ERROR
+24 Apr 2019 17:41:57 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 53 ColNo = 28 Msg = 'audioStream cannot be resolved to a variable'
+24 Apr 2019 17:42:20 GMT: diagnostics = javax.tools.DiagnosticCollector@1e5d11ea
+fileManager = org.eclipse.jdt.internal.compiler.tool.EclipseFileManager@7c97f2ea
+fileObjects = [C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java, C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java]
+24 Apr 2019 17:42:20 GMT: Calling 'org.eclipse.jdt.internal.compiler.tool.EclipseCompiler@76d27b64' with options [-Xlint:deprecation, -Xlint:unchecked, -g, -classpath, ;C:\Users\Daniel\source\repos\2p1p-puzzle-game\src;C:\Users\Daniel\Downloads\drjava-beta-20160913-225446.exe]
+24 Apr 2019 17:42:21 GMT: Compiler call returned
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1ab46d7f
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 22 ColNo = 14 Msg = 'The serializable class Enemy does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2806a62
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@bd20ee4
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4c7398af
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7595dbcb
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@74c77c61
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6ff9e933
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3f9fb283
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@640f6d38
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2be431ac
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@bf4e592
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@49bd45c5
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@56c48767
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5c27b542
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@70530321
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5363f383
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@21eea937
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@408295ed
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2820dcd7
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 19 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6413ddbb
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Enemy.java LineNo = 20 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3060671f
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 189 ColNo = 31 Msg = 'Resource leak: 'pmis' is never closed'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6419a103
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\BigClip.java LineNo = 197 ColNo = 7 Msg = 'The value of the local variable totalRead is not used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4a711f33
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Player does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3075edc3
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 1 ColNo = 8 Msg = 'The import java.awt.Color is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@39e3c4d
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 2 ColNo = 8 Msg = 'The import java.awt.Graphics is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2aa69484
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 3 ColNo = 8 Msg = 'The import java.awt.Graphics2D is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@68ec9e64
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 5 ColNo = 8 Msg = 'The import java.awt.RenderingHints is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@77e86d4f
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 6 ColNo = 8 Msg = 'The import java.awt.event.KeyEvent is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5665bab
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 7 ColNo = 8 Msg = 'The import java.util.ArrayList is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1b7aed37
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 8 ColNo = 8 Msg = 'The import javax.swing.JFrame is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@17e94f82
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 9 ColNo = 8 Msg = 'The import javax.swing.JPanel is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@23dfca25
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 10 ColNo = 8 Msg = 'The import java.awt.event.KeyListener is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@145376f6
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 11 ColNo = 8 Msg = 'The import java.util.Scanner is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@588c321e
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 12 ColNo = 8 Msg = 'The import java.awt.event.MouseEvent is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5c4e3d2
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.event.MouseListener is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@58978fad
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@57fcb68f
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@6e5962ac
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 16 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@4ca1d6c6
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 17 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@282fc218
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Player.java LineNo = 18 ColNo = 8 Msg = 'The import java.awt.image.BufferedImage is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1ad5515c
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 20 ColNo = 14 Msg = 'The serializable class Game does not declare a static final serialVersionUID field of type long'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@3fbc1ca8
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 12 ColNo = 8 Msg = 'The import java.io.File is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7d69ea7f
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 13 ColNo = 8 Msg = 'The import java.awt.MouseInfo is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@2b80c8c8
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 14 ColNo = 8 Msg = 'The import java.io.FileNotFoundException is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@1b6f2355
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 15 ColNo = 8 Msg = 'The import java.awt.Image is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@44e935cc
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 17 ColNo = 8 Msg = 'The import javax.imageio.ImageIO is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@7661153c
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 18 ColNo = 8 Msg = 'The import java.io.IOException is never used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@5b8a45b0
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\Game.java LineNo = 250 ColNo = 8 Msg = 'The value of the local variable jk is not used'
+24 Apr 2019 17:42:21 GMT: Processing diagnostic org.eclipse.jdt.internal.compiler.tool.EclipseCompilerImpl$3$2@391da01f
+24 Apr 2019 17:42:21 GMT:  Kind = WARNING
+24 Apr 2019 17:42:21 GMT: Name = C:\Users\Daniel\source\repos\2p1p-puzzle-game\src\AudioPlayerExample1.java LineNo = 1 ColNo = 8 Msg = 'The import java.io.File is never used'

@@ -11,6 +11,8 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+
+import java.net.URL;
 /**
  * This is an example program that demonstrates how to play back an audio file
  * using the Clip in Java Sound API.
@@ -34,10 +36,10 @@ public class AudioPlayerExample1 implements LineListener {
      parent = g;
     }
     void play(String audioFilePath) {
-        File audioFile = new File(audioFilePath);
 
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+          URL defaultSound = getClass().getResource(audioFilePath);
+           AudioInputStream audioStream = AudioSystem.getAudioInputStream(defaultSound);
 
             AudioFormat format = audioStream.getFormat();
 
