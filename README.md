@@ -10,11 +10,17 @@ escape or p to close/quit
 
 # Colors
 White = player(pulse with music)
+
 Orange = lava
+
 Red = enemy
+
   dots = enemy path
+
 Green = final goal
+
 Grey = Wall
+
 Black = Empty
 
 # Video
