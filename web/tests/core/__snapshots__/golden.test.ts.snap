@@ -1,0 +1,65 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`golden deterministic level simulations > map0 sequence remains stable 1`] = `
+{
+  "enemies": [
+    {
+      "id": 0,
+      "x": 16,
+      "y": 12,
+    },
+  ],
+  "gridChecksum": 763855357,
+  "lastEvent": "turn-processed",
+  "levelId": "map0",
+  "levelIndex": 0,
+  "moves": 8,
+  "players": [
+    {
+      "id": 0,
+      "x": 16,
+      "y": 6,
+    },
+    {
+      "id": 1,
+      "x": 7,
+      "y": 9,
+    },
+  ],
+  "playersDone": 0,
+  "status": "playing",
+  "tick": 8,
+}
+`;
+
+exports[`golden deterministic level simulations > map1 sequence remains stable 1`] = `
+{
+  "enemies": [
+    {
+      "id": 0,
+      "x": 15,
+      "y": 6,
+    },
+  ],
+  "gridChecksum": 1349610200,
+  "lastEvent": "turn-processed",
+  "levelId": "map1",
+  "levelIndex": 0,
+  "moves": 9,
+  "players": [
+    {
+      "id": 0,
+      "x": 15,
+      "y": 8,
+    },
+    {
+      "id": 1,
+      "x": 2,
+      "y": 14,
+    },
+  ],
+  "playersDone": 0,
+  "status": "playing",
+  "tick": 9,
+}
+`;

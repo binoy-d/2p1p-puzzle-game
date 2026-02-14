@@ -1,0 +1,157 @@
+:root {
+  --bg-1: #081019;
+  --bg-2: #111d2a;
+  --panel: rgba(12, 17, 24, 0.88);
+  --panel-border: rgba(122, 173, 219, 0.26);
+  --text: #f2f8ff;
+  --muted: #a2b0c2;
+  --accent: #57d0ff;
+  --accent-2: #45ffaf;
+  --danger: #ff5f6d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 20%, #183957 0, transparent 48%),
+    radial-gradient(circle at 80% 85%, #2f2a50 0, transparent 44%),
+    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  overflow: hidden;
+}
+
+#game-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#game-root {
+  width: 100%;
+  height: 100%;
+}
+
+#menu-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+#menu-root.overlay-hidden {
+  background: transparent;
+}
+
+.menu-panel {
+  pointer-events: auto;
+  width: min(520px, 100%);
+  padding: 22px;
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  background: var(--panel);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
+}
+
+.menu-panel h1,
+.menu-panel h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.menu-panel p,
+.menu-panel label {
+  color: var(--muted);
+}
+
+.menu-status {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 20px;
+  color: var(--accent-2);
+  text-shadow: 0 0 12px rgba(69, 255, 175, 0.35);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+button,
+select,
+input[type='range'] {
+  pointer-events: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(162, 176, 194, 0.25);
+  background: rgba(11, 17, 24, 0.95);
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 15px;
+}
+
+button {
+  cursor: pointer;
+  transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+}
+
+button:hover,
+button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(87, 208, 255, 0.65);
+  background: rgba(31, 53, 72, 0.95);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.checkbox-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.boot-error {
+  color: #ff9ca5;
+  padding: 16px;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 760px) {
+  #menu-root {
+    padding: 12px;
+  }
+
+  .menu-panel {
+    width: 100%;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  button,
+  select {
+    width: 100%;
+  }
+}

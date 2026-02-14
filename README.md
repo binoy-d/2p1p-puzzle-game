@@ -1,28 +1,91 @@
-# Puzzle Game
-A game in which the player controls multiple characters(white squares) with wasd or arrow keys. Avoid lava and enemies to reach the green square. Have fun!
+# 2P1P Puzzle Game
 
-# Download
-[Download Here!](https://github.com/binoy-d/2p1p-puzzle-game/raw/master/game.jar "Download Link")
+This repository now contains two versions:
 
-# Controls
-wasd or arrow keys to move
-escape or p to close/quit
+- Legacy Java version in `/src`.
+- Browser version in `/web` using TypeScript + Vite + Phaser 3.
 
-# Colors
-White = player(pulse with music)
+## Web Game Quick Start
 
-Orange = lava
+From the `web` folder:
 
-Red = enemy
+```bash
+npm install
+npm run dev
+```
 
-  dots = enemy path
+Then open the Vite URL (usually `http://localhost:5173`).
 
-Green = final goal
+### Test
 
-Grey = Wall
+```bash
+npm run test
+```
 
-Black = Empty
+### Coverage
 
-# Video
-Click the image below to watch a youtube video of me playing through the first few levels.
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/biRar_lbAP4/0.jpg)](https://www.youtube.com/watch?v=biRar_lbAP4)
+```bash
+npm run coverage
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+### Build
+
+```bash
+npm run build
+```
+
+## Controls
+
+- Move: `WASD` or arrow keys
+- Pause/Resume: `Escape`
+- Menus: mouse + keyboard focusable buttons
+
+## Levels
+
+Level files live in `/web/public/assets/levels/*.txt` and are listed in:
+
+- `/web/public/assets/levels/manifest.json`
+
+### Add a New Level
+
+1. Create a text file in `/web/public/assets/levels` (for example `map13.txt`).
+2. Keep the map rectangular (all lines same width).
+3. Use supported tiles:
+   - `#` wall
+   - ` ` empty floor
+   - `P` player spawn
+   - `!` goal
+   - `x` lava
+   - `1-9` enemy path markers (`1` is enemy spawn)
+4. Append the new filename to `/web/public/assets/levels/manifest.json`.
+
+## Lighting (High Level)
+
+Lighting v1 is implemented as:
+
+- A darkness render texture over the scene.
+- Radial cutouts erased around players (larger) and enemies (smaller) for radius/falloff.
+- Additive glow circles layered on top for visual bloom.
+- Toggleable from Settings (stored in `localStorage`).
+
+## Testing Approach
+
+Core logic in `/web/src/core` is pure deterministic TypeScript and tested headlessly with Vitest:
+
+- Parser tests (valid + invalid + property-based roundtrip)
+- Collision/movement tests
+- State transition tests
+- Lighting math tests
+- Golden snapshot tests for real levels (`map0`, `map1`)
+
+## Architecture
+
+Detailed architecture and extension guidance:
+
+- `/web/docs/ARCHITECTURE.md`

@@ -1,0 +1,126 @@
+# Architecture
+
+## Goals
+
+- Keep game rules deterministic and testable.
+- Separate simulation from rendering and browser IO.
+- Reuse text levels with minimal format changes.
+- Keep stack simple: Vite + TypeScript + Phaser + DOM overlays.
+
+## Module Boundaries
+
+### 1) Core (`/web/src/core`)
+
+Pure TypeScript, no Phaser/browser imports.
+
+- `levelParser.ts`: parse and validate level text.
+- `engine.ts`: deterministic state transitions.
+- `lighting.ts`: deterministic light/falloff math helpers.
+- `simulation.ts`: deterministic harness for scripted input playback.
+- `types.ts`: domain types.
+
+Core API highlights:
+
+- `createInitialState(levels, startIndex)`
+- `update(state, input, dtMs)`
+- `restartLevel(state)`
+- `setLevel(state, index)`
+
+### 2) Runtime (`/web/src/runtime`)
+
+Browser/Phaser integration and asset loading.
+
+- `levelLoader.ts`: loads manifest + level text files.
+- `phaserView.ts`: renders state, collects keyboard input, runs fixed-step loop.
+- `settingsStorage.ts`: persists settings to `localStorage`.
+
+### 3) App/UI (`/web/src/app`, `/web/src/ui`)
+
+- `gameController.ts`: orchestration layer between core + runtime + menus.
+- `overlay.ts`: DOM menus (main, pause, level select, settings).
+
+### 4) Assets
+
+- `/web/public/assets/levels/*.txt`
+- `/web/public/assets/levels/manifest.json`
+
+## Update Loop Model
+
+- Runtime accumulates frame delta and executes fixed updates at `60Hz`.
+- On each fixed update, one queued direction input is consumed.
+- Core `update()` processes one deterministic turn.
+
+Turn order (matching Java behavior):
+
+1. Enemy phase (including enemy collision checks)
+2. Player phase (all players move in deterministic order)
+3. Win/lose handling and level reset/advance
+
+## Gameplay Invariants Preserved
+
+- Multiple players move on one input direction.
+- Enemy tick happens before player movement each turn.
+- Enemy path uses mutable numeric tiles (`1..17`) and loops in the same style as Java.
+- Touching lava or enemy resets current level.
+- Player reaching goal is removed; level advances when all players finish.
+- Out-of-bounds movement removes the player from active play.
+
+## Lighting v1
+
+- Darkness overlay via Phaser `RenderTexture`.
+- Radial light texture erased around lights (radius/falloff effect).
+- Additive glow layer for visual bloom.
+- Runtime toggle from settings.
+
+## Testing
+
+All tests run headlessly in Node with Vitest.
+
+- Parser validity + property-based roundtrip
+- Collision and movement edge cases
+- State transitions (advance/complete/restart)
+- Lighting math
+- Golden snapshots for full-level deterministic sequences
+
+## File Layout
+
+```text
+web/
+  src/
+    app/
+      gameController.ts
+    core/
+      engine.ts
+      levelParser.ts
+      lighting.ts
+      simulation.ts
+      types.ts
+    runtime/
+      levelLoader.ts
+      phaserView.ts
+      settingsStorage.ts
+    ui/
+      overlay.ts
+    main.ts
+    styles.css
+  public/
+    assets/
+      levels/
+        manifest.json
+        map0.txt ... map12.txt
+  tests/
+    core/
+      *.test.ts
+      __snapshots__/golden.test.ts.snap
+    fixtures/
+      map0.txt
+      map1.txt
+```
+
+## Extending Entities
+
+1. Add new tile symbol(s) in parser validation.
+2. Extend core state + update rules in `engine.ts`.
+3. Add deterministic tests for the new behavior.
+4. Map new state to visuals in `phaserView.ts`.
+5. If configurable, expose toggle in `overlay.ts` + `settingsStorage.ts`.
