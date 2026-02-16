@@ -175,7 +175,13 @@ body::after {
 }
 
 #btn-intro-settings-toggle {
-  min-width: 120px;
+  min-width: 64px;
+  border-radius: 999px;
+  border-color: rgba(124, 210, 255, 0.7);
+  background: rgba(8, 19, 33, 0.86);
+  box-shadow: 0 0 20px rgba(73, 186, 255, 0.2);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 .intro-settings-panel {
@@ -187,6 +193,8 @@ body::after {
   background: rgba(7, 14, 24, 0.88);
   backdrop-filter: blur(6px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.44);
+  transform-origin: top right;
+  animation: intro-settings-in 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .intro-settings-panel h3 {
@@ -206,25 +214,39 @@ body::after {
   width: 100%;
 }
 
+#btn-intro-settings-close {
+  margin-top: 8px;
+  width: 100%;
+}
+
 .intro-menu-dock {
   position: absolute;
-  left: min(3vw, 28px);
+  left: 50%;
+  transform: translateX(-50%);
   bottom: min(3vw, 28px);
   z-index: 3;
-  width: min(410px, calc(100vw - 26px));
-  padding: 14px;
+  width: min(720px, calc(100vw - 24px));
+  padding: 16px;
   border: 1px solid rgba(137, 215, 255, 0.34);
   border-radius: 14px;
-  background: rgba(5, 12, 22, 0.78);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.48);
+  background: linear-gradient(135deg, rgba(6, 15, 28, 0.83), rgba(10, 28, 41, 0.75));
+  backdrop-filter: blur(8px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.52);
   pointer-events: auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 14px;
+  align-items: end;
 }
 
 .intro-menu-dock h2 {
   margin: 0 0 8px;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   letter-spacing: 0.04em;
+}
+
+.intro-menu-fields {
+  min-width: 0;
 }
 
 .intro-menu-dock label {
@@ -234,37 +256,72 @@ body::after {
   font-size: 13px;
 }
 
-#intro-player-name-input,
-#intro-level-select-input {
+#intro-player-name-input {
   width: 100%;
 }
 
 .intro-button-row {
+  margin: 0;
   gap: 8px;
+  justify-content: flex-end;
 }
 
 .intro-button-row button {
-  flex: 1 1 120px;
+  flex: 0 1 150px;
+}
+
+.intro-level-readout {
+  margin-top: 10px;
+  color: #a8bfd8;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.intro-level-readout strong {
+  display: block;
+  margin-top: 5px;
+  color: #ebf6ff;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.intro-level-hint {
+  margin: 10px 0 0;
+  color: #8ea7c1;
+  font-size: 12px;
+}
+
+kbd {
+  display: inline-block;
+  border: 1px solid rgba(166, 197, 225, 0.45);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: 1px 6px;
+  background: rgba(20, 34, 49, 0.88);
+  color: #eaf6ff;
+  font-size: 11px;
 }
 
 #btn-intro-start {
-  min-width: 152px;
-  font-size: 16px;
+  min-width: 176px;
+  font-size: 17px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-color: rgba(115, 255, 212, 0.85);
-  box-shadow: 0 0 0 1px rgba(68, 227, 183, 0.34) inset, 0 0 24px rgba(82, 255, 200, 0.26);
+  box-shadow: 0 0 0 1px rgba(68, 227, 183, 0.34) inset, 0 0 30px rgba(82, 255, 200, 0.3);
 }
 
 .menu-panel {
   pointer-events: auto;
-  width: min(520px, 100%);
-  padding: 22px;
-  border: 1px solid var(--panel-border);
-  border-radius: 16px;
-  background: var(--panel);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
+  width: min(640px, calc(100vw - 30px));
+  padding: 20px;
+  border: 1px solid rgba(129, 189, 229, 0.35);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(10, 19, 32, 0.84), rgba(9, 27, 36, 0.72));
+  backdrop-filter: blur(8px);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.46);
 }
 
 .menu-panel h1,
@@ -280,6 +337,20 @@ body::after {
   color: var(--muted);
 }
 
+.main-level-readout {
+  margin: 8px 0 4px;
+  font-size: 14px;
+}
+
+.main-level-readout strong {
+  color: #e8f5ff;
+}
+
+.main-level-hint {
+  margin: 0 0 12px;
+  font-size: 12px;
+}
+
 .menu-status {
   position: absolute;
   top: 16px;
@@ -288,6 +359,16 @@ body::after {
   min-height: 20px;
   color: var(--accent-2);
   text-shadow: 0 0 12px rgba(69, 255, 175, 0.35);
+}
+
+[data-panel='main'] {
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+
+[data-panel='pause'] {
+  align-self: flex-end;
+  margin-bottom: 20px;
 }
 
 .button-row {
@@ -516,6 +597,18 @@ button:disabled {
   }
 }
 
+@keyframes intro-settings-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (max-width: 760px) {
   #menu-root {
     padding: 12px;
@@ -535,9 +628,11 @@ button:disabled {
   .intro-menu-dock {
     left: 12px;
     right: 12px;
+    transform: none;
     width: auto;
     bottom: 12px;
     padding: 12px;
+    display: block;
   }
 
   .menu-panel {

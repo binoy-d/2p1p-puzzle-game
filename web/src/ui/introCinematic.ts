@@ -13,6 +13,11 @@ interface IntroCinematicOptions {
   onComplete: () => void;
 }
 
+interface AudioPulseEventDetail {
+  kind: 'kick' | 'snare';
+  strength: number;
+}
+
 function clamp01(value: number): number {
   if (value <= 0) {
     return 0;
@@ -56,6 +61,10 @@ export class LockstepIntroCinematic {
 
   private completionIssued = false;
 
+  private kickPulse = 0;
+
+  private snarePulse = 0;
+
   public constructor(options: IntroCinematicOptions) {
     this.panel = options.elements.panel;
     this.canvas = options.elements.canvas;
@@ -81,6 +90,7 @@ export class LockstepIntroCinematic {
     this.completionIssued = false;
     this.startedAtMs = performance.now();
     window.addEventListener('resize', this.handleResize);
+    window.addEventListener('lockstep-audio-pulse', this.handleAudioPulse as EventListener);
     this.resize();
     this.renderFrame(this.startedAtMs);
   }
@@ -92,6 +102,7 @@ export class LockstepIntroCinematic {
 
     this.running = false;
     window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('lockstep-audio-pulse', this.handleAudioPulse as EventListener);
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
@@ -114,12 +125,31 @@ export class LockstepIntroCinematic {
     this.resize();
   };
 
+  private readonly handleAudioPulse = (event: Event): void => {
+    const custom = event as CustomEvent<AudioPulseEventDetail>;
+    const detail = custom.detail;
+    if (!detail) {
+      return;
+    }
+
+    if (detail.kind === 'kick') {
+      this.kickPulse = Math.max(this.kickPulse, detail.strength);
+      return;
+    }
+
+    if (detail.kind === 'snare') {
+      this.snarePulse = Math.max(this.snarePulse, detail.strength);
+    }
+  };
+
   private renderFrame = (timestampMs: number): void => {
     if (!this.running) {
       return;
     }
 
     const elapsedMs = Math.max(0, timestampMs - this.startedAtMs);
+    this.kickPulse *= 0.82;
+    this.snarePulse *= 0.86;
     const visual = sampleIntroVisualState(elapsedMs, this.width, this.height);
     this.drawScene(visual, elapsedMs);
     this.rafId = requestAnimationFrame(this.renderFrame);
@@ -170,10 +200,10 @@ export class LockstepIntroCinematic {
     this.drawNebulaClouds(width, height, elapsedMs);
     this.drawParallaxStars(width, height, elapsedMs);
     this.drawGrid(width, height, visual.gridDrift, 0.13 + visual.lockstepAmount * 0.18);
-    this.drawCore(width * 0.5, height * 0.52, visual.corePulse, visual.fractureFlash);
+    this.drawCore(width * 0.5, height * 0.52, visual.corePulse, visual.fractureFlash, this.kickPulse);
 
     if (visual.lockstepAmount > 0.02) {
-      this.drawLinks(width * 0.5, height * 0.52, visual.explorers, visual.lockstepAmount);
+      this.drawLinks(width * 0.5, height * 0.52, visual.explorers, visual.lockstepAmount, this.snarePulse);
     }
 
     this.drawExplorers(visual.explorers);
@@ -216,14 +246,14 @@ export class LockstepIntroCinematic {
     }
   }
 
-  private drawCore(centerX: number, centerY: number, pulse: number, flash: number): void {
+  private drawCore(centerX: number, centerY: number, pulse: number, flash: number, kickPulse: number): void {
     const ctx = this.context;
     const base = 42;
-    const pulseScale = 0.88 + pulse * 0.35;
-    const glowSize = base * 3.4 * (0.9 + pulse * 0.2 + flash * 0.55);
+    const pulseScale = 0.88 + pulse * 0.35 + kickPulse * 0.28;
+    const glowSize = base * 3.4 * (0.9 + pulse * 0.2 + flash * 0.55 + kickPulse * 0.35);
     const coreSize = base * pulseScale;
 
-    ctx.fillStyle = `rgba(55, 255, 196, ${0.17 + flash * 0.33})`;
+    ctx.fillStyle = `rgba(55, 255, 196, ${0.17 + flash * 0.33 + kickPulse * 0.22})`;
     ctx.fillRect(centerX - glowSize / 2, centerY - glowSize / 2, glowSize, glowSize);
 
     ctx.fillStyle = '#37f8c2';
@@ -231,9 +261,9 @@ export class LockstepIntroCinematic {
     ctx.fillStyle = '#d8fff3';
     ctx.fillRect(centerX - coreSize * 0.28, centerY - coreSize * 0.28, coreSize * 0.56, coreSize * 0.56);
 
-    const ringSize = coreSize * 2.8 * (0.85 + pulse * 0.35);
-    ctx.strokeStyle = `rgba(108, 255, 227, ${0.26 + pulse * 0.24})`;
-    ctx.lineWidth = 2;
+    const ringSize = coreSize * 2.8 * (0.85 + pulse * 0.35 + kickPulse * 0.2);
+    ctx.strokeStyle = `rgba(108, 255, 227, ${0.26 + pulse * 0.24 + kickPulse * 0.25})`;
+    ctx.lineWidth = 2 + kickPulse * 1.6;
     ctx.strokeRect(centerX - ringSize / 2, centerY - ringSize / 2, ringSize, ringSize);
   }
 
@@ -242,10 +272,11 @@ export class LockstepIntroCinematic {
     centerY: number,
     explorers: ReturnType<typeof sampleIntroVisualState>['explorers'],
     lockstepAmount: number,
+    snarePulse: number,
   ): void {
     const ctx = this.context;
-    ctx.strokeStyle = `rgba(104, 238, 255, ${0.15 + lockstepAmount * 0.65})`;
-    ctx.lineWidth = 2 + lockstepAmount * 2.4;
+    ctx.strokeStyle = `rgba(104, 238, 255, ${0.15 + lockstepAmount * 0.65 + snarePulse * 0.22})`;
+    ctx.lineWidth = 2 + lockstepAmount * 2.4 + snarePulse * 1.5;
 
     for (const explorer of explorers) {
       ctx.beginPath();

@@ -46,6 +46,8 @@ export class GameController {
 
   private settingsReturnScreen: Screen = 'main';
 
+  private levelSelectReturnScreen: Screen = 'main';
+
   private playerName = '';
 
   private levelStartedAtMs = Date.now();
@@ -135,7 +137,21 @@ export class GameController {
   }
 
   public openLevelSelect(): void {
+    if (this.screen !== 'paused') {
+      return;
+    }
+
+    this.levelSelectReturnScreen = this.screen;
     this.screen = 'level-select';
+    this.emit();
+  }
+
+  public closeLevelSelect(): void {
+    if (this.screen !== 'level-select') {
+      return;
+    }
+
+    this.screen = this.levelSelectReturnScreen;
     this.emit();
   }
 

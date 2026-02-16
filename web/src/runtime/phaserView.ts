@@ -9,6 +9,7 @@ import {
 import { isTextInputFocused } from './inputFocus';
 import { resolveCameraRumble } from './cameraRumble';
 import { LEVEL_TRANSITION_PROFILE, shouldTriggerLevelTransition } from './levelTransition';
+import { getLevelLabel } from './levelMeta';
 
 const FIXED_STEP_MS = 1000 / 60;
 const MIN_TILE_SIZE = 22;
@@ -55,6 +56,8 @@ class PuzzleScene extends Phaser.Scene {
   private lastLevelIdRef: string | null = null;
 
   private transitionZoomTween: Phaser.Tweens.Tween | null = null;
+
+  private lastRumbleAtMs = 0;
 
   public constructor(controller: GameController) {
     super('PuzzleScene');
@@ -332,7 +335,7 @@ class PuzzleScene extends Phaser.Scene {
 
     const isPaused = snapshot.screen === 'paused';
     this.hudText.setText(
-      `Level ${state.levelIndex + 1}/${state.levelIds.length}  Moves ${state.moves}  Players ${state.players.length}/${state.totalPlayers}${isPaused ? '  [PAUSED]' : ''}`,
+      `${getLevelLabel(state.levelId, state.levelIndex)} (${state.levelIndex + 1}/${state.levelIds.length})  Moves ${state.moves}  Players ${state.players.length}/${state.totalPlayers}${isPaused ? '  [PAUSED]' : ''}`,
     );
   }
 
@@ -471,7 +474,12 @@ class PuzzleScene extends Phaser.Scene {
   private applyCameraRumble(snapshot: ControllerSnapshot): void {
     const profile = resolveCameraRumble(snapshot.screen, this.lastStateRef, snapshot.gameState);
     if (profile) {
-      this.cameras.main.shake(profile.durationMs, profile.intensity, true);
+      const nowMs = Date.now();
+      const minIntervalMs = profile.minIntervalMs ?? 0;
+      if (minIntervalMs === 0 || nowMs - this.lastRumbleAtMs >= minIntervalMs) {
+        this.cameras.main.shake(profile.durationMs, profile.intensity, false);
+        this.lastRumbleAtMs = nowMs;
+      }
     }
 
     this.lastStateRef = snapshot.gameState;

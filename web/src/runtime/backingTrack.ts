@@ -1,5 +1,11 @@
 import type { GameController } from '../app/gameController';
-import { STEPS_PER_BAR, backingTrackStepEvents, midiToFrequency } from './backingTrackPattern';
+import { getMusicVariant } from './levelMeta';
+import {
+  type MusicVariant,
+  STEPS_PER_BAR,
+  backingTrackStepEvents,
+  midiToFrequency,
+} from './backingTrackPattern';
 
 const BPM = 124;
 const STEP_DURATION_SECONDS = 60 / BPM / 4;
@@ -44,17 +50,33 @@ export class ProceduralBackingTrack {
 
   private desiredVolume = 0.6;
 
+  private currentVariant: MusicVariant = 0;
+
+  private readonly pulseTimeouts = new Set<number>();
+
   public constructor(controller: GameController) {
     this.unsubscribeFromController = controller.subscribe((snapshot) => {
       this.setVolume(snapshot.settings.volume);
+      const sourceLevelIndex =
+        snapshot.screen === 'playing' || snapshot.screen === 'paused'
+          ? snapshot.gameState.levelIndex
+          : snapshot.selectedLevelIndex;
+      const sourceLevelId =
+        snapshot.screen === 'playing' || snapshot.screen === 'paused'
+          ? snapshot.gameState.levelId
+          : snapshot.levels[sourceLevelIndex]?.id ?? snapshot.gameState.levelId;
+      this.currentVariant = getMusicVariant(sourceLevelId, sourceLevelIndex);
     });
 
     this.bindUnlockListeners();
+    this.bindFocusListeners();
   }
 
   public destroy(): void {
     this.stopScheduler();
     this.unbindUnlockListeners();
+    this.unbindFocusListeners();
+    this.clearPulseTimeouts();
     this.unsubscribeFromController();
     const context = this.audioContext;
     this.audioContext = null;
@@ -85,6 +107,35 @@ export class ProceduralBackingTrack {
     window.removeEventListener('keydown', this.handleUnlockGesture);
   }
 
+  private bindFocusListeners(): void {
+    window.addEventListener('blur', this.handleWindowBlur);
+    window.addEventListener('focus', this.handleWindowFocus);
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
+  private unbindFocusListeners(): void {
+    window.removeEventListener('blur', this.handleWindowBlur);
+    window.removeEventListener('focus', this.handleWindowFocus);
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+  }
+
+  private readonly handleWindowBlur = (): void => {
+    void this.suspendPlayback();
+  };
+
+  private readonly handleWindowFocus = (): void => {
+    void this.resumePlayback();
+  };
+
+  private readonly handleVisibilityChange = (): void => {
+    if (document.hidden) {
+      void this.suspendPlayback();
+      return;
+    }
+
+    void this.resumePlayback();
+  };
+
   private async ensureStarted(): Promise<void> {
     if (!this.audioContext) {
       const AudioContextCtor = resolveAudioContextCtor();
@@ -112,6 +163,31 @@ export class ProceduralBackingTrack {
     this.applyVolume();
     this.startScheduler();
     this.unbindUnlockListeners();
+  }
+
+  private async suspendPlayback(): Promise<void> {
+    if (!this.audioContext || !this.started) {
+      return;
+    }
+
+    if (this.audioContext.state === 'running') {
+      await this.audioContext.suspend();
+    }
+    this.clearPulseTimeouts();
+  }
+
+  private async resumePlayback(): Promise<void> {
+    if (!this.audioContext || !this.started) {
+      return;
+    }
+
+    if (document.hidden || !document.hasFocus()) {
+      return;
+    }
+
+    if (this.audioContext.state === 'suspended') {
+      await this.audioContext.resume();
+    }
   }
 
   private setVolume(volume: number): void {
@@ -194,6 +270,9 @@ export class ProceduralBackingTrack {
     if (!this.audioContext || !this.started) {
       return;
     }
+    if (this.audioContext.state !== 'running') {
+      return;
+    }
 
     while (this.nextStepTime < this.audioContext.currentTime + SCHEDULE_AHEAD_SECONDS) {
       this.scheduleStep(this.nextStepTime, this.stepInBar, this.barIndex);
@@ -207,13 +286,15 @@ export class ProceduralBackingTrack {
   }
 
   private scheduleStep(time: number, step: number, bar: number): void {
-    const events = backingTrackStepEvents(step, bar);
+    const events = backingTrackStepEvents(step, bar, this.currentVariant);
 
     if (events.kick) {
       this.scheduleKick(time);
+      this.schedulePulseEvent('kick', time);
     }
     if (events.snare) {
       this.scheduleSnare(time);
+      this.schedulePulseEvent('snare', time);
     }
     if (events.hat) {
       this.scheduleHat(time);
@@ -407,6 +488,34 @@ export class ProceduralBackingTrack {
     gain.connect(delaySend);
     oscillator.start(time);
     oscillator.stop(time + 0.2);
+  }
+
+  private schedulePulseEvent(kind: 'kick' | 'snare', scheduledTime: number): void {
+    const context = this.audioContext;
+    if (!context) {
+      return;
+    }
+
+    const msUntil = Math.max(0, (scheduledTime - context.currentTime) * 1000);
+    const timerId = window.setTimeout(() => {
+      this.pulseTimeouts.delete(timerId);
+      window.dispatchEvent(
+        new CustomEvent('lockstep-audio-pulse', {
+          detail: {
+            kind,
+            strength: kind === 'kick' ? 1 : 0.7,
+          },
+        }),
+      );
+    }, msUntil);
+    this.pulseTimeouts.add(timerId);
+  }
+
+  private clearPulseTimeouts(): void {
+    for (const timerId of this.pulseTimeouts) {
+      window.clearTimeout(timerId);
+    }
+    this.pulseTimeouts.clear();
   }
 
   private getNoiseBuffer(context: AudioContext): AudioBuffer {

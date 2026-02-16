@@ -16,6 +16,7 @@ import {
 } from '../editor/levelEditorUtils';
 import { fetchTopScores, saveCustomLevel, type LevelScoreRecord } from '../runtime/backendApi';
 import { isTextInputFocused } from '../runtime/inputFocus';
+import { getLevelLabel } from '../runtime/levelMeta';
 import { LockstepIntroCinematic } from './introCinematic';
 
 function asElement<T extends HTMLElement>(root: ParentNode, selector: string): T {
@@ -90,6 +91,8 @@ export class OverlayUI {
 
   private readonly levelStartButton: HTMLButtonElement;
 
+  private readonly mainCurrentLevelText: HTMLElement;
+
   private readonly volumeSlider: HTMLInputElement;
 
   private readonly lightingToggle: HTMLInputElement;
@@ -100,9 +103,9 @@ export class OverlayUI {
 
   private readonly introStartButton: HTMLButtonElement;
 
-  private readonly introLevelSelect: HTMLSelectElement;
-
   private readonly introPlayerNameInput: HTMLInputElement;
+
+  private readonly introCurrentLevelText: HTMLElement;
 
   private readonly introSettingsPanel: HTMLElement;
 
@@ -179,8 +182,8 @@ export class OverlayUI {
 
     this.introPanel = asElement<HTMLElement>(this.root, '[data-panel="intro"]');
     this.introStartButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-start');
-    this.introLevelSelect = asElement<HTMLSelectElement>(this.root, '#intro-level-select-input');
     this.introPlayerNameInput = asElement<HTMLInputElement>(this.root, '#intro-player-name-input');
+    this.introCurrentLevelText = asElement<HTMLElement>(this.root, '#intro-current-level');
     this.introSettingsPanel = asElement<HTMLElement>(this.root, '#intro-settings-panel');
     this.introSettingsButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-settings-toggle');
     this.introSettingsCloseButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-settings-close');
@@ -202,6 +205,7 @@ export class OverlayUI {
     this.levelSelect = asElement<HTMLSelectElement>(this.root, '#level-select-input');
     this.statusText = asElement<HTMLElement>(this.root, '#menu-status');
     this.playerNameInput = asElement<HTMLInputElement>(this.root, '#player-name-input');
+    this.mainCurrentLevelText = asElement<HTMLElement>(this.root, '#main-current-level');
     this.playButton = asElement<HTMLButtonElement>(this.root, '#btn-play');
     this.levelStartButton = asElement<HTMLButtonElement>(this.root, '#btn-level-start');
     this.volumeSlider = asElement<HTMLInputElement>(this.root, '#settings-volume');
@@ -232,7 +236,7 @@ export class OverlayUI {
       <section class="intro-overlay" data-panel="intro">
         <canvas id="intro-canvas" aria-hidden="true"></canvas>
         <div class="intro-settings-corner">
-          <button type="button" id="btn-intro-settings-toggle">Settings</button>
+          <button type="button" id="btn-intro-settings-toggle" aria-label="Open intro settings">Tune</button>
           <div class="intro-settings-panel" id="intro-settings-panel" hidden>
             <h3>Settings</h3>
             <label for="intro-settings-volume">Volume</label>
@@ -241,7 +245,7 @@ export class OverlayUI {
               <input id="intro-settings-lighting" type="checkbox" />
               Lighting effects
             </label>
-            <button type="button" id="btn-intro-settings-close">Close</button>
+            <button type="button" id="btn-intro-settings-close">Done</button>
           </div>
         </div>
         <div class="intro-content">
@@ -250,14 +254,18 @@ export class OverlayUI {
           <p id="intro-skip-hint" class="intro-skip-hint">Press Start anytime to skip</p>
         </div>
         <aside class="intro-menu-dock">
-          <h2>Enter Lockstep</h2>
-          <label for="intro-player-name-input">Player Name</label>
-          <input id="intro-player-name-input" type="text" maxlength="32" placeholder="Enter your name" />
-          <label for="intro-level-select-input">Level</label>
-          <select id="intro-level-select-input"></select>
+          <div class="intro-menu-fields">
+            <h2>Enter Lockstep</h2>
+            <label for="intro-player-name-input">Player Name</label>
+            <input id="intro-player-name-input" type="text" maxlength="32" placeholder="Enter your name" />
+            <div class="intro-level-readout">
+              Current Level
+              <strong id="intro-current-level">Level 1</strong>
+            </div>
+            <p class="intro-level-hint">Press <kbd>ESC</kbd> in-game to open Level Select.</p>
+          </div>
           <div class="button-row intro-button-row">
             <button type="button" id="btn-intro-start">Start</button>
-            <button type="button" id="btn-intro-open-levels">Scores</button>
             <button type="button" id="btn-intro-open-editor">Editor</button>
           </div>
         </aside>
@@ -273,12 +281,13 @@ export class OverlayUI {
       <section class="menu-panel" data-panel="main">
         <h1>LOCKSTEP</h1>
         <p>Move all white squares to green goals. Avoid lava and enemies.</p>
+        <p class="main-level-readout">Current Level: <strong id="main-current-level">Level 1</strong></p>
+        <p class="main-level-hint">Level Select is available in the <kbd>ESC</kbd> pause menu.</p>
         <label for="player-name-input">Player Name (required)</label>
         <input id="player-name-input" type="text" maxlength="32" placeholder="Enter your name" />
 
         <div class="button-row">
           <button type="button" id="btn-play">Play</button>
-          <button type="button" id="btn-level-select">Level Select</button>
           <button type="button" id="btn-open-editor">Level Editor</button>
           <button type="button" id="btn-main-settings">Settings</button>
         </div>
@@ -353,12 +362,13 @@ export class OverlayUI {
 
       <section class="menu-panel" data-panel="pause" hidden>
         <h2>Paused</h2>
-        <p>Use Resume to continue.</p>
+        <p>Resume play or jump to another level.</p>
         <div class="button-row">
           <button type="button" id="btn-resume">Resume</button>
           <button type="button" id="btn-restart">Restart</button>
+          <button type="button" id="btn-pause-level-select">Level Select</button>
+          <button type="button" id="btn-main-menu">Main Menu</button>
           <button type="button" id="btn-pause-settings">Settings</button>
-          <button type="button" id="btn-quit">Quit</button>
         </div>
       </section>
     `;
@@ -367,13 +377,6 @@ export class OverlayUI {
   private bindEvents(): void {
     this.introStartButton.addEventListener('click', () => {
       this.startFromIntro();
-    });
-
-    asElement<HTMLButtonElement>(this.root, '#btn-intro-open-levels').addEventListener('click', () => {
-      this.closeIntroSettings();
-      this.introCinematic.skip();
-      this.controller.openLevelSelect();
-      void this.loadScoresForSelectedLevel(true);
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-intro-open-editor').addEventListener('click', () => {
@@ -399,13 +402,25 @@ export class OverlayUI {
       this.introSettingsButton.focus();
     });
 
-    this.playButton.addEventListener('click', () => {
-      this.controller.startSelectedLevel();
+    this.introPanel.addEventListener('pointerdown', (event) => {
+      if (this.introSettingsPanel.hidden) {
+        return;
+      }
+
+      const target = event.target as Node;
+      const clickedToggle = target === this.introSettingsButton || this.introSettingsButton.contains(target);
+      if (clickedToggle) {
+        return;
+      }
+
+      const clickedPanel = this.introSettingsPanel.contains(target);
+      if (!clickedPanel) {
+        this.closeIntroSettings();
+      }
     });
 
-    asElement<HTMLButtonElement>(this.root, '#btn-level-select').addEventListener('click', () => {
-      this.controller.openLevelSelect();
-      void this.loadScoresForSelectedLevel(true);
+    this.playButton.addEventListener('click', () => {
+      this.controller.startSelectedLevel();
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-open-editor').addEventListener('click', () => {
@@ -427,7 +442,7 @@ export class OverlayUI {
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-level-back').addEventListener('click', () => {
-      this.controller.openMainMenu();
+      this.controller.closeLevelSelect();
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-settings-back').addEventListener('click', () => {
@@ -442,8 +457,13 @@ export class OverlayUI {
       this.controller.restartCurrentLevel();
     });
 
-    asElement<HTMLButtonElement>(this.root, '#btn-quit').addEventListener('click', () => {
+    asElement<HTMLButtonElement>(this.root, '#btn-main-menu').addEventListener('click', () => {
       this.controller.openMainMenu();
+    });
+
+    asElement<HTMLButtonElement>(this.root, '#btn-pause-level-select').addEventListener('click', () => {
+      this.controller.openLevelSelect();
+      void this.loadScoresForSelectedLevel(true);
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-pause-settings').addEventListener('click', () => {
@@ -490,11 +510,6 @@ export class OverlayUI {
       const level = Number.parseInt(this.levelSelect.value, 10);
       this.controller.setSelectedLevel(level);
       void this.loadScoresForSelectedLevel(true);
-    });
-
-    this.introLevelSelect.addEventListener('change', () => {
-      const level = Number.parseInt(this.introLevelSelect.value, 10);
-      this.controller.setSelectedLevel(level);
     });
 
     this.volumeSlider.addEventListener('input', () => {
@@ -585,7 +600,13 @@ export class OverlayUI {
         return;
       }
 
-      if (snapshot.screen === 'level-select' || snapshot.screen === 'editor') {
+      if (snapshot.screen === 'level-select') {
+        event.preventDefault();
+        this.controller.closeLevelSelect();
+        return;
+      }
+
+      if (snapshot.screen === 'editor') {
         event.preventDefault();
         this.controller.openMainMenu();
       }
@@ -593,11 +614,6 @@ export class OverlayUI {
   }
 
   private startFromIntro(): void {
-    const level = Number.parseInt(this.introLevelSelect.value, 10);
-    if (Number.isInteger(level)) {
-      this.controller.setSelectedLevel(level);
-    }
-
     this.controller.setPlayerName(this.introPlayerNameInput.value);
     this.closeIntroSettings();
     this.introCinematic.skip();
@@ -626,6 +642,12 @@ export class OverlayUI {
     this.lightingToggle.checked = snapshot.settings.lightingEnabled;
     this.introLightingToggle.checked = snapshot.settings.lightingEnabled;
     this.statusText.textContent = snapshot.statusMessage ?? '';
+    const currentLevel = snapshot.levels[snapshot.selectedLevelIndex];
+    if (currentLevel) {
+      const label = getLevelLabel(currentLevel.id, snapshot.selectedLevelIndex);
+      this.introCurrentLevelText.textContent = label;
+      this.mainCurrentLevelText.textContent = label;
+    }
 
     const canPlay = snapshot.playerName.trim().length > 0;
     this.playButton.disabled = !canPlay;
@@ -691,30 +713,20 @@ export class OverlayUI {
 
   private syncLevelOptions(snapshot: ControllerSnapshot): void {
     const signature = snapshot.levels.map((level) => level.id).join('|');
-    if (this.levelSelect.dataset.signature !== signature || this.introLevelSelect.dataset.signature !== signature) {
+    if (this.levelSelect.dataset.signature !== signature) {
       this.levelSelect.innerHTML = '';
-      this.introLevelSelect.innerHTML = '';
       snapshot.levels.forEach((level, index) => {
         const menuOption = document.createElement('option');
         menuOption.value = String(index);
-        menuOption.textContent = `Level ${index + 1} (${level.id})`;
+        menuOption.textContent = `${getLevelLabel(level.id, index)} (${level.id})`;
         this.levelSelect.append(menuOption);
-
-        const introOption = document.createElement('option');
-        introOption.value = String(index);
-        introOption.textContent = `Level ${index + 1} (${level.id})`;
-        this.introLevelSelect.append(introOption);
       });
       this.levelSelect.dataset.signature = signature;
-      this.introLevelSelect.dataset.signature = signature;
     }
 
     const nextValue = String(snapshot.selectedLevelIndex);
     if (this.levelSelect.value !== nextValue) {
       this.levelSelect.value = nextValue;
-    }
-    if (this.introLevelSelect.value !== nextValue) {
-      this.introLevelSelect.value = nextValue;
     }
   }
 

@@ -74,9 +74,10 @@ npm run build
 - Pause menu: `Escape`
 - Intro menu (integrated with cinematic):
   - enter player name directly on intro
-  - choose level directly on intro
   - top-right quick settings (volume + lighting)
-  - `Start` button (or `Enter` / `Space`) to skip and launch selected level
+  - `Start` button (or `Enter` / `Space`) to skip and launch current selected level
+- Level Select is only available from Pause menu (`Escape` in-game -> `Level Select`)
+- Pause menu includes explicit `Main Menu` action
 - Menus: mouse + keyboard focusable buttons
 - Enemy collisions: short impact animation shows the player/enemy intersection before reset
 - Level Editor: available from main menu
@@ -87,6 +88,8 @@ npm run build
 Level files live in `/web/public/assets/levels/*.txt` and are listed in:
 
 - `/web/public/assets/levels/manifest.json`
+
+Built-in levels have friendly display names (for HUD/menu labels) while keeping original file IDs.
 
 ### Add a New Level
 
@@ -134,7 +137,8 @@ Lighting v1 is implemented as:
 
 - Procedural backing track generated at runtime with Web Audio API (no external audio files).
 - 16-step house/synth sequencer with kick/snare/hat + bass/chord/lead layers.
-- Starts on first user interaction (browser autoplay-safe) and respects the global volume setting.
+- Musical variant changes per level.
+- Starts on first user interaction (browser autoplay-safe), respects global volume, and pauses when the window/tab loses focus.
 
 ## Testing Approach
 

@@ -4,24 +4,26 @@ import type { GameState, TurnEvent } from '../core/types';
 export interface CameraRumbleProfile {
   durationMs: number;
   intensity: number;
+  minIntervalMs?: number;
 }
 
 const RUMBLE_BY_EVENT: Partial<Record<TurnEvent, CameraRumbleProfile>> = {
   'turn-processed': {
-    durationMs: 95,
-    intensity: 0.0026,
+    durationMs: 84,
+    intensity: 0.0017,
+    minIntervalMs: 88,
   },
   'level-reset': {
-    durationMs: 180,
-    intensity: 0.0062,
+    durationMs: 160,
+    intensity: 0.0048,
   },
   'level-advanced': {
-    durationMs: 150,
-    intensity: 0.0038,
+    durationMs: 132,
+    intensity: 0.0031,
   },
   'game-complete': {
-    durationMs: 220,
-    intensity: 0.007,
+    durationMs: 190,
+    intensity: 0.0056,
   },
 };
 

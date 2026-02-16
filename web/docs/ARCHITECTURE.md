@@ -35,6 +35,7 @@ Browser/Phaser integration and asset loading.
 - `settingsStorage.ts`: persists settings to `localStorage`.
 - `backendApi.ts`: HTTP client for custom levels and scoreboards.
 - `backingTrack.ts`: procedural Web Audio backing track (step sequencer).
+- `levelMeta.ts`: level display names and level-based music variant mapping.
 
 ### 3) App/UI (`/web/src/app`, `/web/src/ui`)
 
@@ -42,6 +43,10 @@ Browser/Phaser integration and asset loading.
 - `overlay.ts`: DOM menus (main, pause, level select, settings, editor).
 - `introCinematic.ts` + `introTimeline.ts`: programmatic title/lore intro renderer and deterministic timeline.
 - `editor/levelEditorUtils.ts`: pure utilities for editor grid operations and validation.
+
+Navigation note:
+
+- Level Select is intentionally reachable from pause flow only (`Escape` in gameplay -> Pause -> Level Select).
 
 ### 4) Assets
 
@@ -125,8 +130,10 @@ web/
       levelEditorUtils.ts
     runtime/
       backingTrack.ts
+      backingTrackPattern.ts
       backendApi.ts
       levelLoader.ts
+      levelMeta.ts
       phaserView.ts
       settingsStorage.ts
     ui/

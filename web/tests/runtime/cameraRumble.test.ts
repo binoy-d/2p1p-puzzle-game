@@ -33,20 +33,21 @@ describe('camera rumble', () => {
     const base = makeState();
 
     expect(resolveCameraRumble('playing', base, withEvent(base, 'turn-processed'))).toEqual({
-      durationMs: 95,
-      intensity: 0.0026,
+      durationMs: 84,
+      intensity: 0.0017,
+      minIntervalMs: 88,
     });
     expect(resolveCameraRumble('playing', base, withEvent(base, 'level-reset'))).toEqual({
-      durationMs: 180,
-      intensity: 0.0062,
+      durationMs: 160,
+      intensity: 0.0048,
     });
     expect(resolveCameraRumble('playing', base, withEvent(base, 'level-advanced'))).toEqual({
-      durationMs: 150,
-      intensity: 0.0038,
+      durationMs: 132,
+      intensity: 0.0031,
     });
     expect(resolveCameraRumble('playing', base, withEvent(base, 'game-complete'))).toEqual({
-      durationMs: 220,
-      intensity: 0.007,
+      durationMs: 190,
+      intensity: 0.0056,
     });
     expect(resolveCameraRumble('playing', base, withEvent(base, 'none'))).toBeNull();
   });

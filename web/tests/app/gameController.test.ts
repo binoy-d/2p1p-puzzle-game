@@ -75,6 +75,24 @@ describe('game controller', () => {
     expect(controller.getSnapshot().screen).toBe('playing');
   });
 
+  it('allows level select only from pause flow', () => {
+    const controller = makeController();
+
+    controller.openLevelSelect();
+    expect(controller.getSnapshot().screen).toBe('main');
+
+    controller.setPlayerName('Ava');
+    controller.startSelectedLevel();
+    controller.openPauseMenu();
+    expect(controller.getSnapshot().screen).toBe('paused');
+
+    controller.openLevelSelect();
+    expect(controller.getSnapshot().screen).toBe('level-select');
+
+    controller.closeLevelSelect();
+    expect(controller.getSnapshot().screen).toBe('paused');
+  });
+
   it('shows enemy death animation before applying level reset', () => {
     const nowSpy = vi.spyOn(Date, 'now');
     let now = 1000;

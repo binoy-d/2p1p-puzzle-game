@@ -11,9 +11,9 @@ describe('backing track pattern', () => {
   });
 
   it('produces deterministic events across bars and wrapped indices', () => {
-    const a = backingTrackStepEvents(0, 0);
-    const b = backingTrackStepEvents(16, 4);
-    const c = backingTrackStepEvents(-16, -4);
+    const a = backingTrackStepEvents(0, 0, 1);
+    const b = backingTrackStepEvents(16, 4, 1);
+    const c = backingTrackStepEvents(-16, -4, 1);
     expect(a).toEqual(b);
     expect(a).toEqual(c);
   });
@@ -29,6 +29,13 @@ describe('backing track pattern', () => {
     expect(step4.snare).toBe(true);
     expect(step12.snare).toBe(true);
     expect(step4.kick).toBe(true);
+  });
+
+  it('changes melodic notes across variants', () => {
+    const base = backingTrackStepEvents(0, 0, 0);
+    const shifted = backingTrackStepEvents(0, 0, 3);
+    expect(base.bassMidi).not.toBe(shifted.bassMidi);
+    expect(base.chordMidi).not.toEqual(shifted.chordMidi);
   });
 
   it('maps MIDI note 69 to 440Hz', () => {
