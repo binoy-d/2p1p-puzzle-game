@@ -217,7 +217,7 @@ export class OverlayUI {
 
       <section class="menu-panel" data-panel="pause" hidden>
         <h2>Paused</h2>
-        <p>Press ESC to resume.</p>
+        <p>Use Resume to continue.</p>
         <div class="button-row">
           <button type="button" id="btn-resume">Resume</button>
           <button type="button" id="btn-restart">Restart</button>
@@ -353,14 +353,21 @@ export class OverlayUI {
       }
 
       const snapshot = this.controller.getSnapshot();
+      if (snapshot.screen === 'playing') {
+        event.preventDefault();
+        this.controller.openPauseMenu();
+        return;
+      }
+
       if (snapshot.screen === 'paused') {
         event.preventDefault();
-        this.controller.togglePause();
+        return;
       }
 
       if (snapshot.screen === 'settings') {
         event.preventDefault();
         this.controller.closeSettings();
+        return;
       }
 
       if (snapshot.screen === 'level-select' || snapshot.screen === 'editor') {

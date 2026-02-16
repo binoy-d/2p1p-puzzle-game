@@ -118,6 +118,15 @@ export class GameController {
     }
   }
 
+  public openPauseMenu(): void {
+    if (this.screen !== 'playing') {
+      return;
+    }
+
+    this.screen = 'paused';
+    this.emit();
+  }
+
   public restartCurrentLevel(): void {
     this.gameState = restartLevel(this.gameState);
     this.screen = 'playing';

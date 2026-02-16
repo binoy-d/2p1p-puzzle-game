@@ -93,10 +93,6 @@ class PuzzleScene extends Phaser.Scene {
           event.preventDefault();
           this.controller.queueDirection('right');
           break;
-        case 'Escape':
-          event.preventDefault();
-          this.controller.togglePause();
-          break;
         default:
           break;
       }
