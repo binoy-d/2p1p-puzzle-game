@@ -180,7 +180,7 @@ export class LockstepIntroCinematic {
     this.drawScanlines(width, height);
 
     if (visual.fractureFlash > 0.02) {
-      ctx.fillStyle = `rgba(255, 245, 245, ${visual.fractureFlash * 0.45})`;
+      ctx.fillStyle = `rgba(220, 255, 242, ${visual.fractureFlash * 0.42})`;
       ctx.fillRect(0, 0, width, height);
     }
 
@@ -223,16 +223,16 @@ export class LockstepIntroCinematic {
     const glowSize = base * 3.4 * (0.9 + pulse * 0.2 + flash * 0.55);
     const coreSize = base * pulseScale;
 
-    ctx.fillStyle = `rgba(255, 77, 103, ${0.17 + flash * 0.33})`;
+    ctx.fillStyle = `rgba(55, 255, 196, ${0.17 + flash * 0.33})`;
     ctx.fillRect(centerX - glowSize / 2, centerY - glowSize / 2, glowSize, glowSize);
 
-    ctx.fillStyle = '#ff4d67';
+    ctx.fillStyle = '#37f8c2';
     ctx.fillRect(centerX - coreSize / 2, centerY - coreSize / 2, coreSize, coreSize);
-    ctx.fillStyle = '#ffdce4';
+    ctx.fillStyle = '#d8fff3';
     ctx.fillRect(centerX - coreSize * 0.28, centerY - coreSize * 0.28, coreSize * 0.56, coreSize * 0.56);
 
     const ringSize = coreSize * 2.8 * (0.85 + pulse * 0.35);
-    ctx.strokeStyle = `rgba(255, 116, 151, ${0.26 + pulse * 0.24})`;
+    ctx.strokeStyle = `rgba(108, 255, 227, ${0.26 + pulse * 0.24})`;
     ctx.lineWidth = 2;
     ctx.strokeRect(centerX - ringSize / 2, centerY - ringSize / 2, ringSize, ringSize);
   }
@@ -244,7 +244,7 @@ export class LockstepIntroCinematic {
     lockstepAmount: number,
   ): void {
     const ctx = this.context;
-    ctx.strokeStyle = `rgba(255, 118, 145, ${0.15 + lockstepAmount * 0.65})`;
+    ctx.strokeStyle = `rgba(104, 238, 255, ${0.15 + lockstepAmount * 0.65})`;
     ctx.lineWidth = 2 + lockstepAmount * 2.4;
 
     for (const explorer of explorers) {

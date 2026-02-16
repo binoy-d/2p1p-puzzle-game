@@ -34,11 +34,13 @@ Browser/Phaser integration and asset loading.
 - `phaserView.ts`: renders state, collects keyboard input, runs fixed-step loop.
 - `settingsStorage.ts`: persists settings to `localStorage`.
 - `backendApi.ts`: HTTP client for custom levels and scoreboards.
+- `backingTrack.ts`: procedural Web Audio backing track (step sequencer).
 
 ### 3) App/UI (`/web/src/app`, `/web/src/ui`)
 
 - `gameController.ts`: orchestration layer between core + runtime + menus.
 - `overlay.ts`: DOM menus (main, pause, level select, settings, editor).
+- `introCinematic.ts` + `introTimeline.ts`: programmatic title/lore intro renderer and deterministic timeline.
 - `editor/levelEditorUtils.ts`: pure utilities for editor grid operations and validation.
 
 ### 4) Assets
@@ -122,11 +124,14 @@ web/
     editor/
       levelEditorUtils.ts
     runtime/
+      backingTrack.ts
       backendApi.ts
       levelLoader.ts
       phaserView.ts
       settingsStorage.ts
     ui/
+      introCinematic.ts
+      introTimeline.ts
       overlay.ts
     main.ts
     styles.css

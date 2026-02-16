@@ -72,7 +72,11 @@ npm run build
 
 - Move: `WASD` or arrow keys
 - Pause menu: `Escape`
-- Intro cinematic: `Start` button (or `Enter` / `Space`) to skip
+- Intro menu (integrated with cinematic):
+  - enter player name directly on intro
+  - choose level directly on intro
+  - top-right quick settings (volume + lighting)
+  - `Start` button (or `Enter` / `Space`) to skip and launch selected level
 - Menus: mouse + keyboard focusable buttons
 - Enemy collisions: short impact animation shows the player/enemy intersection before reset
 - Level Editor: available from main menu
@@ -125,6 +129,12 @@ Lighting v1 is implemented as:
 - Per-tile brightness shading that matches the original Java feel (walls/floors brighten by player proximity).
 - Enemy path center dots pulse in size; the next-hit dot is fully opaque, and farther path dots fade progressively.
 - Toggleable from Settings (stored in `localStorage`).
+
+## Audio (High Level)
+
+- Procedural backing track generated at runtime with Web Audio API (no external audio files).
+- 16-step house/synth sequencer with kick/snare/hat + bass/chord/lead layers.
+- Starts on first user interaction (browser autoplay-safe) and respects the global volume setting.
 
 ## Testing Approach
 

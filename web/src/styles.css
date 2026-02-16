@@ -126,11 +126,13 @@ body::after {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding: min(7vw, 80px);
+  justify-content: center;
+  padding: min(6vw, 72px);
+  padding-bottom: min(18vw, 190px);
   gap: 10px;
   text-align: center;
   z-index: 1;
+  pointer-events: none;
 }
 
 #intro-title {
@@ -161,13 +163,97 @@ body::after {
   opacity: 0;
 }
 
+.intro-settings-corner {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+#btn-intro-settings-toggle {
+  min-width: 120px;
+}
+
+.intro-settings-panel {
+  pointer-events: auto;
+  width: min(300px, 80vw);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(129, 213, 255, 0.34);
+  background: rgba(7, 14, 24, 0.88);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.44);
+}
+
+.intro-settings-panel h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.intro-settings-panel label {
+  display: block;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.intro-settings-panel input[type='range'] {
+  width: 100%;
+}
+
+.intro-menu-dock {
+  position: absolute;
+  left: min(3vw, 28px);
+  bottom: min(3vw, 28px);
+  z-index: 3;
+  width: min(410px, calc(100vw - 26px));
+  padding: 14px;
+  border: 1px solid rgba(137, 215, 255, 0.34);
+  border-radius: 14px;
+  background: rgba(5, 12, 22, 0.78);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.48);
+  pointer-events: auto;
+}
+
+.intro-menu-dock h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+.intro-menu-dock label {
+  display: block;
+  margin: 8px 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#intro-player-name-input,
+#intro-level-select-input {
+  width: 100%;
+}
+
+.intro-button-row {
+  gap: 8px;
+}
+
+.intro-button-row button {
+  flex: 1 1 120px;
+}
+
 #btn-intro-start {
-  min-width: 160px;
+  min-width: 152px;
   font-size: 16px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-color: rgba(140, 215, 255, 0.8);
-  box-shadow: 0 0 0 1px rgba(76, 167, 255, 0.34) inset, 0 0 24px rgba(91, 205, 255, 0.26);
+  border-color: rgba(115, 255, 212, 0.85);
+  box-shadow: 0 0 0 1px rgba(68, 227, 183, 0.34) inset, 0 0 24px rgba(82, 255, 200, 0.26);
 }
 
 .menu-panel {
@@ -432,6 +518,25 @@ button:disabled {
 
 @media (max-width: 760px) {
   #menu-root {
+    padding: 12px;
+  }
+
+  .intro-content {
+    justify-content: flex-start;
+    padding-top: 72px;
+    padding-bottom: 12px;
+  }
+
+  .intro-settings-corner {
+    right: 12px;
+    top: 12px;
+  }
+
+  .intro-menu-dock {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    bottom: 12px;
     padding: 12px;
   }
 

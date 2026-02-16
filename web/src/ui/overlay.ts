@@ -15,6 +15,7 @@ import {
   validateGridForEditor,
 } from '../editor/levelEditorUtils';
 import { fetchTopScores, saveCustomLevel, type LevelScoreRecord } from '../runtime/backendApi';
+import { isTextInputFocused } from '../runtime/inputFocus';
 import { LockstepIntroCinematic } from './introCinematic';
 
 function asElement<T extends HTMLElement>(root: ParentNode, selector: string): T {
@@ -99,6 +100,20 @@ export class OverlayUI {
 
   private readonly introStartButton: HTMLButtonElement;
 
+  private readonly introLevelSelect: HTMLSelectElement;
+
+  private readonly introPlayerNameInput: HTMLInputElement;
+
+  private readonly introSettingsPanel: HTMLElement;
+
+  private readonly introSettingsButton: HTMLButtonElement;
+
+  private readonly introSettingsCloseButton: HTMLButtonElement;
+
+  private readonly introVolumeSlider: HTMLInputElement;
+
+  private readonly introLightingToggle: HTMLInputElement;
+
   private readonly introCinematic: LockstepIntroCinematic;
 
   private readonly scoreList: HTMLOListElement;
@@ -164,6 +179,13 @@ export class OverlayUI {
 
     this.introPanel = asElement<HTMLElement>(this.root, '[data-panel="intro"]');
     this.introStartButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-start');
+    this.introLevelSelect = asElement<HTMLSelectElement>(this.root, '#intro-level-select-input');
+    this.introPlayerNameInput = asElement<HTMLInputElement>(this.root, '#intro-player-name-input');
+    this.introSettingsPanel = asElement<HTMLElement>(this.root, '#intro-settings-panel');
+    this.introSettingsButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-settings-toggle');
+    this.introSettingsCloseButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-settings-close');
+    this.introVolumeSlider = asElement<HTMLInputElement>(this.root, '#intro-settings-volume');
+    this.introLightingToggle = asElement<HTMLInputElement>(this.root, '#intro-settings-lighting');
     this.introCinematic = new LockstepIntroCinematic({
       elements: {
         panel: this.introPanel,
@@ -209,12 +231,36 @@ export class OverlayUI {
     return `
       <section class="intro-overlay" data-panel="intro">
         <canvas id="intro-canvas" aria-hidden="true"></canvas>
+        <div class="intro-settings-corner">
+          <button type="button" id="btn-intro-settings-toggle">Settings</button>
+          <div class="intro-settings-panel" id="intro-settings-panel" hidden>
+            <h3>Settings</h3>
+            <label for="intro-settings-volume">Volume</label>
+            <input id="intro-settings-volume" type="range" min="0" max="1" step="0.05" />
+            <label class="checkbox-row">
+              <input id="intro-settings-lighting" type="checkbox" />
+              Lighting effects
+            </label>
+            <button type="button" id="btn-intro-settings-close">Close</button>
+          </div>
+        </div>
         <div class="intro-content">
           <h1 id="intro-title">LOCKSTEP</h1>
           <p id="intro-line"></p>
           <p id="intro-skip-hint" class="intro-skip-hint">Press Start anytime to skip</p>
-          <button type="button" id="btn-intro-start">Start</button>
         </div>
+        <aside class="intro-menu-dock">
+          <h2>Enter Lockstep</h2>
+          <label for="intro-player-name-input">Player Name</label>
+          <input id="intro-player-name-input" type="text" maxlength="32" placeholder="Enter your name" />
+          <label for="intro-level-select-input">Level</label>
+          <select id="intro-level-select-input"></select>
+          <div class="button-row intro-button-row">
+            <button type="button" id="btn-intro-start">Start</button>
+            <button type="button" id="btn-intro-open-levels">Scores</button>
+            <button type="button" id="btn-intro-open-editor">Editor</button>
+          </div>
+        </aside>
       </section>
 
       <div class="menu-status" id="menu-status" aria-live="polite"></div>
@@ -320,7 +366,37 @@ export class OverlayUI {
 
   private bindEvents(): void {
     this.introStartButton.addEventListener('click', () => {
+      this.startFromIntro();
+    });
+
+    asElement<HTMLButtonElement>(this.root, '#btn-intro-open-levels').addEventListener('click', () => {
+      this.closeIntroSettings();
       this.introCinematic.skip();
+      this.controller.openLevelSelect();
+      void this.loadScoresForSelectedLevel(true);
+    });
+
+    asElement<HTMLButtonElement>(this.root, '#btn-intro-open-editor').addEventListener('click', () => {
+      this.closeIntroSettings();
+      const snapshot = this.controller.getSnapshot();
+      const source = snapshot.levels[snapshot.selectedLevelIndex] ?? snapshot.levels[0];
+      if (source) {
+        this.loadLevelIntoEditor(source);
+      }
+      this.introCinematic.skip();
+      this.controller.openEditor();
+    });
+
+    this.introSettingsButton.addEventListener('click', () => {
+      this.introSettingsPanel.hidden = !this.introSettingsPanel.hidden;
+      if (!this.introSettingsPanel.hidden) {
+        this.introVolumeSlider.focus();
+      }
+    });
+
+    this.introSettingsCloseButton.addEventListener('click', () => {
+      this.closeIntroSettings();
+      this.introSettingsButton.focus();
     });
 
     this.playButton.addEventListener('click', () => {
@@ -406,18 +482,35 @@ export class OverlayUI {
       this.controller.setPlayerName(this.playerNameInput.value);
     });
 
+    this.introPlayerNameInput.addEventListener('input', () => {
+      this.controller.setPlayerName(this.introPlayerNameInput.value);
+    });
+
     this.levelSelect.addEventListener('change', () => {
       const level = Number.parseInt(this.levelSelect.value, 10);
       this.controller.setSelectedLevel(level);
       void this.loadScoresForSelectedLevel(true);
     });
 
+    this.introLevelSelect.addEventListener('change', () => {
+      const level = Number.parseInt(this.introLevelSelect.value, 10);
+      this.controller.setSelectedLevel(level);
+    });
+
     this.volumeSlider.addEventListener('input', () => {
       this.controller.setVolume(Number.parseFloat(this.volumeSlider.value));
     });
 
+    this.introVolumeSlider.addEventListener('input', () => {
+      this.controller.setVolume(Number.parseFloat(this.introVolumeSlider.value));
+    });
+
     this.lightingToggle.addEventListener('change', () => {
       this.controller.setLightingEnabled(this.lightingToggle.checked);
+    });
+
+    this.introLightingToggle.addEventListener('change', () => {
+      this.controller.setLightingEnabled(this.introLightingToggle.checked);
     });
 
     this.editorGridRoot.addEventListener('mousedown', (event) => {
@@ -458,9 +551,15 @@ export class OverlayUI {
     window.addEventListener('keydown', (event) => {
       const snapshot = this.controller.getSnapshot();
       if (snapshot.screen === 'intro') {
-        if (isIntroStartKey(event)) {
+        if (event.key === 'Escape' && !this.introSettingsPanel.hidden) {
           event.preventDefault();
-          this.introCinematic.skip();
+          this.closeIntroSettings();
+          return;
+        }
+
+        if (!isTextInputFocused(document.activeElement as Element | null) && isIntroStartKey(event)) {
+          event.preventDefault();
+          this.startFromIntro();
         }
         return;
       }
@@ -493,6 +592,22 @@ export class OverlayUI {
     });
   }
 
+  private startFromIntro(): void {
+    const level = Number.parseInt(this.introLevelSelect.value, 10);
+    if (Number.isInteger(level)) {
+      this.controller.setSelectedLevel(level);
+    }
+
+    this.controller.setPlayerName(this.introPlayerNameInput.value);
+    this.closeIntroSettings();
+    this.introCinematic.skip();
+    this.controller.startSelectedLevel();
+  }
+
+  private closeIntroSettings(): void {
+    this.introSettingsPanel.hidden = true;
+  }
+
   private render(snapshot: ControllerSnapshot): void {
     const screenChanged = this.lastRenderedScreen !== snapshot.screen;
     this.lastSnapshot = snapshot;
@@ -502,14 +617,20 @@ export class OverlayUI {
     if (this.playerNameInput.value !== snapshot.playerName) {
       this.playerNameInput.value = snapshot.playerName;
     }
+    if (this.introPlayerNameInput.value !== snapshot.playerName) {
+      this.introPlayerNameInput.value = snapshot.playerName;
+    }
 
     this.volumeSlider.value = snapshot.settings.volume.toString();
+    this.introVolumeSlider.value = snapshot.settings.volume.toString();
     this.lightingToggle.checked = snapshot.settings.lightingEnabled;
+    this.introLightingToggle.checked = snapshot.settings.lightingEnabled;
     this.statusText.textContent = snapshot.statusMessage ?? '';
 
     const canPlay = snapshot.playerName.trim().length > 0;
     this.playButton.disabled = !canPlay;
     this.levelStartButton.disabled = !canPlay;
+    this.introStartButton.disabled = !canPlay;
 
     this.panels.intro.hidden = snapshot.screen !== 'intro';
     this.panels.main.hidden = snapshot.screen !== 'main';
@@ -523,6 +644,7 @@ export class OverlayUI {
       this.introCinematic.start();
     } else {
       this.introCinematic.stop();
+      this.closeIntroSettings();
     }
 
     if (screenChanged && snapshot.screen === 'main') {
@@ -530,7 +652,11 @@ export class OverlayUI {
     }
 
     if (screenChanged && snapshot.screen === 'intro') {
-      this.introStartButton.focus();
+      if (!canPlay) {
+        this.introPlayerNameInput.focus();
+      } else {
+        this.introStartButton.focus();
+      }
     }
 
     if (screenChanged && snapshot.screen === 'paused') {
@@ -565,20 +691,30 @@ export class OverlayUI {
 
   private syncLevelOptions(snapshot: ControllerSnapshot): void {
     const signature = snapshot.levels.map((level) => level.id).join('|');
-    if (this.levelSelect.dataset.signature !== signature) {
+    if (this.levelSelect.dataset.signature !== signature || this.introLevelSelect.dataset.signature !== signature) {
       this.levelSelect.innerHTML = '';
+      this.introLevelSelect.innerHTML = '';
       snapshot.levels.forEach((level, index) => {
-        const option = document.createElement('option');
-        option.value = String(index);
-        option.textContent = `Level ${index + 1} (${level.id})`;
-        this.levelSelect.append(option);
+        const menuOption = document.createElement('option');
+        menuOption.value = String(index);
+        menuOption.textContent = `Level ${index + 1} (${level.id})`;
+        this.levelSelect.append(menuOption);
+
+        const introOption = document.createElement('option');
+        introOption.value = String(index);
+        introOption.textContent = `Level ${index + 1} (${level.id})`;
+        this.introLevelSelect.append(introOption);
       });
       this.levelSelect.dataset.signature = signature;
+      this.introLevelSelect.dataset.signature = signature;
     }
 
     const nextValue = String(snapshot.selectedLevelIndex);
     if (this.levelSelect.value !== nextValue) {
       this.levelSelect.value = nextValue;
+    }
+    if (this.introLevelSelect.value !== nextValue) {
+      this.introLevelSelect.value = nextValue;
     }
   }
 

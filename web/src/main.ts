@@ -2,6 +2,7 @@ import { GameController } from './app/gameController';
 import { parseLevelText } from './core/levelParser';
 import type { ParsedLevel } from './core/types';
 import { fetchCustomLevels } from './runtime/backendApi';
+import { ProceduralBackingTrack } from './runtime/backingTrack';
 import { loadLevelsFromManifest } from './runtime/levelLoader';
 import { PhaserGameView } from './runtime/phaserView';
 import { loadSettings } from './runtime/settingsStorage';
@@ -42,6 +43,14 @@ async function bootstrap(): Promise<void> {
 
   const controller = new GameController(levels, settings);
   new PhaserGameView('game-root', controller);
+  const backingTrack = new ProceduralBackingTrack(controller);
+  window.addEventListener(
+    'beforeunload',
+    () => {
+      backingTrack.destroy();
+    },
+    { once: true },
+  );
 
   const menuRoot = document.querySelector<HTMLElement>('#menu-root');
   if (!menuRoot) {
