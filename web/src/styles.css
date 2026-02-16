@@ -77,6 +77,11 @@ body::after {
   height: 100%;
 }
 
+#game-shell.editor-screen-active #game-root {
+  opacity: 0;
+  pointer-events: none;
+}
+
 #game-root {
   width: 100%;
   height: 100%;
@@ -126,9 +131,8 @@ body::after {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: min(6vw, 72px);
-  padding-bottom: min(18vw, 190px);
+  justify-content: flex-start;
+  padding: clamp(46px, 9vh, 124px) min(6vw, 72px) 0;
   gap: 10px;
   text-align: center;
   z-index: 1;
@@ -467,41 +471,147 @@ button:disabled {
   font-size: 15px;
 }
 
-.menu-panel-editor {
-  width: min(1180px, 100%);
-  max-height: calc(100vh - 56px);
-  overflow: auto;
+#menu-root.editor-screen-active {
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
 }
 
-.editor-controls {
+#menu-root.editor-screen-active .menu-status {
+  display: none;
+}
+
+.menu-panel-editor-page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+  border: none;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(53, 168, 255, 0.15), transparent 36%),
+    radial-gradient(circle at 82% 74%, rgba(90, 247, 190, 0.12), transparent 40%),
+    linear-gradient(145deg, rgba(4, 12, 22, 0.95), rgba(6, 20, 34, 0.93));
+  box-shadow: none;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.editor-controls label {
-  min-width: 72px;
-  font-size: 13px;
+.editor-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.editor-page-header h2 {
+  margin: 0;
+}
+
+.editor-page-header p {
+  margin: 6px 0 0;
+  font-size: 14px;
+}
+
+.editor-page-header-actions {
+  width: min(300px, 100%);
+  display: grid;
+  gap: 6px;
+}
+
+.editor-page-header-actions label {
+  margin: 0;
+  font-size: 12px;
   color: var(--muted);
 }
 
-.editor-controls input,
-.editor-controls select {
-  flex: 1 1 150px;
+.editor-page-header-actions button {
+  width: 100%;
+}
+
+.editor-page-layout {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(280px, 340px) 1fr;
+  gap: 14px;
+}
+
+.editor-sidebar {
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.editor-card {
+  padding: 12px;
+  border: 1px solid rgba(122, 173, 219, 0.24);
+  border-radius: 12px;
+  background: rgba(8, 14, 24, 0.75);
+}
+
+.editor-card h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.editor-card label {
+  display: block;
+  margin: 6px 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.editor-card input,
+.editor-card select,
+.editor-card button {
+  width: 100%;
+}
+
+.editor-card-buttons {
+  margin-top: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.editor-dimensions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.editor-workspace {
+  min-height: 0;
+  border: 1px solid rgba(122, 173, 219, 0.24);
+  border-radius: 12px;
+  background: rgba(6, 10, 16, 0.88);
+  padding: 10px;
+}
+
+.editor-grid-scroll {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 .editor-palette {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
   gap: 6px;
-  margin: 8px 0;
+  margin: 8px 0 0;
 }
 
 .editor-palette-tile {
-  min-width: 54px;
+  min-width: 0;
   text-transform: uppercase;
+  padding: 8px 6px;
+  font-size: 12px;
 }
 
 .editor-palette-selected {
@@ -510,7 +620,7 @@ button:disabled {
 }
 
 .editor-selected {
-  margin-bottom: 8px;
+  margin: 8px 0 0;
   color: var(--muted);
 }
 
@@ -521,8 +631,8 @@ button:disabled {
   border: 1px solid rgba(122, 173, 219, 0.26);
   border-radius: 12px;
   background: rgba(6, 10, 16, 0.85);
-  overflow: auto;
-  max-height: 520px;
+  min-height: 100%;
+  align-content: start;
 }
 
 .editor-grid-cell {
@@ -563,8 +673,9 @@ button:disabled {
 
 .editor-feedback {
   min-height: 20px;
-  margin-top: 8px;
+  margin-top: 10px;
   color: var(--accent-2);
+  font-size: 13px;
 }
 
 .editor-feedback-error {
@@ -615,9 +726,7 @@ button:disabled {
   }
 
   .intro-content {
-    justify-content: flex-start;
-    padding-top: 72px;
-    padding-bottom: 12px;
+    padding: 64px 14px 0;
   }
 
   .intro-settings-corner {
@@ -639,6 +748,34 @@ button:disabled {
     width: 100%;
     border-radius: 12px;
     padding: 16px;
+  }
+
+  .menu-panel-editor-page {
+    border-radius: 0;
+    padding: 12px;
+  }
+
+  .editor-page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editor-page-header-actions {
+    width: 100%;
+  }
+
+  .editor-page-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .editor-sidebar {
+    max-height: 42vh;
+    padding-right: 0;
+  }
+
+  .editor-workspace {
+    min-height: 42vh;
   }
 
   button,

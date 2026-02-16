@@ -36,6 +36,20 @@ describe('game controller', () => {
     expect(controller.getSnapshot().screen).toBe('editor');
   });
 
+  it('routes main menu actions back to intro title screen', () => {
+    const controller = makeController();
+    controller.openEditor();
+    controller.openMainMenu();
+    expect(controller.getSnapshot().screen).toBe('intro');
+
+    controller.finishIntro();
+    controller.setPlayerName('Ava');
+    controller.startSelectedLevel();
+    controller.openPauseMenu();
+    controller.openMainMenu();
+    expect(controller.getSnapshot().screen).toBe('intro');
+  });
+
   it('upserts level and rebuilds playable state', () => {
     const controller = makeController();
     const custom = parseLevelText('custom-level-1', ['#####', '#P !#', '#####'].join('\n'));

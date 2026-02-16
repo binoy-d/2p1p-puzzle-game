@@ -11,7 +11,6 @@ import {
   resizeGrid,
   sanitizeDimension,
   serializeGrid,
-  shouldPaintOnHover,
   validateGridForEditor,
 } from '../editor/levelEditorUtils';
 import { fetchTopScores, saveCustomLevel, type LevelScoreRecord } from '../runtime/backendApi';
@@ -137,6 +136,8 @@ export class OverlayUI {
 
   private readonly editorHeightInput: HTMLInputElement;
 
+  private readonly editorPlayerNameInput: HTMLInputElement;
+
   private readonly editorGridRoot: HTMLElement;
 
   private readonly editorFeedback: HTMLElement;
@@ -145,13 +146,15 @@ export class OverlayUI {
 
   private readonly editorPaletteRoot: HTMLElement;
 
+  private readonly editorSaveButton: HTMLButtonElement;
+
+  private readonly editorSavePlayButton: HTMLButtonElement;
+
   private editorPaletteButtons = new Map<string, HTMLButtonElement>();
 
   private editorGrid: string[][] = this.createBlankGrid(25, 16);
 
   private editorTile = '#';
-
-  private editorPainting = false;
 
   private lastSnapshot: ControllerSnapshot | null = null;
 
@@ -220,10 +223,13 @@ export class OverlayUI {
     this.editorIdInput = asElement<HTMLInputElement>(this.root, '#editor-level-id');
     this.editorWidthInput = asElement<HTMLInputElement>(this.root, '#editor-width');
     this.editorHeightInput = asElement<HTMLInputElement>(this.root, '#editor-height');
+    this.editorPlayerNameInput = asElement<HTMLInputElement>(this.root, '#editor-player-name-input');
     this.editorGridRoot = asElement<HTMLElement>(this.root, '#editor-grid');
     this.editorFeedback = asElement<HTMLElement>(this.root, '#editor-feedback');
     this.editorSelectedTile = asElement<HTMLElement>(this.root, '#editor-selected-tile');
     this.editorPaletteRoot = asElement<HTMLElement>(this.root, '#editor-palette');
+    this.editorSaveButton = asElement<HTMLButtonElement>(this.root, '#btn-editor-save');
+    this.editorSavePlayButton = asElement<HTMLButtonElement>(this.root, '#btn-editor-save-play');
 
     this.buildPalette();
     this.renderEditorGrid();
@@ -324,40 +330,71 @@ export class OverlayUI {
         </div>
       </section>
 
-      <section class="menu-panel menu-panel-editor" data-panel="editor" hidden>
-        <h2>Level Editor</h2>
-        <p>Load a level, paint tiles, then save and play.</p>
+      <section class="menu-panel menu-panel-editor-page" data-panel="editor" hidden>
+        <header class="editor-page-header">
+          <div>
+            <h2>Level Editor</h2>
+            <p>Choose a template, paint tiles, then save and play.</p>
+          </div>
+          <div class="editor-page-header-actions">
+            <label for="editor-player-name-input">Player Name</label>
+            <input id="editor-player-name-input" type="text" maxlength="32" placeholder="Required to save/play" />
+            <button type="button" id="btn-editor-back">Back to Intro</button>
+          </div>
+        </header>
 
-        <div class="editor-controls">
-          <label for="editor-source-level">Source Level</label>
-          <select id="editor-source-level"></select>
-          <button type="button" id="btn-editor-load">Load</button>
-          <button type="button" id="btn-editor-new">New Blank</button>
+        <div class="editor-page-layout">
+          <aside class="editor-sidebar">
+            <section class="editor-card">
+              <h3>Template</h3>
+              <label for="editor-source-level">Base Level</label>
+              <select id="editor-source-level"></select>
+              <div class="button-row editor-card-buttons">
+                <button type="button" id="btn-editor-load">Load</button>
+                <button type="button" id="btn-editor-new">New Blank</button>
+              </div>
+            </section>
+
+            <section class="editor-card">
+              <h3>Map Setup</h3>
+              <label for="editor-level-id">Level ID</label>
+              <input id="editor-level-id" type="text" placeholder="custom-level-1" />
+              <div class="editor-dimensions">
+                <div>
+                  <label for="editor-width">Width</label>
+                  <input id="editor-width" type="number" min="4" max="80" value="25" />
+                </div>
+                <div>
+                  <label for="editor-height">Height</label>
+                  <input id="editor-height" type="number" min="4" max="80" value="16" />
+                </div>
+              </div>
+              <button type="button" id="btn-editor-resize">Resize Grid</button>
+            </section>
+
+            <section class="editor-card">
+              <h3>Tiles</h3>
+              <div class="editor-palette" id="editor-palette"></div>
+              <p class="editor-selected">Selected: <strong id="editor-selected-tile">Wall (#)</strong></p>
+            </section>
+
+            <section class="editor-card">
+              <h3>Save</h3>
+              <div class="button-row editor-card-buttons">
+                <button type="button" id="btn-editor-save">Save Level</button>
+                <button type="button" id="btn-editor-save-play">Save + Play</button>
+                <button type="button" id="btn-editor-export">Download .txt</button>
+              </div>
+              <div class="editor-feedback" id="editor-feedback" aria-live="polite"></div>
+            </section>
+          </aside>
+
+          <section class="editor-workspace">
+            <div class="editor-grid-scroll">
+              <div class="editor-grid" id="editor-grid" role="grid" aria-label="Level tile grid"></div>
+            </div>
+          </section>
         </div>
-
-        <div class="editor-controls">
-          <label for="editor-level-id">Save ID</label>
-          <input id="editor-level-id" type="text" placeholder="custom-level-1" />
-          <label for="editor-width">Width</label>
-          <input id="editor-width" type="number" min="4" max="80" value="25" />
-          <label for="editor-height">Height</label>
-          <input id="editor-height" type="number" min="4" max="80" value="16" />
-          <button type="button" id="btn-editor-resize">Resize</button>
-        </div>
-
-        <div class="editor-palette" id="editor-palette"></div>
-        <div class="editor-selected">Selected: <strong id="editor-selected-tile">Wall (#)</strong></div>
-
-        <div class="editor-grid" id="editor-grid" role="grid" aria-label="Level tile grid"></div>
-
-        <div class="button-row">
-          <button type="button" id="btn-editor-save">Save Level</button>
-          <button type="button" id="btn-editor-save-play">Save + Play</button>
-          <button type="button" id="btn-editor-export">Download .txt</button>
-          <button type="button" id="btn-editor-back">Back</button>
-        </div>
-
-        <div class="editor-feedback" id="editor-feedback" aria-live="polite"></div>
       </section>
 
       <section class="menu-panel" data-panel="pause" hidden>
@@ -506,6 +543,10 @@ export class OverlayUI {
       this.controller.setPlayerName(this.introPlayerNameInput.value);
     });
 
+    this.editorPlayerNameInput.addEventListener('input', () => {
+      this.controller.setPlayerName(this.editorPlayerNameInput.value);
+    });
+
     this.levelSelect.addEventListener('change', () => {
       const level = Number.parseInt(this.levelSelect.value, 10);
       this.controller.setSelectedLevel(level);
@@ -528,39 +569,13 @@ export class OverlayUI {
       this.controller.setLightingEnabled(this.introLightingToggle.checked);
     });
 
-    this.editorGridRoot.addEventListener('mousedown', (event) => {
-      const target = event.target as HTMLElement;
-      if (!target.dataset.x || !target.dataset.y) {
-        return;
-      }
-
-      this.editorPainting = true;
-      this.paintGridCell(target);
-    });
-
-    this.editorGridRoot.addEventListener('mouseover', (event) => {
-      const mouseEvent = event as MouseEvent;
-      if (!shouldPaintOnHover(this.editorPainting, mouseEvent.buttons)) {
-        if (this.editorPainting && mouseEvent.buttons === 0) {
-          this.editorPainting = false;
-        }
-        return;
-      }
-
+    this.editorGridRoot.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
       if (!target.dataset.x || !target.dataset.y) {
         return;
       }
 
       this.paintGridCell(target);
-    });
-
-    window.addEventListener('mouseup', () => {
-      this.editorPainting = false;
-    });
-
-    window.addEventListener('blur', () => {
-      this.editorPainting = false;
     });
 
     window.addEventListener('keydown', (event) => {
@@ -614,7 +629,13 @@ export class OverlayUI {
   }
 
   private startFromIntro(): void {
-    this.controller.setPlayerName(this.introPlayerNameInput.value);
+    const nextName = this.introPlayerNameInput.value.trim();
+    this.controller.setPlayerName(nextName);
+    if (!nextName) {
+      this.introPlayerNameInput.focus();
+      return;
+    }
+
     this.closeIntroSettings();
     this.introCinematic.skip();
     this.controller.startSelectedLevel();
@@ -636,6 +657,9 @@ export class OverlayUI {
     if (this.introPlayerNameInput.value !== snapshot.playerName) {
       this.introPlayerNameInput.value = snapshot.playerName;
     }
+    if (this.editorPlayerNameInput.value !== snapshot.playerName) {
+      this.editorPlayerNameInput.value = snapshot.playerName;
+    }
 
     this.volumeSlider.value = snapshot.settings.volume.toString();
     this.introVolumeSlider.value = snapshot.settings.volume.toString();
@@ -653,6 +677,8 @@ export class OverlayUI {
     this.playButton.disabled = !canPlay;
     this.levelStartButton.disabled = !canPlay;
     this.introStartButton.disabled = !canPlay;
+    this.editorSaveButton.disabled = !canPlay;
+    this.editorSavePlayButton.disabled = !canPlay;
 
     this.panels.intro.hidden = snapshot.screen !== 'intro';
     this.panels.main.hidden = snapshot.screen !== 'main';
@@ -690,7 +716,11 @@ export class OverlayUI {
     }
 
     if (screenChanged && snapshot.screen === 'editor') {
-      this.editorIdInput.focus();
+      if (!canPlay) {
+        this.editorPlayerNameInput.focus();
+      } else {
+        this.editorIdInput.focus();
+      }
     }
 
     if (snapshot.screen === 'level-select') {
@@ -708,6 +738,11 @@ export class OverlayUI {
     }
 
     this.root.classList.toggle('overlay-hidden', snapshot.screen === 'playing');
+    this.root.classList.toggle('editor-screen-active', snapshot.screen === 'editor');
+    const gameShell = document.querySelector<HTMLElement>('#game-shell');
+    if (gameShell) {
+      gameShell.classList.toggle('editor-screen-active', snapshot.screen === 'editor');
+    }
     this.lastRenderedScreen = snapshot.screen;
   }
 
@@ -999,6 +1034,7 @@ export class OverlayUI {
     const authorName = this.controller.getPlayerName();
     if (!authorName) {
       this.showEditorFeedback('Enter a player name before saving or playing levels.', true);
+      this.editorPlayerNameInput.focus();
       return;
     }
 

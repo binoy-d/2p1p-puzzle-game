@@ -114,7 +114,7 @@ export class GameController {
   }
 
   public openMainMenu(): void {
-    this.screen = 'main';
+    this.screen = 'intro';
     this.inputQueue.length = 0;
     this.clearTransientEffects();
     this.emit();
