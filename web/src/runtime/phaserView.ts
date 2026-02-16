@@ -1,5 +1,11 @@
 import Phaser from 'phaser';
 import type { ControllerSnapshot, GameController } from '../app/gameController';
+import {
+  collectEnemyPathTargets,
+  computePathDotOpacity,
+  computePathDotScale,
+  pathDistanceFromNextHit,
+} from './enemyPathVisuals';
 
 const FIXED_STEP_MS = 1000 / 60;
 const MIN_TILE_SIZE = 22;
@@ -130,48 +136,6 @@ class PuzzleScene extends Phaser.Scene {
     return clampByte(swop);
   }
 
-  private predictEnemyNextTile(
-    enemy: ControllerSnapshot['gameState']['enemies'][number],
-    grid: string[][],
-  ): { x: number; y: number } | null {
-    const currentRaw = grid[enemy.y]?.[enemy.x];
-    const parsedCurrent = Number.parseInt(currentRaw, 10);
-    if (!Number.isInteger(parsedCurrent)) {
-      return null;
-    }
-
-    let currentValue = parsedCurrent;
-    for (let row = enemy.y - 1; row <= enemy.y + 1; row += 1) {
-      for (let col = enemy.x - 1; col <= enemy.x + 1; col += 1) {
-        const candidate = grid[row]?.[col];
-        const newValue = Number.parseInt(candidate ?? '', 10);
-        if (Number.isInteger(newValue) && newValue - 1 === currentValue) {
-          return { x: col, y: row };
-        }
-
-        if (currentValue === 17) {
-          currentValue = 1;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  private collectEnemyTargetKeys(state: ControllerSnapshot['gameState']): Set<string> {
-    const keys = new Set<string>();
-    for (const enemy of state.enemies) {
-      const target = this.predictEnemyNextTile(enemy, state.grid);
-      if (!target) {
-        continue;
-      }
-
-      keys.add(`${target.x},${target.y}`);
-    }
-
-    return keys;
-  }
-
   private computeTileSize(viewportWidth: number, viewportHeight: number, levelWidth: number, levelHeight: number): number {
     if (levelWidth <= 0 || levelHeight <= 0) {
       return 40;
@@ -198,7 +162,8 @@ class PuzzleScene extends Phaser.Scene {
     const boardHeight = levelHeight * tileSize;
     const offsetX = Math.floor((viewportWidth - boardWidth) / 2);
     const offsetY = Math.floor((viewportHeight - boardHeight) / 2);
-    const enemyTargetKeys = this.collectEnemyTargetKeys(state);
+    const enemyPathTargets = collectEnemyPathTargets(state.enemies, state.grid);
+    const enemyTargetValues = enemyPathTargets.map((target) => target.value);
 
     this.terrainLayer.clear();
     this.entityLayer.clear();
@@ -231,26 +196,9 @@ class PuzzleScene extends Phaser.Scene {
           blue = 0;
         }
 
-        const isEnemyTarget = enemyTargetKeys.has(`${x},${y}`);
-        if (isEnemyTarget) {
-          red = clampByte(red + 120);
-          green = clampByte(green - 38);
-          blue = clampByte(blue - 38);
-        }
-
         const color = rgb(red, green, blue);
         this.terrainLayer.fillStyle(color, 1);
         this.terrainLayer.fillRect(offsetX + x * tileSize, offsetY + y * tileSize, tileSize, tileSize);
-
-        if (isEnemyTarget) {
-          this.terrainLayer.fillStyle(rgb(255, 76, 96), 0.35);
-          this.terrainLayer.fillRect(
-            offsetX + x * tileSize + tileSize * 0.14,
-            offsetY + y * tileSize + tileSize * 0.14,
-            tileSize * 0.72,
-            tileSize * 0.72,
-          );
-        }
 
         if (tile === 'x') {
           const subSize = tileSize / 4;
@@ -284,21 +232,33 @@ class PuzzleScene extends Phaser.Scene {
         }
 
         if (isNumericTile(tile)) {
+          const tileValue = Number.parseInt(tile, 10);
+          const distanceFromNext = pathDistanceFromNextHit(tileValue, enemyTargetValues);
+          const opacity = computePathDotOpacity(distanceFromNext);
+          const centerScale = computePathDotScale(distanceFromNext, time, x * 0.37 + y * 0.53);
+          const centerSize = tileSize * centerScale;
+          const outerSize = centerSize * 1.55;
+          const outerInset = (tileSize - outerSize) / 2;
+          const centerInset = (tileSize - centerSize) / 2;
           const pathPulse = 0.5 + 0.5 * Math.sin((time + x * 37 + y * 53) / 180);
-          this.terrainLayer.fillStyle(rgb(120 + pathPulse * 45, 0, 0), 1);
+
+          this.terrainLayer.fillStyle(rgb(120 + pathPulse * 45, 0, 0), opacity * 0.55);
           this.terrainLayer.fillRect(
-            offsetX + x * tileSize + tileSize * 0.31,
-            offsetY + y * tileSize + tileSize * 0.31,
-            tileSize * 0.38,
-            tileSize * 0.38,
+            offsetX + x * tileSize + outerInset,
+            offsetY + y * tileSize + outerInset,
+            outerSize,
+            outerSize,
           );
 
-          this.terrainLayer.fillStyle(rgb(232 + pathPulse * 22, 25 + pathPulse * 25, 25 + pathPulse * 20), 1);
+          this.terrainLayer.fillStyle(
+            rgb(232 + pathPulse * 22, 25 + pathPulse * 25, 25 + pathPulse * 20),
+            opacity,
+          );
           this.terrainLayer.fillRect(
-            offsetX + x * tileSize + tileSize * 0.39,
-            offsetY + y * tileSize + tileSize * 0.39,
-            tileSize * 0.22,
-            tileSize * 0.22,
+            offsetX + x * tileSize + centerInset,
+            offsetY + y * tileSize + centerInset,
+            centerSize,
+            centerSize,
           );
         }
       }

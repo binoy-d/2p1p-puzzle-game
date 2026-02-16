@@ -102,8 +102,7 @@ SQLite DB is stored at `/backend/data/puzzle.sqlite`.
 Lighting v1 is implemented as:
 
 - Per-tile brightness shading that matches the original Java feel (walls/floors brighten by player proximity).
-- Enemy next-move tile gets a focused red warning tint.
-- Enhanced enemy path visibility with animated red center markers on numeric path tiles.
+- Enemy path center dots pulse in size; the next-hit dot is fully opaque, and farther path dots fade progressively.
 - Toggleable from Settings (stored in `localStorage`).
 
 ## Testing Approach

@@ -7,6 +7,7 @@ import {
   parseTextToGrid,
   resizeGrid,
   serializeGrid,
+  shouldPaintOnHover,
   validateGridForEditor,
 } from '../../src/editor/levelEditorUtils';
 
@@ -60,5 +61,13 @@ describe('level editor utils', () => {
 
     const next = nextCustomLevelId(['custom-level-1', 'custom-level-2']);
     expect(next).toBe('custom-level-3');
+  });
+
+  it('only continues paint while left mouse button is held', () => {
+    expect(shouldPaintOnHover(false, 1)).toBe(false);
+    expect(shouldPaintOnHover(true, 0)).toBe(false);
+    expect(shouldPaintOnHover(true, 1)).toBe(true);
+    expect(shouldPaintOnHover(true, 2)).toBe(false);
+    expect(shouldPaintOnHover(true, 3)).toBe(true);
   });
 });

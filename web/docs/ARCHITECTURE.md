@@ -70,8 +70,8 @@ Turn order (matching Java behavior):
 ## Lighting v1
 
 - Tile-based brightness shading to preserve original Java visual style.
-- Enemy next-step tile receives focused red warning tint.
-- Numeric enemy path tiles rendered with strong red center markers.
+- Numeric enemy path center dots pulse in size.
+- Dot opacity is strongest for the immediate next-hit tile and fades with path distance.
 - Runtime toggle from settings (`lightingEnabled`) switches tile glow intensity behavior.
 
 ## Level Editor + Saver

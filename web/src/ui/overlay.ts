@@ -11,6 +11,7 @@ import {
   resizeGrid,
   sanitizeDimension,
   serializeGrid,
+  shouldPaintOnHover,
   validateGridForEditor,
 } from '../editor/levelEditorUtils';
 import { fetchTopScores, saveCustomLevel, type LevelScoreRecord } from '../runtime/backendApi';
@@ -365,7 +366,11 @@ export class OverlayUI {
     });
 
     this.editorGridRoot.addEventListener('mouseover', (event) => {
-      if (!this.editorPainting) {
+      const mouseEvent = event as MouseEvent;
+      if (!shouldPaintOnHover(this.editorPainting, mouseEvent.buttons)) {
+        if (this.editorPainting && mouseEvent.buttons === 0) {
+          this.editorPainting = false;
+        }
         return;
       }
 
@@ -378,6 +383,10 @@ export class OverlayUI {
     });
 
     window.addEventListener('mouseup', () => {
+      this.editorPainting = false;
+    });
+
+    window.addEventListener('blur', () => {
       this.editorPainting = false;
     });
 

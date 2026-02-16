@@ -170,3 +170,7 @@ export function nextCustomLevelId(existingIds: string[]): string {
 
   return `custom-level-${Date.now()}`;
 }
+
+export function shouldPaintOnHover(isPainting: boolean, mouseButtons: number): boolean {
+  return isPainting && (mouseButtons & 1) === 1;
+}
