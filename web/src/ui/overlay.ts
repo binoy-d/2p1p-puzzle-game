@@ -13,7 +13,7 @@ import {
   serializeGrid,
   validateGridForEditor,
 } from '../editor/levelEditorUtils';
-import { loadStoredCustomLevels, upsertStoredCustomLevel } from '../runtime/customLevelStorage';
+import { fetchTopScores, saveCustomLevel, type LevelScoreRecord } from '../runtime/backendApi';
 
 function asElement<T extends HTMLElement>(root: ParentNode, selector: string): T {
   const element = root.querySelector(selector);
@@ -73,11 +73,21 @@ export class OverlayUI {
 
   private readonly statusText: HTMLElement;
 
+  private readonly playerNameInput: HTMLInputElement;
+
+  private readonly playButton: HTMLButtonElement;
+
+  private readonly levelStartButton: HTMLButtonElement;
+
   private readonly volumeSlider: HTMLInputElement;
 
   private readonly lightingToggle: HTMLInputElement;
 
   private readonly panels: Record<string, HTMLElement>;
+
+  private readonly scoreList: HTMLOListElement;
+
+  private readonly scoreStatus: HTMLElement;
 
   private readonly editorSourceSelect: HTMLSelectElement;
 
@@ -105,6 +115,10 @@ export class OverlayUI {
 
   private lastSnapshot: ControllerSnapshot | null = null;
 
+  private readonly scoreCache = new Map<string, LevelScoreRecord[]>();
+
+  private scoreRequestNonce = 0;
+
   public constructor(root: HTMLElement, controller: GameController) {
     this.root = root;
     this.controller = controller;
@@ -121,8 +135,13 @@ export class OverlayUI {
 
     this.levelSelect = asElement<HTMLSelectElement>(this.root, '#level-select-input');
     this.statusText = asElement<HTMLElement>(this.root, '#menu-status');
+    this.playerNameInput = asElement<HTMLInputElement>(this.root, '#player-name-input');
+    this.playButton = asElement<HTMLButtonElement>(this.root, '#btn-play');
+    this.levelStartButton = asElement<HTMLButtonElement>(this.root, '#btn-level-start');
     this.volumeSlider = asElement<HTMLInputElement>(this.root, '#settings-volume');
     this.lightingToggle = asElement<HTMLInputElement>(this.root, '#settings-lighting');
+    this.scoreList = asElement<HTMLOListElement>(this.root, '#score-list');
+    this.scoreStatus = asElement<HTMLElement>(this.root, '#score-status');
 
     this.editorSourceSelect = asElement<HTMLSelectElement>(this.root, '#editor-source-level');
     this.editorIdInput = asElement<HTMLInputElement>(this.root, '#editor-level-id');
@@ -146,6 +165,9 @@ export class OverlayUI {
       <section class="menu-panel" data-panel="main">
         <h1>2P1P Puzzle Game</h1>
         <p>Move all white squares to green goals. Avoid lava and enemies.</p>
+        <label for="player-name-input">Player Name (required)</label>
+        <input id="player-name-input" type="text" maxlength="32" placeholder="Enter your name" />
+
         <div class="button-row">
           <button type="button" id="btn-play">Play</button>
           <button type="button" id="btn-level-select">Level Select</button>
@@ -158,6 +180,12 @@ export class OverlayUI {
         <h2>Level Select</h2>
         <label for="level-select-input">Choose a level</label>
         <select id="level-select-input"></select>
+
+        <div class="scoreboard">
+          <div id="score-status" class="score-status">Top 10 scores</div>
+          <ol id="score-list" class="score-list"></ol>
+        </div>
+
         <div class="button-row">
           <button type="button" id="btn-level-start">Start</button>
           <button type="button" id="btn-level-back">Back</button>
@@ -206,7 +234,7 @@ export class OverlayUI {
         <div class="editor-grid" id="editor-grid" role="grid" aria-label="Level tile grid"></div>
 
         <div class="button-row">
-          <button type="button" id="btn-editor-save">Save Local</button>
+          <button type="button" id="btn-editor-save">Save Level</button>
           <button type="button" id="btn-editor-save-play">Save + Play</button>
           <button type="button" id="btn-editor-export">Download .txt</button>
           <button type="button" id="btn-editor-back">Back</button>
@@ -229,12 +257,13 @@ export class OverlayUI {
   }
 
   private bindEvents(): void {
-    asElement<HTMLButtonElement>(this.root, '#btn-play').addEventListener('click', () => {
+    this.playButton.addEventListener('click', () => {
       this.controller.startSelectedLevel();
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-level-select').addEventListener('click', () => {
       this.controller.openLevelSelect();
+      void this.loadScoresForSelectedLevel(true);
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-open-editor').addEventListener('click', () => {
@@ -250,7 +279,7 @@ export class OverlayUI {
       this.controller.openSettings();
     });
 
-    asElement<HTMLButtonElement>(this.root, '#btn-level-start').addEventListener('click', () => {
+    this.levelStartButton.addEventListener('click', () => {
       const level = Number.parseInt(this.levelSelect.value, 10);
       this.controller.startLevel(level);
     });
@@ -292,11 +321,11 @@ export class OverlayUI {
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-editor-save').addEventListener('click', () => {
-      this.saveEditorLevel(false);
+      void this.saveEditorLevel(false);
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-editor-save-play').addEventListener('click', () => {
-      this.saveEditorLevel(true);
+      void this.saveEditorLevel(true);
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-editor-export').addEventListener('click', () => {
@@ -307,9 +336,14 @@ export class OverlayUI {
       this.controller.openMainMenu();
     });
 
+    this.playerNameInput.addEventListener('input', () => {
+      this.controller.setPlayerName(this.playerNameInput.value);
+    });
+
     this.levelSelect.addEventListener('change', () => {
       const level = Number.parseInt(this.levelSelect.value, 10);
       this.controller.setSelectedLevel(level);
+      void this.loadScoresForSelectedLevel(true);
     });
 
     this.volumeSlider.addEventListener('input', () => {
@@ -382,9 +416,17 @@ export class OverlayUI {
     this.syncLevelOptions(snapshot);
     this.syncEditorSourceOptions(snapshot);
 
+    if (this.playerNameInput.value !== snapshot.playerName) {
+      this.playerNameInput.value = snapshot.playerName;
+    }
+
     this.volumeSlider.value = snapshot.settings.volume.toString();
     this.lightingToggle.checked = snapshot.settings.lightingEnabled;
     this.statusText.textContent = snapshot.statusMessage ?? '';
+
+    const canPlay = snapshot.playerName.trim().length > 0;
+    this.playButton.disabled = !canPlay;
+    this.levelStartButton.disabled = !canPlay;
 
     this.panels.main.hidden = snapshot.screen !== 'main';
     this.panels.levelSelect.hidden = snapshot.screen !== 'level-select';
@@ -393,7 +435,7 @@ export class OverlayUI {
     this.panels.pause.hidden = snapshot.screen !== 'paused';
 
     if (snapshot.screen === 'main') {
-      asElement<HTMLButtonElement>(this.root, '#btn-play').focus();
+      this.playButton.focus();
     }
 
     if (snapshot.screen === 'paused') {
@@ -406,6 +448,10 @@ export class OverlayUI {
 
     if (snapshot.screen === 'editor') {
       this.editorIdInput.focus();
+    }
+
+    if (snapshot.screen === 'level-select') {
+      void this.loadScoresForSelectedLevel(false);
     }
 
     this.root.classList.toggle('overlay-hidden', snapshot.screen === 'playing');
@@ -431,17 +477,13 @@ export class OverlayUI {
   }
 
   private syncEditorSourceOptions(snapshot: ControllerSnapshot): void {
-    const customLevelIds = new Set(loadStoredCustomLevels().map((entry) => entry.id));
-    const signature = snapshot.levels
-      .map((level) => `${level.id}:${customLevelIds.has(level.id) ? 'custom' : 'builtin'}`)
-      .join('|');
-
+    const signature = snapshot.levels.map((level) => level.id).join('|');
     if (this.editorSourceSelect.dataset.signature !== signature) {
       this.editorSourceSelect.innerHTML = '';
       snapshot.levels.forEach((level, index) => {
         const option = document.createElement('option');
         option.value = String(index);
-        option.textContent = customLevelIds.has(level.id) ? `Custom: ${level.id}` : `Built-in: ${level.id}`;
+        option.textContent = `Level ${index + 1} (${level.id})`;
         this.editorSourceSelect.append(option);
       });
       this.editorSourceSelect.dataset.signature = signature;
@@ -450,6 +492,62 @@ export class OverlayUI {
     const nextValue = String(snapshot.selectedLevelIndex);
     if (this.editorSourceSelect.value !== nextValue) {
       this.editorSourceSelect.value = nextValue;
+    }
+  }
+
+  private async loadScoresForSelectedLevel(forceRefresh: boolean): Promise<void> {
+    const snapshot = this.lastSnapshot;
+    if (!snapshot) {
+      return;
+    }
+
+    const level = snapshot.levels[snapshot.selectedLevelIndex];
+    if (!level) {
+      this.scoreStatus.textContent = 'No level selected.';
+      this.scoreList.innerHTML = '';
+      return;
+    }
+
+    if (!forceRefresh && this.scoreCache.has(level.id)) {
+      this.renderScores(level.id, this.scoreCache.get(level.id) ?? []);
+      return;
+    }
+
+    const nonce = ++this.scoreRequestNonce;
+    this.scoreStatus.textContent = `Loading scores for ${level.id}...`;
+
+    try {
+      const scores = await fetchTopScores(level.id);
+      if (nonce !== this.scoreRequestNonce) {
+        return;
+      }
+
+      this.scoreCache.set(level.id, scores);
+      this.renderScores(level.id, scores);
+    } catch (error) {
+      if (nonce !== this.scoreRequestNonce) {
+        return;
+      }
+
+      this.scoreStatus.textContent = `Scores unavailable: ${String(error)}`;
+      this.scoreList.innerHTML = '';
+    }
+  }
+
+  private renderScores(levelId: string, scores: LevelScoreRecord[]): void {
+    this.scoreList.innerHTML = '';
+
+    if (scores.length === 0) {
+      this.scoreStatus.textContent = `${levelId}: no scores yet.`;
+      return;
+    }
+
+    this.scoreStatus.textContent = `${levelId}: top ${Math.min(scores.length, 10)} scores`;
+    for (let i = 0; i < scores.length; i += 1) {
+      const score = scores[i];
+      const item = document.createElement('li');
+      item.textContent = `${i + 1}. ${score.playerName} - ${score.moves} moves - ${(score.durationMs / 1000).toFixed(1)}s`;
+      this.scoreList.append(item);
     }
   }
 
@@ -551,14 +649,7 @@ export class OverlayUI {
 
   private loadLevelIntoEditor(level: ParsedLevel): void {
     this.editorGrid = cloneGrid(level.grid);
-
-    const customLevelIds = new Set(loadStoredCustomLevels().map((entry) => entry.id));
-    if (customLevelIds.has(level.id)) {
-      this.editorIdInput.value = level.id;
-    } else {
-      this.editorIdInput.value = this.defaultEditorId();
-    }
-
+    this.editorIdInput.value = this.defaultEditorId();
     this.renderEditorGrid();
     this.showEditorFeedback(`Loaded ${level.id}`);
   }
@@ -600,25 +691,31 @@ export class OverlayUI {
 
   private resolveSaveId(baseId: string, snapshot: ControllerSnapshot): string {
     const allIds = new Set(snapshot.levels.map((level) => level.id));
-    const storedIds = new Set(loadStoredCustomLevels().map((entry) => entry.id));
-
     let candidate = baseId || this.defaultEditorId();
-    if (allIds.has(candidate) && !storedIds.has(candidate)) {
-      candidate = `${candidate}-custom`;
+
+    if (!allIds.has(candidate)) {
+      return candidate;
     }
 
+    const stem = candidate;
     let suffix = 2;
-    while (allIds.has(candidate) && !storedIds.has(candidate)) {
-      candidate = `${baseId || 'custom-level'}-${suffix}`;
+    while (allIds.has(candidate)) {
+      candidate = `${stem}-${suffix}`;
       suffix += 1;
     }
 
     return candidate;
   }
 
-  private saveEditorLevel(playAfterSave: boolean): void {
+  private async saveEditorLevel(playAfterSave: boolean): Promise<void> {
     const snapshot = this.lastSnapshot;
     if (!snapshot) {
+      return;
+    }
+
+    const authorName = this.controller.getPlayerName();
+    if (!authorName) {
+      this.showEditorFeedback('Enter a player name before saving or playing levels.', true);
       return;
     }
 
@@ -639,29 +736,34 @@ export class OverlayUI {
     }
 
     const text = serializeGrid(this.editorGrid);
-    const parsed = parseLevelText(levelId, text);
 
-    upsertStoredCustomLevel({
-      id: levelId,
-      name: levelId,
-      text,
-      updatedAt: Date.now(),
-    });
+    try {
+      const saved = await saveCustomLevel({
+        id: levelId,
+        name: levelId,
+        text,
+        authorName,
+      });
 
-    const levelIndex = this.controller.upsertLevel(parsed);
-    this.editorIdInput.value = levelId;
+      const parsed = parseLevelText(saved.id, saved.text);
+      const levelIndex = this.controller.upsertLevel(parsed);
+      this.editorIdInput.value = saved.id;
+      this.scoreCache.delete(saved.id);
 
-    if (playAfterSave) {
-      this.controller.startLevel(levelIndex);
-      return;
+      if (playAfterSave) {
+        this.controller.startLevel(levelIndex);
+        return;
+      }
+
+      if (validation.warnings.length > 0) {
+        this.showEditorFeedback(`Saved ${saved.id}. Warning: ${validation.warnings.join(' ')}`);
+        return;
+      }
+
+      this.showEditorFeedback(`Saved ${saved.id} to backend.`);
+    } catch (error) {
+      this.showEditorFeedback(`Save failed: ${String(error)}`, true);
     }
-
-    if (validation.warnings.length > 0) {
-      this.showEditorFeedback(`Saved ${levelId}. Warning: ${validation.warnings.join(' ')}`);
-      return;
-    }
-
-    this.showEditorFeedback(`Saved ${levelId}.`);
   }
 
   private exportEditorText(): void {

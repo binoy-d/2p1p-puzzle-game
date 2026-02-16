@@ -4,10 +4,12 @@ on:
   push:
     paths:
       - 'web/**'
+      - 'backend/**'
       - '.github/workflows/web-ci.yml'
   pull_request:
     paths:
       - 'web/**'
+      - 'backend/**'
       - '.github/workflows/web-ci.yml'
 
 jobs:
@@ -38,3 +40,23 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Syntax Check
+        run: npm run check
+
+      - name: Test
+        run: npm run test

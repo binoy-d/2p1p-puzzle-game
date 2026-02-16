@@ -33,6 +33,7 @@ describe('game controller', () => {
     expect(snapshot.selectedLevelIndex).toBe(2);
     expect(snapshot.gameState.levelId).toBe('custom-level-1');
 
+    controller.setPlayerName('Tester');
     controller.startLevel(index);
     expect(controller.getSnapshot().screen).toBe('playing');
     expect(controller.getSnapshot().gameState.levelId).toBe('custom-level-1');
@@ -45,5 +46,17 @@ describe('game controller', () => {
     const index = controller.upsertLevel(replacement);
     expect(index).toBe(1);
     expect(controller.getSnapshot().levels[1].grid[1][2]).toBe('!');
+  });
+
+  it('requires a player name before starting gameplay', () => {
+    const controller = makeController();
+
+    controller.startSelectedLevel();
+    expect(controller.getSnapshot().screen).toBe('main');
+    expect(controller.getSnapshot().statusMessage).toMatch(/player name/i);
+
+    controller.setPlayerName('Ava');
+    controller.startSelectedLevel();
+    expect(controller.getSnapshot().screen).toBe('playing');
   });
 });

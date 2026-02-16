@@ -4,12 +4,21 @@ This repository now contains two versions:
 
 - Legacy Java version in `/src`.
 - Browser version in `/web` using TypeScript + Vite + Phaser 3.
+- Backend API in `/backend` (Node + SQLite) for custom levels and scoreboards.
 
-## Web Game Quick Start
+## Full Stack Quick Start
 
-From the `web` folder:
+Start backend:
 
 ```bash
+cd backend
+npm run start
+```
+
+Start web app:
+
+```bash
+cd web
 npm install
 npm run dev
 ```
@@ -43,9 +52,10 @@ npm run build
 ## Controls
 
 - Move: `WASD` or arrow keys
-- Pause/Resume: `Escape`
+- Pause menu: `Escape`
 - Menus: mouse + keyboard focusable buttons
 - Level Editor: available from main menu
+- Player name is required before starting a run
 
 ## Levels
 
@@ -70,18 +80,29 @@ Level files live in `/web/public/assets/levels/*.txt` and are listed in:
 
 - Open from Main Menu -> `Level Editor`.
 - Paint tiles with the palette (`#`, space, `P`, `!`, `x`, `1-9`).
-- Load existing built-in/custom levels into the editor.
-- Resize maps, edit raw text, and validate before save.
-- `Save Local` stores custom levels in browser `localStorage` and adds them to level select immediately.
+- Load existing levels into the editor.
+- Resize maps and validate before save.
+- `Save Level` stores custom levels in backend SQLite and adds them to level select immediately.
 - `Save + Play` saves then launches the edited level.
 - `Download .txt` exports a compatible level text file.
+
+## Backend API
+
+Base URL: `http://localhost:8787`
+
+- `GET /api/levels` -> all user-created levels
+- `POST /api/levels` -> create/update user level
+- `GET /api/scores/:levelId` -> top 10 scores for level
+- `POST /api/scores` -> submit a run score
+
+SQLite DB is stored at `/backend/data/puzzle.sqlite`.
 
 ## Lighting (High Level)
 
 Lighting v1 is implemented as:
 
 - Per-tile brightness shading that matches the original Java feel (walls/floors brighten by player proximity).
-- Short-range enemy red tint spread on surrounding tiles for hazard readability.
+- Enemy next-move tile gets a focused red warning tint.
 - Enhanced enemy path visibility with animated red center markers on numeric path tiles.
 - Toggleable from Settings (stored in `localStorage`).
 

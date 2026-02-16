@@ -9,6 +9,7 @@
 - Menus and level editor UI: `/web/src/ui`
 - Editor utilities: `/web/src/editor`
 - Tests: `/web/tests`
+- Backend API + SQLite: `/backend`
 
 ## Core Engineering Rules
 
@@ -33,6 +34,13 @@ npm run coverage
 npm run build
 ```
 
+Run backend from `/backend`:
+
+```bash
+npm run start
+npm run test
+```
+
 ## Testing Expectations
 
 - Add/update unit tests for deterministic behavior changes.
@@ -45,9 +53,11 @@ npm run build
 - Save flow should:
   1. validate grid,
   2. parse through `parseLevelText`,
-  3. persist to `localStorage`,
+  3. persist to backend `POST /api/levels`,
   4. upsert into controller level list.
 - Export `.txt` files in the same format as built-in maps.
+- Require a non-empty player name before allowing gameplay.
+- Submit per-level scores (`moves`, `durationMs`) to backend and keep top 10 ordering stable.
 
 ## Styling and UX
 

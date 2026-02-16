@@ -1,0 +1,12 @@
+{
+  "name": "2p1p-puzzle-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.mjs",
+    "start": "node src/server.mjs",
+    "check": "node --check src/server.mjs",
+    "test": "node --test"
+  }
+}

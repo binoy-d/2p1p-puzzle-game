@@ -5,7 +5,7 @@
 - Keep game rules deterministic and testable.
 - Separate simulation from rendering and browser IO.
 - Reuse text levels with minimal format changes.
-- Keep stack simple: Vite + TypeScript + Phaser + DOM overlays.
+- Keep stack simple: Vite + TypeScript + Phaser + DOM overlays + minimal Node backend.
 
 ## Module Boundaries
 
@@ -33,7 +33,7 @@ Browser/Phaser integration and asset loading.
 - `levelLoader.ts`: loads manifest + level text files.
 - `phaserView.ts`: renders state, collects keyboard input, runs fixed-step loop.
 - `settingsStorage.ts`: persists settings to `localStorage`.
-- `customLevelStorage.ts`: persists custom editor levels to `localStorage`.
+- `backendApi.ts`: HTTP client for custom levels and scoreboards.
 
 ### 3) App/UI (`/web/src/app`, `/web/src/ui`)
 
@@ -70,16 +70,31 @@ Turn order (matching Java behavior):
 ## Lighting v1
 
 - Tile-based brightness shading to preserve original Java visual style.
-- Enemy short-spread red tint added per tile for threat awareness.
+- Enemy next-step tile receives focused red warning tint.
 - Numeric enemy path tiles rendered with strong red center markers.
 - Runtime toggle from settings (`lightingEnabled`) switches tile glow intensity behavior.
 
 ## Level Editor + Saver
 
 - In-browser editor built with DOM controls and a tile grid painter.
-- Supports loading built-in/custom levels, resizing, text import/export, and validation.
-- Saving writes to browser `localStorage`, reparses through core parser, and injects into live controller level list.
+- Supports loading levels, resizing, text export, and validation.
+- Saving writes to backend API (SQLite), reparses through core parser, and injects into live controller level list.
 - Export path is plain `.txt` to remain compatible with repo map format.
+
+## Backend
+
+- Location: `/backend`
+- Runtime: Node HTTP server + built-in SQLite (`node:sqlite`)
+- Stores:
+  - user-created levels (`user_levels`)
+  - run scores (`level_scores`)
+- Exposes:
+  - `GET /api/levels`
+  - `POST /api/levels`
+  - `GET /api/scores/:levelId`
+  - `POST /api/scores`
+
+Top 10 ordering is deterministic: lowest `moves`, then lowest `durationMs`, then earliest submission.
 
 ## Testing
 
@@ -107,7 +122,7 @@ web/
     editor/
       levelEditorUtils.ts
     runtime/
-      customLevelStorage.ts
+      backendApi.ts
       levelLoader.ts
       phaserView.ts
       settingsStorage.ts
@@ -127,6 +142,14 @@ web/
     fixtures/
       map0.txt
       map1.txt
+backend/
+  src/
+    config.mjs
+    db.mjs
+    server.mjs
+    validation.mjs
+  data/
+    puzzle.sqlite
 ```
 
 ## Extending Entities

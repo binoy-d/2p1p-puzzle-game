@@ -1,6 +1,8 @@
 import { GameController } from './app/gameController';
+import { parseLevelText } from './core/levelParser';
+import type { ParsedLevel } from './core/types';
+import { fetchCustomLevels } from './runtime/backendApi';
 import { loadLevelsFromManifest } from './runtime/levelLoader';
-import { loadStoredCustomLevels, parseStoredCustomLevels } from './runtime/customLevelStorage';
 import { PhaserGameView } from './runtime/phaserView';
 import { loadSettings } from './runtime/settingsStorage';
 import { OverlayUI } from './ui/overlay';
@@ -20,7 +22,21 @@ async function bootstrap(): Promise<void> {
   `;
 
   const builtInLevels = await loadLevelsFromManifest('/assets/levels/manifest.json');
-  const customLevels = parseStoredCustomLevels(loadStoredCustomLevels());
+  const customLevels: ParsedLevel[] = [];
+
+  try {
+    const fromBackend = await fetchCustomLevels();
+    for (const level of fromBackend) {
+      try {
+        customLevels.push(parseLevelText(level.id, level.text));
+      } catch {
+        // Skip malformed backend entries but continue loading valid levels.
+      }
+    }
+  } catch {
+    // Backend optional in dev: game still runs with built-in levels.
+  }
+
   const levels = [...builtInLevels, ...customLevels];
   const settings = loadSettings();
 

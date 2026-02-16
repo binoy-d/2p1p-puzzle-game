@@ -1,5 +1,6 @@
 import { createInitialState, restartLevel, setLevel, update } from '../core';
 import type { Direction, GameState, ParsedLevel } from '../core';
+import { submitScore } from '../runtime/backendApi';
 import { saveSettings, type GameSettings } from '../runtime/settingsStorage';
 
 export type Screen = 'main' | 'level-select' | 'settings' | 'editor' | 'playing' | 'paused';
@@ -10,6 +11,7 @@ export interface ControllerSnapshot {
   levels: ParsedLevel[];
   settings: GameSettings;
   selectedLevelIndex: number;
+  playerName: string;
   statusMessage: string | null;
 }
 
@@ -33,6 +35,10 @@ export class GameController {
   private readonly subscribers = new Set<Subscriber>();
 
   private settingsReturnScreen: Screen = 'main';
+
+  private playerName = '';
+
+  private levelStartedAtMs = Date.now();
 
   public constructor(levels: ParsedLevel[], settings: GameSettings) {
     if (levels.length === 0) {
@@ -59,6 +65,7 @@ export class GameController {
       levels: this.levels,
       settings: this.settings,
       selectedLevelIndex: this.selectedLevelIndex,
+      playerName: this.playerName,
       statusMessage: this.statusMessage,
     };
   }
@@ -68,12 +75,19 @@ export class GameController {
   }
 
   public startLevel(levelIndex: number): void {
+    if (!this.playerName) {
+      this.statusMessage = 'Enter a player name before playing.';
+      this.emit();
+      return;
+    }
+
     const clamped = Math.max(0, Math.min(levelIndex, this.levels.length - 1));
     this.selectedLevelIndex = clamped;
     this.gameState = setLevel(this.gameState, clamped);
     this.screen = 'playing';
     this.statusMessage = null;
     this.inputQueue.length = 0;
+    this.levelStartedAtMs = Date.now();
     this.emit();
   }
 
@@ -132,6 +146,7 @@ export class GameController {
     this.screen = 'playing';
     this.statusMessage = null;
     this.inputQueue.length = 0;
+    this.levelStartedAtMs = Date.now();
     this.emit();
   }
 
@@ -157,19 +172,32 @@ export class GameController {
       return;
     }
 
-    const next = update(this.gameState, { direction }, dtMs);
+    const previous = this.gameState;
+    const completedLevelId = previous.levelId;
+    const completedMoves = previous.moves + 1;
+
+    const next = update(previous, { direction }, dtMs);
     this.gameState = next;
 
     if (next.lastEvent === 'level-advanced') {
       this.selectedLevelIndex = next.levelIndex;
       this.statusMessage = `Level ${next.levelIndex + 1}`;
+      const durationMs = Math.max(0, Date.now() - this.levelStartedAtMs);
+      this.levelStartedAtMs = Date.now();
+      void this.submitCompletedScore(completedLevelId, completedMoves, durationMs);
+    } else if (next.lastEvent === 'level-reset') {
+      this.levelStartedAtMs = Date.now();
     }
 
     if (next.status === 'game-complete') {
+      const finalMoves = next.lastEvent === 'game-complete' ? next.moves : completedMoves;
+      const durationMs = Math.max(0, Date.now() - this.levelStartedAtMs);
+      void this.submitCompletedScore(completedLevelId, finalMoves, durationMs);
       this.screen = 'main';
       this.statusMessage = 'All levels complete.';
       this.selectedLevelIndex = this.levels.length - 1;
       this.inputQueue.length = 0;
+      this.levelStartedAtMs = Date.now();
     }
 
     this.emit();
@@ -179,6 +207,15 @@ export class GameController {
     const clamped = Math.max(0, Math.min(levelIndex, this.levels.length - 1));
     this.selectedLevelIndex = clamped;
     this.emit();
+  }
+
+  public setPlayerName(name: string): void {
+    this.playerName = name.trim().slice(0, 32);
+    this.emit();
+  }
+
+  public getPlayerName(): string {
+    return this.playerName;
   }
 
   public upsertLevel(level: ParsedLevel): number {
@@ -193,6 +230,7 @@ export class GameController {
     this.selectedLevelIndex = levelIndex;
     this.gameState = createInitialState(this.levels, levelIndex);
     this.statusMessage = `Saved level ${level.id}`;
+    this.levelStartedAtMs = Date.now();
     this.emit();
     return levelIndex;
   }
@@ -223,6 +261,23 @@ export class GameController {
     const snapshot = this.getSnapshot();
     for (const subscriber of this.subscribers) {
       subscriber(snapshot);
+    }
+  }
+
+  private async submitCompletedScore(levelId: string, moves: number, durationMs: number): Promise<void> {
+    if (!this.playerName) {
+      return;
+    }
+
+    try {
+      await submitScore({
+        levelId,
+        playerName: this.playerName,
+        moves,
+        durationMs,
+      });
+    } catch {
+      // Non-fatal: keep gameplay responsive if backend is unavailable.
     }
   }
 }
