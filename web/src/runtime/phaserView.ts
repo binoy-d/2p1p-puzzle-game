@@ -1,14 +1,20 @@
 import Phaser from 'phaser';
 import type { ControllerSnapshot, GameController } from '../app/gameController';
-import { getSpawnTileCenter } from '../core/engine';
 
 const FIXED_STEP_MS = 1000 / 60;
 const TILE_SIZE = 40;
-const LIGHT_TEXTURE_KEY = 'light-gradient';
 
 function isNumericTile(value: string): boolean {
   const numeric = Number.parseInt(value, 10);
   return Number.isInteger(numeric);
+}
+
+function clampByte(value: number): number {
+  return Phaser.Math.Clamp(Math.round(value), 0, 255);
+}
+
+function rgb(r: number, g: number, b: number): number {
+  return (clampByte(r) << 16) | (clampByte(g) << 8) | clampByte(b);
 }
 
 class PuzzleScene extends Phaser.Scene {
@@ -17,10 +23,6 @@ class PuzzleScene extends Phaser.Scene {
   private terrainLayer!: Phaser.GameObjects.Graphics;
 
   private entityLayer!: Phaser.GameObjects.Graphics;
-
-  private glowLayer!: Phaser.GameObjects.Graphics;
-
-  private darknessLayer!: Phaser.GameObjects.RenderTexture;
 
   private hudText!: Phaser.GameObjects.Text;
 
@@ -36,25 +38,19 @@ class PuzzleScene extends Phaser.Scene {
 
     this.terrainLayer = this.add.graphics().setDepth(0);
     this.entityLayer = this.add.graphics().setDepth(1);
-    this.glowLayer = this.add.graphics().setDepth(2).setBlendMode(Phaser.BlendModes.ADD);
-    this.darknessLayer = this.add
-      .renderTexture(0, 0, this.scale.width, this.scale.height)
-      .setOrigin(0)
-      .setDepth(3);
     this.hudText = this.add
       .text(16, 16, '', {
         fontFamily: 'system-ui, sans-serif',
         color: '#f2f6ff',
         fontSize: '16px',
       })
-      .setDepth(4)
+      .setDepth(2)
       .setShadow(0, 1, '#000000', 2, false, true);
 
-    this.createLightTexture();
     this.registerInput();
   }
 
-  public update(_time: number, delta: number): void {
+  public update(time: number, delta: number): void {
     this.accumulator += delta;
 
     let guard = 0;
@@ -64,30 +60,7 @@ class PuzzleScene extends Phaser.Scene {
       guard += 1;
     }
 
-    this.renderSnapshot(this.controller.getSnapshot(), this.scale.width, this.scale.height, _time);
-  }
-
-  private createLightTexture(): void {
-    if (this.textures.exists(LIGHT_TEXTURE_KEY)) {
-      return;
-    }
-
-    const size = 256;
-    const texture = this.textures.createCanvas(LIGHT_TEXTURE_KEY, size, size);
-    if (!texture) {
-      throw new Error('Unable to create light texture.');
-    }
-    const ctx = texture.context;
-    const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-
-    gradient.addColorStop(0, 'rgba(255,255,255,1)');
-    gradient.addColorStop(0.45, 'rgba(255,255,255,0.55)');
-    gradient.addColorStop(1, 'rgba(255,255,255,0)');
-
-    ctx.clearRect(0, 0, size, size);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, size, size);
-    texture.refresh();
+    this.renderSnapshot(this.controller.getSnapshot(), this.scale.width, this.scale.height, time);
   }
 
   private registerInput(): void {
@@ -123,6 +96,37 @@ class PuzzleScene extends Phaser.Scene {
     });
   }
 
+  private computeLegacyGlow(
+    tileX: number,
+    tileY: number,
+    players: ControllerSnapshot['gameState']['players'],
+  ): number {
+    if (players.length === 0) {
+      return 0;
+    }
+
+    let sumDistances = 0;
+    for (const player of players) {
+      const dx = tileX - player.x;
+      const dy = tileY - player.y;
+      sumDistances += Math.sqrt(dx * dx + dy * dy);
+    }
+
+    const brightness = sumDistances / ((players.length + 1) / 2);
+    let swop = 255 - Math.trunc(brightness * 6);
+    swop = Math.trunc(swop / 10);
+
+    // Keep Java ordering/quirk for visual parity.
+    if (swop <= 30) {
+      swop -= 5;
+    } else if (swop <= 15) {
+      swop -= 10;
+    }
+
+    swop *= 2;
+    return clampByte(swop);
+  }
+
   private renderSnapshot(
     snapshot: ControllerSnapshot,
     viewportWidth: number,
@@ -140,33 +144,57 @@ class PuzzleScene extends Phaser.Scene {
 
     this.terrainLayer.clear();
     this.entityLayer.clear();
-    this.glowLayer.clear();
 
     for (let y = 0; y < levelHeight; y += 1) {
       for (let x = 0; x < levelWidth; x += 1) {
         const tile = state.grid[y][x];
-        let color = 0x1d2128;
+        const glowValue = snapshot.settings.lightingEnabled
+          ? this.computeLegacyGlow(x, y, state.players)
+          : 140;
+        const wallShade = clampByte(glowValue * 2);
+        const floorShade = clampByte(glowValue / 4);
+
+        let color = rgb(floorShade, floorShade, floorShade);
 
         if (tile === '#') {
-          color = 0x5a616f;
+          color = rgb(wallShade, wallShade, wallShade);
         } else if (tile === 'x') {
-          color = 0xc14b1d;
+          const lavaPulse = 0.5 + 0.5 * Math.sin((time + (x * 13 + y * 19) * 22) / 140);
+          color = rgb(190 + lavaPulse * 55, 32 + lavaPulse * 36, 0);
         } else if (tile === '!') {
-          color = 0x15754a;
-        } else if (isNumericTile(tile)) {
-          color = 0x242a34;
+          const goalPulse = 0.5 + 0.5 * Math.sin((time + (x * 17 + y * 11) * 20) / 170);
+          color = rgb(0, 170 + goalPulse * 22, 0);
         }
 
         this.terrainLayer.fillStyle(color, 1);
         this.terrainLayer.fillRect(offsetX + x * TILE_SIZE, offsetY + y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
         if (tile === '!') {
-          this.terrainLayer.fillStyle(0x46e58a, 1);
+          this.terrainLayer.fillStyle(rgb(0, 245, 0), 1);
           this.terrainLayer.fillRect(
             offsetX + x * TILE_SIZE + TILE_SIZE * 0.25,
             offsetY + y * TILE_SIZE + TILE_SIZE * 0.25,
             TILE_SIZE * 0.5,
             TILE_SIZE * 0.5,
+          );
+        }
+
+        if (isNumericTile(tile)) {
+          const pathPulse = 0.5 + 0.5 * Math.sin((time + x * 37 + y * 53) / 180);
+          this.terrainLayer.fillStyle(rgb(120 + pathPulse * 45, 0, 0), 1);
+          this.terrainLayer.fillRect(
+            offsetX + x * TILE_SIZE + TILE_SIZE * 0.31,
+            offsetY + y * TILE_SIZE + TILE_SIZE * 0.31,
+            TILE_SIZE * 0.38,
+            TILE_SIZE * 0.38,
+          );
+
+          this.terrainLayer.fillStyle(rgb(232 + pathPulse * 22, 25 + pathPulse * 25, 25 + pathPulse * 20), 1);
+          this.terrainLayer.fillRect(
+            offsetX + x * TILE_SIZE + TILE_SIZE * 0.39,
+            offsetY + y * TILE_SIZE + TILE_SIZE * 0.39,
+            TILE_SIZE * 0.22,
+            TILE_SIZE * 0.22,
           );
         }
       }
@@ -202,37 +230,10 @@ class PuzzleScene extends Phaser.Scene {
       );
     }
 
-    if (snapshot.settings.lightingEnabled) {
-      this.applyLighting(state, offsetX, offsetY);
-    } else {
-      this.darknessLayer.clear();
-    }
-
     const isPaused = snapshot.screen === 'paused';
     this.hudText.setText(
       `Level ${state.levelIndex + 1}/${state.levelIds.length}  Moves ${state.moves}  Players ${state.players.length}/${state.totalPlayers}${isPaused ? '  [PAUSED]' : ''}`,
     );
-  }
-
-  private applyLighting(state: ControllerSnapshot['gameState'], offsetX: number, offsetY: number): void {
-    this.darknessLayer.clear();
-    this.darknessLayer.fill(0x000000, 0.78);
-
-    for (const player of state.players) {
-      const center = getSpawnTileCenter(player.x, player.y, TILE_SIZE, offsetX, offsetY);
-      this.darknessLayer.erase(LIGHT_TEXTURE_KEY, center.x - 124, center.y - 124);
-
-      this.glowLayer.fillStyle(0xffffff, 0.24);
-      this.glowLayer.fillCircle(center.x, center.y, TILE_SIZE * 1.15);
-    }
-
-    for (const enemy of state.enemies) {
-      const center = getSpawnTileCenter(enemy.x, enemy.y, TILE_SIZE, offsetX, offsetY);
-      this.darknessLayer.erase(LIGHT_TEXTURE_KEY, center.x - 72, center.y - 72);
-
-      this.glowLayer.fillStyle(0xff4455, 0.2);
-      this.glowLayer.fillCircle(center.x, center.y, TILE_SIZE * 0.85);
-    }
   }
 }
 
@@ -252,8 +253,8 @@ export class PhaserGameView {
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
       render: {
-        pixelArt: false,
-        antialias: true,
+        pixelArt: true,
+        antialias: false,
       },
     });
   }
