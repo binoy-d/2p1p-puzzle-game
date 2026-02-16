@@ -66,16 +66,12 @@ function tileClass(tile: string): string {
   return 'tile-path';
 }
 
-function isIntroSkipKey(event: KeyboardEvent): boolean {
+function isIntroStartKey(event: KeyboardEvent): boolean {
   if (event.altKey || event.ctrlKey || event.metaKey) {
     return false;
   }
 
-  if (event.key.length === 1) {
-    return true;
-  }
-
-  return event.key === 'Enter' || event.key === 'Escape' || event.key === ' ' || event.key === 'Spacebar';
+  return event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar';
 }
 
 export class OverlayUI {
@@ -101,7 +97,7 @@ export class OverlayUI {
 
   private readonly introPanel: HTMLElement;
 
-  private readonly introSkipButton: HTMLButtonElement;
+  private readonly introStartButton: HTMLButtonElement;
 
   private readonly introCinematic: LockstepIntroCinematic;
 
@@ -167,7 +163,7 @@ export class OverlayUI {
     };
 
     this.introPanel = asElement<HTMLElement>(this.root, '[data-panel="intro"]');
-    this.introSkipButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-skip');
+    this.introStartButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-start');
     this.introCinematic = new LockstepIntroCinematic({
       elements: {
         panel: this.introPanel,
@@ -216,8 +212,8 @@ export class OverlayUI {
         <div class="intro-content">
           <h1 id="intro-title">LOCKSTEP</h1>
           <p id="intro-line"></p>
-          <p id="intro-skip-hint" class="intro-skip-hint">Press any key, click, or tap to skip</p>
-          <button type="button" id="btn-intro-skip">Skip Intro</button>
+          <p id="intro-skip-hint" class="intro-skip-hint">Press Start anytime to skip</p>
+          <button type="button" id="btn-intro-start">Start</button>
         </div>
       </section>
 
@@ -323,20 +319,8 @@ export class OverlayUI {
   }
 
   private bindEvents(): void {
-    this.introSkipButton.addEventListener('click', () => {
+    this.introStartButton.addEventListener('click', () => {
       this.introCinematic.skip();
-    });
-
-    this.introPanel.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement;
-      if (target.tagName === 'BUTTON') {
-        return;
-      }
-
-      const snapshot = this.controller.getSnapshot();
-      if (snapshot.screen === 'intro') {
-        this.introCinematic.skip();
-      }
     });
 
     this.playButton.addEventListener('click', () => {
@@ -474,7 +458,7 @@ export class OverlayUI {
     window.addEventListener('keydown', (event) => {
       const snapshot = this.controller.getSnapshot();
       if (snapshot.screen === 'intro') {
-        if (isIntroSkipKey(event)) {
+        if (isIntroStartKey(event)) {
           event.preventDefault();
           this.introCinematic.skip();
         }
@@ -543,6 +527,10 @@ export class OverlayUI {
 
     if (screenChanged && snapshot.screen === 'main') {
       this.playButton.focus();
+    }
+
+    if (screenChanged && snapshot.screen === 'intro') {
+      this.introStartButton.focus();
     }
 
     if (screenChanged && snapshot.screen === 'paused') {

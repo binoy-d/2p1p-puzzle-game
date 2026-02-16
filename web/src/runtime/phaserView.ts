@@ -8,6 +8,7 @@ import {
 } from './enemyPathVisuals';
 import { isTextInputFocused } from './inputFocus';
 import { resolveCameraRumble } from './cameraRumble';
+import { LEVEL_TRANSITION_PROFILE, shouldTriggerLevelTransition } from './levelTransition';
 
 const FIXED_STEP_MS = 1000 / 60;
 const MIN_TILE_SIZE = 22;
@@ -44,6 +45,12 @@ class PuzzleScene extends Phaser.Scene {
   private accumulator = 0;
 
   private lastStateRef: ControllerSnapshot['gameState'] | null = null;
+
+  private lastScreenRef: ControllerSnapshot['screen'] | null = null;
+
+  private lastLevelIdRef: string | null = null;
+
+  private transitionZoomTween: Phaser.Tweens.Tween | null = null;
 
   public constructor(controller: GameController) {
     super('PuzzleScene');
@@ -161,6 +168,7 @@ class PuzzleScene extends Phaser.Scene {
     viewportHeight: number,
     time: number,
   ): void {
+    this.applyLevelTransition(snapshot);
     this.applyCameraRumble(snapshot);
 
     const state = snapshot.gameState;
@@ -308,6 +316,40 @@ class PuzzleScene extends Phaser.Scene {
     this.hudText.setText(
       `Level ${state.levelIndex + 1}/${state.levelIds.length}  Moves ${state.moves}  Players ${state.players.length}/${state.totalPlayers}${isPaused ? '  [PAUSED]' : ''}`,
     );
+  }
+
+  private applyLevelTransition(snapshot: ControllerSnapshot): void {
+    const shouldTransition = shouldTriggerLevelTransition({
+      previousScreen: this.lastScreenRef,
+      nextScreen: snapshot.screen,
+      previousLevelId: this.lastLevelIdRef,
+      nextLevelId: snapshot.gameState.levelId,
+    });
+
+    this.lastScreenRef = snapshot.screen;
+    this.lastLevelIdRef = snapshot.gameState.levelId;
+
+    if (!shouldTransition) {
+      return;
+    }
+
+    const camera = this.cameras.main;
+    this.transitionZoomTween?.stop();
+    camera.resetFX();
+    camera.fadeOut(LEVEL_TRANSITION_PROFILE.fadeOutMs, 0, 0, 0);
+    camera.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      camera.setZoom(LEVEL_TRANSITION_PROFILE.zoomFrom);
+      this.time.delayedCall(LEVEL_TRANSITION_PROFILE.blackHoldMs, () => {
+        camera.fadeIn(LEVEL_TRANSITION_PROFILE.fadeInMs, 0, 0, 0);
+      });
+
+      this.transitionZoomTween = this.tweens.add({
+        targets: camera,
+        zoom: LEVEL_TRANSITION_PROFILE.zoomTo,
+        duration: LEVEL_TRANSITION_PROFILE.zoomMs,
+        ease: LEVEL_TRANSITION_PROFILE.zoomEase,
+      });
+    });
   }
 
   private applyCameraRumble(snapshot: ControllerSnapshot): void {

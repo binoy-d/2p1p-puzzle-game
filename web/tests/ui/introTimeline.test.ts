@@ -25,7 +25,20 @@ describe('intro timeline', () => {
     expect(bind.lockstepAmount).toBeLessThan(late.lockstepAmount);
     expect(early.line).toMatch(/Light-Core fractured/i);
     expect(bind.line).toMatch(/tethered/i);
-    expect(late.line).toMatch(/moves all bodies/i);
+    expect(late.line).toMatch(/moves them together/i);
+  });
+
+  it('holds final lore line after intro duration while motion continues', () => {
+    const atEnd = sampleIntroVisualState(INTRO_DURATION_MS, 1280, 720);
+    const afterEnd = sampleIntroVisualState(INTRO_DURATION_MS + 3200, 1280, 720);
+
+    expect(afterEnd.line).toBe('Every step moves them together.');
+    expect(afterEnd.lineAlpha).toBe(1);
+    expect(afterEnd.lockstepAmount).toBe(1);
+
+    const movedX = Math.abs(afterEnd.explorers[0].x - atEnd.explorers[0].x);
+    const movedY = Math.abs(afterEnd.explorers[0].y - atEnd.explorers[0].y);
+    expect(movedX + movedY).toBeGreaterThan(0.5);
   });
 
   it('returns deterministic explorer positions inside sane bounds', () => {

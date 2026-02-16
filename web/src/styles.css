@@ -26,10 +26,49 @@ body {
   font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at 15% 20%, #183957 0, transparent 48%),
-    radial-gradient(circle at 80% 85%, #2f2a50 0, transparent 44%),
-    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+    radial-gradient(circle at 16% 18%, rgba(40, 129, 212, 0.35) 0, transparent 40%),
+    radial-gradient(circle at 84% 82%, rgba(161, 64, 255, 0.22) 0, transparent 44%),
+    radial-gradient(circle at 65% 20%, rgba(74, 225, 194, 0.18) 0, transparent 38%),
+    linear-gradient(135deg, #050a14 0%, #111f35 46%, #160f2b 100%);
   overflow: hidden;
+  position: relative;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: -22vmax;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(87, 213, 255, 0.16), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(255, 97, 186, 0.14), transparent 42%),
+    radial-gradient(circle at 40% 80%, rgba(88, 150, 255, 0.12), transparent 40%);
+  filter: blur(26px);
+  animation: aurora-pan 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  background-image:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(120, 184, 255, 0.11) 0 1px, transparent 1px);
+  background-size:
+    70px 70px,
+    130px 130px;
+  background-position:
+    0 0,
+    30px 28px;
+  opacity: 0.22;
+  animation: starfield-shift 24s linear infinite;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
 }
 
 #game-shell {
@@ -122,8 +161,13 @@ body {
   opacity: 0;
 }
 
-#btn-intro-skip {
-  min-width: 140px;
+#btn-intro-start {
+  min-width: 160px;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-color: rgba(140, 215, 255, 0.8);
+  box-shadow: 0 0 0 1px rgba(76, 167, 255, 0.34) inset, 0 0 24px rgba(91, 205, 255, 0.26);
 }
 
 .menu-panel {
@@ -364,6 +408,26 @@ button:disabled {
   color: #ff9ca5;
   padding: 16px;
   white-space: pre-wrap;
+}
+
+@keyframes aurora-pan {
+  0% {
+    transform: translate3d(-3%, -2%, 0) rotate(0deg);
+  }
+
+  100% {
+    transform: translate3d(3%, 2%, 0) rotate(8deg);
+  }
+}
+
+@keyframes starfield-shift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(80px, -56px, 0);
+  }
 }
 
 @media (max-width: 760px) {

@@ -72,7 +72,7 @@ npm run build
 
 - Move: `WASD` or arrow keys
 - Pause menu: `Escape`
-- Intro cinematic: `any key`, click/tap, or `Skip Intro` button
+- Intro cinematic: `Start` button (or `Enter` / `Space`) to skip
 - Menus: mouse + keyboard focusable buttons
 - Level Editor: available from main menu
 - Player name is required before starting a run

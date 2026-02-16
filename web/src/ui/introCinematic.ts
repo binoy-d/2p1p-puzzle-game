@@ -25,6 +25,10 @@ function clamp01(value: number): number {
   return value;
 }
 
+function fract(value: number): number {
+  return value - Math.floor(value);
+}
+
 export class LockstepIntroCinematic {
   private readonly panel: HTMLElement;
 
@@ -118,12 +122,6 @@ export class LockstepIntroCinematic {
     const elapsedMs = Math.max(0, timestampMs - this.startedAtMs);
     const visual = sampleIntroVisualState(elapsedMs, this.width, this.height);
     this.drawScene(visual, elapsedMs);
-
-    if (elapsedMs >= INTRO_DURATION_MS) {
-      this.complete();
-      return;
-    }
-
     this.rafId = requestAnimationFrame(this.renderFrame);
   };
 
@@ -163,11 +161,14 @@ export class LockstepIntroCinematic {
 
     const bgGradient = ctx.createLinearGradient(0, 0, width, height);
     bgGradient.addColorStop(0, '#050c14');
-    bgGradient.addColorStop(0.55, '#0b1730');
-    bgGradient.addColorStop(1, '#11111f');
+    bgGradient.addColorStop(0.42, '#0c1f3f');
+    bgGradient.addColorStop(0.68, '#1a1f49');
+    bgGradient.addColorStop(1, '#130d22');
     ctx.fillStyle = bgGradient;
     ctx.fillRect(0, 0, width, height);
 
+    this.drawNebulaClouds(width, height, elapsedMs);
+    this.drawParallaxStars(width, height, elapsedMs);
     this.drawGrid(width, height, visual.gridDrift, 0.13 + visual.lockstepAmount * 0.18);
     this.drawCore(width * 0.5, height * 0.52, visual.corePulse, visual.fractureFlash);
 
@@ -187,6 +188,8 @@ export class LockstepIntroCinematic {
     this.titleElement.style.opacity = visual.titleAlpha.toFixed(3);
     this.lineElement.textContent = visual.line;
     this.lineElement.style.opacity = visual.lineAlpha.toFixed(3);
+    this.skipHintElement.textContent =
+      elapsedMs >= INTRO_DURATION_MS ? 'Ready: press Start' : 'Press Start anytime to skip';
     this.skipHintElement.style.opacity = clamp01(elapsedMs / 900).toFixed(3);
   }
 
@@ -227,6 +230,11 @@ export class LockstepIntroCinematic {
     ctx.fillRect(centerX - coreSize / 2, centerY - coreSize / 2, coreSize, coreSize);
     ctx.fillStyle = '#ffdce4';
     ctx.fillRect(centerX - coreSize * 0.28, centerY - coreSize * 0.28, coreSize * 0.56, coreSize * 0.56);
+
+    const ringSize = coreSize * 2.8 * (0.85 + pulse * 0.35);
+    ctx.strokeStyle = `rgba(255, 116, 151, ${0.26 + pulse * 0.24})`;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(centerX - ringSize / 2, centerY - ringSize / 2, ringSize, ringSize);
   }
 
   private drawLinks(
@@ -287,5 +295,61 @@ export class LockstepIntroCinematic {
     vignette.addColorStop(1, 'rgba(0,0,0,0.46)');
     ctx.fillStyle = vignette;
     ctx.fillRect(0, 0, width, height);
+  }
+
+  private drawNebulaClouds(width: number, height: number, elapsedMs: number): void {
+    const ctx = this.context;
+    const shiftA = Math.sin(elapsedMs / 5200) * width * 0.05;
+    const shiftB = Math.cos(elapsedMs / 6100) * width * 0.07;
+
+    const cloudA = ctx.createRadialGradient(
+      width * 0.26 + shiftA,
+      height * 0.28,
+      width * 0.05,
+      width * 0.26 + shiftA,
+      height * 0.28,
+      width * 0.42,
+    );
+    cloudA.addColorStop(0, 'rgba(72, 171, 255, 0.24)');
+    cloudA.addColorStop(1, 'rgba(72, 171, 255, 0)');
+    ctx.fillStyle = cloudA;
+    ctx.fillRect(0, 0, width, height);
+
+    const cloudB = ctx.createRadialGradient(
+      width * 0.76 + shiftB,
+      height * 0.72,
+      width * 0.04,
+      width * 0.76 + shiftB,
+      height * 0.72,
+      width * 0.45,
+    );
+    cloudB.addColorStop(0, 'rgba(190, 118, 255, 0.18)');
+    cloudB.addColorStop(1, 'rgba(190, 118, 255, 0)');
+    ctx.fillStyle = cloudB;
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  private drawParallaxStars(width: number, height: number, elapsedMs: number): void {
+    const ctx = this.context;
+    const layers = [
+      { count: 56, speed: 0.0045, size: 1.3, alpha: 0.26, tint: 210 },
+      { count: 40, speed: 0.0082, size: 1.8, alpha: 0.34, tint: 190 },
+      { count: 24, speed: 0.0125, size: 2.4, alpha: 0.43, tint: 350 },
+    ];
+
+    for (const layer of layers) {
+      for (let i = 0; i < layer.count; i += 1) {
+        const seed = i * 67.891 + layer.size * 23.7;
+        const baseX = fract(Math.sin(seed * 12.97) * 43758.5453) * width;
+        const baseY = fract(Math.sin(seed * 7.31) * 24634.6345) * height;
+        const x = (baseX + elapsedMs * layer.speed * (1 + (i % 3) * 0.18)) % (width + 40) - 20;
+        const y = (baseY + Math.sin(elapsedMs / 1200 + i * 0.77) * 12 + height) % height;
+        const twinkle = 0.5 + 0.5 * Math.sin(elapsedMs / 260 + i * 1.71);
+        const alpha = layer.alpha * (0.45 + twinkle * 0.55);
+        const hue = layer.tint + (i % 5) * 6;
+        ctx.fillStyle = `hsla(${hue} 85% 78% / ${alpha})`;
+        ctx.fillRect(x, y, layer.size, layer.size);
+      }
+    }
   }
 }
