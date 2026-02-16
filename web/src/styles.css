@@ -167,6 +167,26 @@ button:disabled {
   margin-bottom: 4px;
 }
 
+.hud-scoreboard {
+  position: absolute;
+  right: 18px;
+  top: 72px;
+  width: min(300px, 27vw);
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  pointer-events: auto;
+  padding: 12px;
+  border: 1px solid rgba(122, 173, 219, 0.22);
+  border-radius: 12px;
+  background: rgba(8, 13, 20, 0.86);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.36);
+}
+
+.hud-scoreboard h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
 .menu-panel-editor {
   width: min(1180px, 100%);
   max-height: calc(100vh - 56px);
@@ -291,5 +311,9 @@ button:disabled {
   button,
   select {
     width: 100%;
+  }
+
+  .hud-scoreboard {
+    display: none;
   }
 }

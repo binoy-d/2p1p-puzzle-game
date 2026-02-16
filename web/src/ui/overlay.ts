@@ -90,6 +90,12 @@ export class OverlayUI {
 
   private readonly scoreStatus: HTMLElement;
 
+  private readonly hudScoreboard: HTMLElement;
+
+  private readonly hudScoreList: HTMLOListElement;
+
+  private readonly hudScoreStatus: HTMLElement;
+
   private readonly editorSourceSelect: HTMLSelectElement;
 
   private readonly editorIdInput: HTMLInputElement;
@@ -120,6 +126,12 @@ export class OverlayUI {
 
   private scoreRequestNonce = 0;
 
+  private inFlightScoreLevelId: string | null = null;
+
+  private lastRenderedScreen: ControllerSnapshot['screen'] | null = null;
+
+  private lastRenderedHudLevelId: string | null = null;
+
   public constructor(root: HTMLElement, controller: GameController) {
     this.root = root;
     this.controller = controller;
@@ -143,6 +155,9 @@ export class OverlayUI {
     this.lightingToggle = asElement<HTMLInputElement>(this.root, '#settings-lighting');
     this.scoreList = asElement<HTMLOListElement>(this.root, '#score-list');
     this.scoreStatus = asElement<HTMLElement>(this.root, '#score-status');
+    this.hudScoreboard = asElement<HTMLElement>(this.root, '#hud-scoreboard');
+    this.hudScoreList = asElement<HTMLOListElement>(this.root, '#hud-score-list');
+    this.hudScoreStatus = asElement<HTMLElement>(this.root, '#hud-score-status');
 
     this.editorSourceSelect = asElement<HTMLSelectElement>(this.root, '#editor-source-level');
     this.editorIdInput = asElement<HTMLInputElement>(this.root, '#editor-level-id');
@@ -162,6 +177,11 @@ export class OverlayUI {
   private buildMarkup(): string {
     return `
       <div class="menu-status" id="menu-status" aria-live="polite"></div>
+      <aside class="hud-scoreboard" id="hud-scoreboard" hidden>
+        <h3>High Scores</h3>
+        <div id="hud-score-status" class="score-status">Lower is better (moves, then time)</div>
+        <ol id="hud-score-list" class="score-list"></ol>
+      </aside>
 
       <section class="menu-panel" data-panel="main">
         <h1>2P1P Puzzle Game</h1>
@@ -183,7 +203,7 @@ export class OverlayUI {
         <select id="level-select-input"></select>
 
         <div class="scoreboard">
-          <div id="score-status" class="score-status">Top 10 scores</div>
+          <div id="score-status" class="score-status">Top 10 scores (lower is better)</div>
           <ol id="score-list" class="score-list"></ol>
         </div>
 
@@ -421,6 +441,7 @@ export class OverlayUI {
   }
 
   private render(snapshot: ControllerSnapshot): void {
+    const screenChanged = this.lastRenderedScreen !== snapshot.screen;
     this.lastSnapshot = snapshot;
     this.syncLevelOptions(snapshot);
     this.syncEditorSourceOptions(snapshot);
@@ -442,20 +463,21 @@ export class OverlayUI {
     this.panels.settings.hidden = snapshot.screen !== 'settings';
     this.panels.editor.hidden = snapshot.screen !== 'editor';
     this.panels.pause.hidden = snapshot.screen !== 'paused';
+    this.hudScoreboard.hidden = !(snapshot.screen === 'playing' || snapshot.screen === 'paused');
 
-    if (snapshot.screen === 'main') {
+    if (screenChanged && snapshot.screen === 'main') {
       this.playButton.focus();
     }
 
-    if (snapshot.screen === 'paused') {
+    if (screenChanged && snapshot.screen === 'paused') {
       asElement<HTMLButtonElement>(this.root, '#btn-resume').focus();
     }
 
-    if (snapshot.screen === 'settings') {
+    if (screenChanged && snapshot.screen === 'settings') {
       this.volumeSlider.focus();
     }
 
-    if (snapshot.screen === 'editor') {
+    if (screenChanged && snapshot.screen === 'editor') {
       this.editorIdInput.focus();
     }
 
@@ -463,7 +485,18 @@ export class OverlayUI {
       void this.loadScoresForSelectedLevel(false);
     }
 
+    if (snapshot.screen === 'playing' || snapshot.screen === 'paused') {
+      const currentLevelId = snapshot.gameState.levelId;
+      if (this.lastRenderedHudLevelId !== currentLevelId) {
+        this.lastRenderedHudLevelId = currentLevelId;
+        void this.loadScoresForLevel(currentLevelId, false);
+      }
+    } else {
+      this.lastRenderedHudLevelId = null;
+    }
+
     this.root.classList.toggle('overlay-hidden', snapshot.screen === 'playing');
+    this.lastRenderedScreen = snapshot.screen;
   }
 
   private syncLevelOptions(snapshot: ControllerSnapshot): void {
@@ -512,51 +545,80 @@ export class OverlayUI {
 
     const level = snapshot.levels[snapshot.selectedLevelIndex];
     if (!level) {
-      this.scoreStatus.textContent = 'No level selected.';
-      this.scoreList.innerHTML = '';
+      this.renderScores('none', []);
       return;
     }
 
-    if (!forceRefresh && this.scoreCache.has(level.id)) {
-      this.renderScores(level.id, this.scoreCache.get(level.id) ?? []);
+    await this.loadScoresForLevel(level.id, forceRefresh);
+  }
+
+  private async loadScoresForLevel(levelId: string, forceRefresh: boolean): Promise<void> {
+    if (!forceRefresh && this.scoreCache.has(levelId)) {
+      this.renderScores(levelId, this.scoreCache.get(levelId) ?? []);
+      return;
+    }
+
+    if (!forceRefresh && this.inFlightScoreLevelId === levelId) {
       return;
     }
 
     const nonce = ++this.scoreRequestNonce;
-    this.scoreStatus.textContent = `Loading scores for ${level.id}...`;
+    this.inFlightScoreLevelId = levelId;
+    this.scoreStatus.textContent = `Loading scores for ${levelId}...`;
+    this.hudScoreStatus.textContent = `Loading scores for ${levelId}...`;
 
     try {
-      const scores = await fetchTopScores(level.id);
+      const scores = await fetchTopScores(levelId);
       if (nonce !== this.scoreRequestNonce) {
         return;
       }
 
-      this.scoreCache.set(level.id, scores);
-      this.renderScores(level.id, scores);
+      this.inFlightScoreLevelId = null;
+      this.scoreCache.set(levelId, scores);
+      this.renderScores(levelId, scores);
     } catch (error) {
       if (nonce !== this.scoreRequestNonce) {
         return;
       }
 
+      this.inFlightScoreLevelId = null;
       this.scoreStatus.textContent = `Scores unavailable: ${String(error)}`;
+      this.hudScoreStatus.textContent = `Scores unavailable: ${String(error)}`;
       this.scoreList.innerHTML = '';
+      this.hudScoreList.innerHTML = '';
     }
   }
 
   private renderScores(levelId: string, scores: LevelScoreRecord[]): void {
     this.scoreList.innerHTML = '';
+    this.hudScoreList.innerHTML = '';
 
-    if (scores.length === 0) {
-      this.scoreStatus.textContent = `${levelId}: no scores yet.`;
+    const applyScore = (list: HTMLOListElement, score: LevelScoreRecord, index: number): void => {
+      const item = document.createElement('li');
+      item.textContent = `${index + 1}. ${score.playerName} - ${score.moves} moves - ${(score.durationMs / 1000).toFixed(1)}s`;
+      list.append(item);
+    };
+
+    if (levelId === 'none') {
+      this.scoreStatus.textContent = 'No level selected.';
+      this.hudScoreStatus.textContent = 'No level selected.';
       return;
     }
 
-    this.scoreStatus.textContent = `${levelId}: top ${Math.min(scores.length, 10)} scores`;
+    const header = `${levelId}: top ${Math.min(scores.length, 10)} (lower moves, then lower time)`;
+
+    if (scores.length === 0) {
+      this.scoreStatus.textContent = `${levelId}: no scores yet.`;
+      this.hudScoreStatus.textContent = `${levelId}: no scores yet.`;
+      return;
+    }
+
+    this.scoreStatus.textContent = header;
+    this.hudScoreStatus.textContent = header;
     for (let i = 0; i < scores.length; i += 1) {
       const score = scores[i];
-      const item = document.createElement('li');
-      item.textContent = `${i + 1}. ${score.playerName} - ${score.moves} moves - ${(score.durationMs / 1000).toFixed(1)}s`;
-      this.scoreList.append(item);
+      applyScore(this.scoreList, score, i);
+      applyScore(this.hudScoreList, score, i);
     }
   }
 
