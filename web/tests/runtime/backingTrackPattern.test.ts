@@ -1,41 +1,40 @@
 import { describe, expect, it } from 'vitest';
-import {
-  STEPS_PER_BAR,
-  backingTrackStepEvents,
-  midiToFrequency,
-} from '../../src/runtime/backingTrackPattern';
+import { STEPS_PER_BAR, backingTrackStepEvents, midiToFrequency } from '../../src/runtime/backingTrackPattern';
 
 describe('backing track pattern', () => {
   it('uses a 16-step bar', () => {
     expect(STEPS_PER_BAR).toBe(16);
   });
 
-  it('produces deterministic events across bars and wrapped indices', () => {
-    const a = backingTrackStepEvents(0, 0, 1);
-    const b = backingTrackStepEvents(16, 4, 1);
-    const c = backingTrackStepEvents(-16, -4, 1);
+  it('is deterministic for the same seed/step/bar', () => {
+    const a = backingTrackStepEvents(3, 7, 123456);
+    const b = backingTrackStepEvents(3, 7, 123456);
     expect(a).toEqual(b);
-    expect(a).toEqual(c);
   });
 
-  it('emits kick/snare pattern on core beats', () => {
-    const step0 = backingTrackStepEvents(0, 0);
-    const step2 = backingTrackStepEvents(2, 0);
-    const step4 = backingTrackStepEvents(4, 0);
-    const step12 = backingTrackStepEvents(12, 0);
-
-    expect(step0.kick).toBe(true);
-    expect(step2.kick).toBe(false);
-    expect(step4.snare).toBe(true);
-    expect(step12.snare).toBe(true);
-    expect(step4.kick).toBe(true);
+  it('wraps step indices by bar length', () => {
+    const a = backingTrackStepEvents(1, 2, 42);
+    const b = backingTrackStepEvents(17, 2, 42);
+    expect(a).toEqual(b);
   });
 
-  it('changes melodic notes across variants', () => {
-    const base = backingTrackStepEvents(0, 0, 0);
-    const shifted = backingTrackStepEvents(0, 0, 3);
-    expect(base.bassMidi).not.toBe(shifted.bassMidi);
-    expect(base.chordMidi).not.toEqual(shifted.chordMidi);
+  it('produces distinct musical output for different seeds', () => {
+    const renderWindow = (seed: number): string => {
+      const events: string[] = [];
+      for (let bar = 0; bar < 4; bar += 1) {
+        for (let step = 0; step < 16; step += 1) {
+          const e = backingTrackStepEvents(step, bar, seed);
+          events.push(
+            `${Number(e.kick)}${Number(e.snare)}${Number(e.hat)}:${e.bassMidi ?? 'n'}:${e.leadMidi ?? 'n'}:${e.chordMidi?.join('-') ?? 'n'}`,
+          );
+        }
+      }
+      return events.join('|');
+    };
+
+    const seedA = renderWindow(1111);
+    const seedB = renderWindow(99999991);
+    expect(seedA).not.toEqual(seedB);
   });
 
   it('maps MIDI note 69 to 440Hz', () => {

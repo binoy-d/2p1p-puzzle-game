@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getLevelLabel, getLevelName, getMusicVariant } from '../../src/runtime/levelMeta';
+import { getLevelLabel, getLevelMusicSeed, getLevelName } from '../../src/runtime/levelMeta';
 
 describe('level metadata helpers', () => {
   it('returns named labels for built-in maps', () => {
@@ -11,12 +11,15 @@ describe('level metadata helpers', () => {
     expect(getLevelName('custom-grid-1', 5)).toBe('Custom Circuit 6');
   });
 
-  it('returns stable music variants for custom levels', () => {
-    const a = getMusicVariant('custom-grid-1', 5);
-    const b = getMusicVariant('custom-grid-1', 5);
-    const c = getMusicVariant('custom-grid-2', 5);
+  it('returns stable non-zero music seeds', () => {
+    const a = getLevelMusicSeed('custom-grid-1', 5);
+    const b = getLevelMusicSeed('custom-grid-1', 5);
+    const c = getLevelMusicSeed('custom-grid-2', 5);
+    const builtIn = getLevelMusicSeed('map0', 0);
+
     expect(a).toBe(b);
-    expect([0, 1, 2, 3]).toContain(a);
-    expect([0, 1, 2, 3]).toContain(c);
+    expect(a).not.toBe(c);
+    expect(a).toBeGreaterThan(0);
+    expect(builtIn).toBeGreaterThan(0);
   });
 });

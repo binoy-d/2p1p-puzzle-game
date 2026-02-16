@@ -1,5 +1,3 @@
-export type MusicVariant = 0 | 1 | 2 | 3;
-
 const BUILT_IN_LEVEL_NAMES: Record<string, string> = {
   map0: 'Relay Threshold',
   map1: 'Mirror Lift',
@@ -33,15 +31,7 @@ export function getLevelLabel(levelId: string, levelIndex: number): string {
   return `Level ${levelIndex + 1}: ${getLevelName(levelId, levelIndex)}`;
 }
 
-export function getMusicVariant(levelId: string, levelIndex: number): MusicVariant {
-  const knownOrder: MusicVariant[] = [0, 1, 2, 3, 1, 2, 0, 3, 2, 1, 0, 3, 2];
-  if (levelId.startsWith('map')) {
-    const numeric = Number.parseInt(levelId.slice(3), 10);
-    if (Number.isInteger(numeric) && numeric >= 0 && numeric < knownOrder.length) {
-      return knownOrder[numeric];
-    }
-  }
-
-  const fallback = (stableHash(levelId) + levelIndex) % 4;
-  return fallback as MusicVariant;
+export function getLevelMusicSeed(levelId: string, levelIndex: number): number {
+  const hash = stableHash(`${levelId}::${levelIndex}::lockstep-seed`);
+  return hash === 0 ? 1 : hash;
 }

@@ -1,11 +1,6 @@
 import type { GameController } from '../app/gameController';
-import { getMusicVariant } from './levelMeta';
-import {
-  type MusicVariant,
-  STEPS_PER_BAR,
-  backingTrackStepEvents,
-  midiToFrequency,
-} from './backingTrackPattern';
+import { getLevelMusicSeed } from './levelMeta';
+import { STEPS_PER_BAR, backingTrackStepEvents, midiToFrequency } from './backingTrackPattern';
 
 const BPM = 124;
 const STEP_DURATION_SECONDS = 60 / BPM / 4;
@@ -50,7 +45,7 @@ export class ProceduralBackingTrack {
 
   private desiredVolume = 0.6;
 
-  private currentVariant: MusicVariant = 0;
+  private currentSeed = 1;
 
   private readonly pulseTimeouts = new Set<number>();
 
@@ -65,7 +60,7 @@ export class ProceduralBackingTrack {
         snapshot.screen === 'playing' || snapshot.screen === 'paused'
           ? snapshot.gameState.levelId
           : snapshot.levels[sourceLevelIndex]?.id ?? snapshot.gameState.levelId;
-      this.currentVariant = getMusicVariant(sourceLevelId, sourceLevelIndex);
+      this.currentSeed = getLevelMusicSeed(sourceLevelId, sourceLevelIndex);
     });
 
     this.bindUnlockListeners();
@@ -286,7 +281,7 @@ export class ProceduralBackingTrack {
   }
 
   private scheduleStep(time: number, step: number, bar: number): void {
-    const events = backingTrackStepEvents(step, bar, this.currentVariant);
+    const events = backingTrackStepEvents(step, bar, this.currentSeed);
 
     if (events.kick) {
       this.scheduleKick(time);

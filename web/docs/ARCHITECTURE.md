@@ -35,7 +35,7 @@ Browser/Phaser integration and asset loading.
 - `settingsStorage.ts`: persists settings to `localStorage`.
 - `backendApi.ts`: HTTP client for custom levels and scoreboards.
 - `backingTrack.ts`: procedural Web Audio backing track (step sequencer).
-- `levelMeta.ts`: level display names and level-based music variant mapping.
+- `levelMeta.ts`: level display names and level-based music seed mapping.
 
 ### 3) App/UI (`/web/src/app`, `/web/src/ui`)
 

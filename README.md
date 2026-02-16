@@ -136,8 +136,8 @@ Lighting v1 is implemented as:
 ## Audio (High Level)
 
 - Procedural backing track generated at runtime with Web Audio API (no external audio files).
-- 16-step house/synth sequencer with kick/snare/hat + bass/chord/lead layers.
-- Musical variant changes per level.
+- Seed-driven house/synth sequencer with kick/snare/hat + bass/chord/lead layers.
+- Each level uses its own deterministic music seed for a distinct track feel.
 - Starts on first user interaction (browser autoplay-safe), respects global volume, and pauses when the window/tab loses focus.
 
 ## Testing Approach
