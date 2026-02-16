@@ -8,13 +8,28 @@ function makeController() {
     parseLevelText('map1', ['#####', '#P ##', '#####'].join('\n')),
   ];
 
-  return new GameController(levels, {
+  const controller = new GameController(levels, {
     volume: 0.5,
     lightingEnabled: true,
   });
+
+  controller.finishIntro();
+  return controller;
 }
 
 describe('game controller', () => {
+  it('starts on intro screen and transitions to main when intro completes', () => {
+    const levels = [parseLevelText('map0', ['#####', '#P!##', '#####'].join('\n'))];
+    const controller = new GameController(levels, {
+      volume: 0.4,
+      lightingEnabled: true,
+    });
+
+    expect(controller.getSnapshot().screen).toBe('intro');
+    controller.finishIntro();
+    expect(controller.getSnapshot().screen).toBe('main');
+  });
+
   it('switches to editor screen', () => {
     const controller = makeController();
     controller.openEditor();

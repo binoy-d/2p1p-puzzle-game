@@ -57,6 +57,75 @@ body {
   background: transparent;
 }
 
+.intro-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  background: #04080f;
+  overflow: hidden;
+  z-index: 30;
+}
+
+#intro-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.intro-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: min(7vw, 80px);
+  gap: 10px;
+  text-align: center;
+  z-index: 1;
+}
+
+#intro-title {
+  margin: 0;
+  font-size: clamp(2rem, 7.2vw, 5.8rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f3f8ff;
+  text-shadow: 0 0 30px rgba(146, 220, 255, 0.42);
+  opacity: 0;
+}
+
+#intro-line {
+  margin: 0;
+  max-width: min(92vw, 900px);
+  min-height: 1.3em;
+  font-size: clamp(1rem, 2.35vw, 1.7rem);
+  color: #d5e4ff;
+  text-shadow: 0 0 18px rgba(90, 155, 255, 0.4);
+  opacity: 0;
+}
+
+.intro-skip-hint {
+  margin: 0;
+  color: rgba(214, 232, 255, 0.86);
+  font-size: clamp(0.78rem, 1.45vw, 1rem);
+  letter-spacing: 0.04em;
+  opacity: 0;
+}
+
+#btn-intro-skip {
+  min-width: 140px;
+}
+
 .menu-panel {
   pointer-events: auto;
   width: min(520px, 100%);

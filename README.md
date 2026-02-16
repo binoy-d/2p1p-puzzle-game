@@ -1,10 +1,12 @@
-# 2P1P Puzzle Game
+# LOCKSTEP
 
 This repository now contains two versions:
 
 - Legacy Java version in `/src`.
 - Browser version in `/web` using TypeScript + Vite + Phaser 3.
 - Backend API in `/backend` (Node + SQLite) for custom levels and scoreboards.
+
+Lore premise: a fractured Light-Core binds every explorer into one movement field, so each command moves all bodies in lockstep.
 
 ## Full Stack Quick Start
 
@@ -70,6 +72,7 @@ npm run build
 
 - Move: `WASD` or arrow keys
 - Pause menu: `Escape`
+- Intro cinematic: `any key`, click/tap, or `Skip Intro` button
 - Menus: mouse + keyboard focusable buttons
 - Level Editor: available from main menu
 - Player name is required before starting a run

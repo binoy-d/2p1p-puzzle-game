@@ -7,6 +7,7 @@ import {
   pathDistanceFromNextHit,
 } from './enemyPathVisuals';
 import { isTextInputFocused } from './inputFocus';
+import { resolveCameraRumble } from './cameraRumble';
 
 const FIXED_STEP_MS = 1000 / 60;
 const MIN_TILE_SIZE = 22;
@@ -41,6 +42,8 @@ class PuzzleScene extends Phaser.Scene {
   private hudText!: Phaser.GameObjects.Text;
 
   private accumulator = 0;
+
+  private lastStateRef: ControllerSnapshot['gameState'] | null = null;
 
   public constructor(controller: GameController) {
     super('PuzzleScene');
@@ -158,6 +161,8 @@ class PuzzleScene extends Phaser.Scene {
     viewportHeight: number,
     time: number,
   ): void {
+    this.applyCameraRumble(snapshot);
+
     const state = snapshot.gameState;
     const levelHeight = state.grid.length;
     const levelWidth = state.grid[0]?.length ?? 0;
@@ -303,6 +308,15 @@ class PuzzleScene extends Phaser.Scene {
     this.hudText.setText(
       `Level ${state.levelIndex + 1}/${state.levelIds.length}  Moves ${state.moves}  Players ${state.players.length}/${state.totalPlayers}${isPaused ? '  [PAUSED]' : ''}`,
     );
+  }
+
+  private applyCameraRumble(snapshot: ControllerSnapshot): void {
+    const profile = resolveCameraRumble(snapshot.screen, this.lastStateRef, snapshot.gameState);
+    if (profile) {
+      this.cameras.main.shake(profile.durationMs, profile.intensity, true);
+    }
+
+    this.lastStateRef = snapshot.gameState;
   }
 }
 

@@ -3,7 +3,7 @@ import type { Direction, GameState, ParsedLevel } from '../core';
 import { submitScore } from '../runtime/backendApi';
 import { saveSettings, type GameSettings } from '../runtime/settingsStorage';
 
-export type Screen = 'main' | 'level-select' | 'settings' | 'editor' | 'playing' | 'paused';
+export type Screen = 'intro' | 'main' | 'level-select' | 'settings' | 'editor' | 'playing' | 'paused';
 
 export interface ControllerSnapshot {
   screen: Screen;
@@ -24,7 +24,7 @@ export class GameController {
 
   private settings: GameSettings;
 
-  private screen: Screen = 'main';
+  private screen: Screen = 'intro';
 
   private selectedLevelIndex = 0;
 
@@ -94,6 +94,15 @@ export class GameController {
   public openMainMenu(): void {
     this.screen = 'main';
     this.inputQueue.length = 0;
+    this.emit();
+  }
+
+  public finishIntro(): void {
+    if (this.screen !== 'intro') {
+      return;
+    }
+
+    this.screen = 'main';
     this.emit();
   }
 

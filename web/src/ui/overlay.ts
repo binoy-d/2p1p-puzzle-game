@@ -15,6 +15,7 @@ import {
   validateGridForEditor,
 } from '../editor/levelEditorUtils';
 import { fetchTopScores, saveCustomLevel, type LevelScoreRecord } from '../runtime/backendApi';
+import { LockstepIntroCinematic } from './introCinematic';
 
 function asElement<T extends HTMLElement>(root: ParentNode, selector: string): T {
   const element = root.querySelector(selector);
@@ -65,6 +66,18 @@ function tileClass(tile: string): string {
   return 'tile-path';
 }
 
+function isIntroSkipKey(event: KeyboardEvent): boolean {
+  if (event.altKey || event.ctrlKey || event.metaKey) {
+    return false;
+  }
+
+  if (event.key.length === 1) {
+    return true;
+  }
+
+  return event.key === 'Enter' || event.key === 'Escape' || event.key === ' ' || event.key === 'Spacebar';
+}
+
 export class OverlayUI {
   private readonly root: HTMLElement;
 
@@ -85,6 +98,12 @@ export class OverlayUI {
   private readonly lightingToggle: HTMLInputElement;
 
   private readonly panels: Record<string, HTMLElement>;
+
+  private readonly introPanel: HTMLElement;
+
+  private readonly introSkipButton: HTMLButtonElement;
+
+  private readonly introCinematic: LockstepIntroCinematic;
 
   private readonly scoreList: HTMLOListElement;
 
@@ -139,12 +158,28 @@ export class OverlayUI {
     this.root.innerHTML = this.buildMarkup();
 
     this.panels = {
+      intro: asElement<HTMLElement>(this.root, '[data-panel="intro"]'),
       main: asElement<HTMLElement>(this.root, '[data-panel="main"]'),
       levelSelect: asElement<HTMLElement>(this.root, '[data-panel="level-select"]'),
       settings: asElement<HTMLElement>(this.root, '[data-panel="settings"]'),
       editor: asElement<HTMLElement>(this.root, '[data-panel="editor"]'),
       pause: asElement<HTMLElement>(this.root, '[data-panel="pause"]'),
     };
+
+    this.introPanel = asElement<HTMLElement>(this.root, '[data-panel="intro"]');
+    this.introSkipButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-skip');
+    this.introCinematic = new LockstepIntroCinematic({
+      elements: {
+        panel: this.introPanel,
+        canvas: asElement<HTMLCanvasElement>(this.root, '#intro-canvas'),
+        title: asElement<HTMLElement>(this.root, '#intro-title'),
+        line: asElement<HTMLElement>(this.root, '#intro-line'),
+        skipHint: asElement<HTMLElement>(this.root, '#intro-skip-hint'),
+      },
+      onComplete: () => {
+        this.controller.finishIntro();
+      },
+    });
 
     this.levelSelect = asElement<HTMLSelectElement>(this.root, '#level-select-input');
     this.statusText = asElement<HTMLElement>(this.root, '#menu-status');
@@ -176,6 +211,16 @@ export class OverlayUI {
 
   private buildMarkup(): string {
     return `
+      <section class="intro-overlay" data-panel="intro">
+        <canvas id="intro-canvas" aria-hidden="true"></canvas>
+        <div class="intro-content">
+          <h1 id="intro-title">LOCKSTEP</h1>
+          <p id="intro-line"></p>
+          <p id="intro-skip-hint" class="intro-skip-hint">Press any key, click, or tap to skip</p>
+          <button type="button" id="btn-intro-skip">Skip Intro</button>
+        </div>
+      </section>
+
       <div class="menu-status" id="menu-status" aria-live="polite"></div>
       <aside class="hud-scoreboard" id="hud-scoreboard" hidden>
         <h3>High Scores</h3>
@@ -184,7 +229,7 @@ export class OverlayUI {
       </aside>
 
       <section class="menu-panel" data-panel="main">
-        <h1>2P1P Puzzle Game</h1>
+        <h1>LOCKSTEP</h1>
         <p>Move all white squares to green goals. Avoid lava and enemies.</p>
         <label for="player-name-input">Player Name (required)</label>
         <input id="player-name-input" type="text" maxlength="32" placeholder="Enter your name" />
@@ -278,6 +323,22 @@ export class OverlayUI {
   }
 
   private bindEvents(): void {
+    this.introSkipButton.addEventListener('click', () => {
+      this.introCinematic.skip();
+    });
+
+    this.introPanel.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (target.tagName === 'BUTTON') {
+        return;
+      }
+
+      const snapshot = this.controller.getSnapshot();
+      if (snapshot.screen === 'intro') {
+        this.introCinematic.skip();
+      }
+    });
+
     this.playButton.addEventListener('click', () => {
       this.controller.startSelectedLevel();
     });
@@ -411,11 +472,19 @@ export class OverlayUI {
     });
 
     window.addEventListener('keydown', (event) => {
+      const snapshot = this.controller.getSnapshot();
+      if (snapshot.screen === 'intro') {
+        if (isIntroSkipKey(event)) {
+          event.preventDefault();
+          this.introCinematic.skip();
+        }
+        return;
+      }
+
       if (event.key !== 'Escape') {
         return;
       }
 
-      const snapshot = this.controller.getSnapshot();
       if (snapshot.screen === 'playing') {
         event.preventDefault();
         this.controller.openPauseMenu();
@@ -458,12 +527,19 @@ export class OverlayUI {
     this.playButton.disabled = !canPlay;
     this.levelStartButton.disabled = !canPlay;
 
+    this.panels.intro.hidden = snapshot.screen !== 'intro';
     this.panels.main.hidden = snapshot.screen !== 'main';
     this.panels.levelSelect.hidden = snapshot.screen !== 'level-select';
     this.panels.settings.hidden = snapshot.screen !== 'settings';
     this.panels.editor.hidden = snapshot.screen !== 'editor';
     this.panels.pause.hidden = snapshot.screen !== 'paused';
     this.hudScoreboard.hidden = !(snapshot.screen === 'playing' || snapshot.screen === 'paused');
+
+    if (snapshot.screen === 'intro') {
+      this.introCinematic.start();
+    } else {
+      this.introCinematic.stop();
+    }
 
     if (screenChanged && snapshot.screen === 'main') {
       this.playButton.focus();
