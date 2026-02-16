@@ -8,6 +8,23 @@ This repository now contains two versions:
 
 ## Full Stack Quick Start
 
+Run everything with one command from repo root:
+
+```bash
+docker compose up --build
+```
+
+Then open `http://localhost:5173`.
+
+Notes:
+
+- Backend API runs on `http://localhost:8787`.
+- SQLite data is persisted in the Docker volume `backend-data`.
+- Stop services with `docker compose down`.
+- Reset persisted DB with `docker compose down -v`.
+
+## Local (non-Docker) Quick Start
+
 Start backend:
 
 ```bash

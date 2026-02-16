@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      PORT: "8787"
+      DB_PATH: /app/data/puzzle.sqlite
+    ports:
+      - "8787:8787"
+    volumes:
+      - backend-data:/app/data
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    environment:
+      VITE_PROXY_TARGET: http://backend:8787
+    ports:
+      - "5173:5173"
+
+volumes:
+  backend-data:
