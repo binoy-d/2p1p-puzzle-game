@@ -17,6 +17,10 @@ function rgb(r: number, g: number, b: number): number {
   return (clampByte(r) << 16) | (clampByte(g) << 8) | clampByte(b);
 }
 
+function fract(value: number): number {
+  return value - Math.floor(value);
+}
+
 class PuzzleScene extends Phaser.Scene {
   private readonly controller: GameController;
 
@@ -207,6 +211,27 @@ class PuzzleScene extends Phaser.Scene {
         const color = rgb(red, green, blue);
         this.terrainLayer.fillStyle(color, 1);
         this.terrainLayer.fillRect(offsetX + x * TILE_SIZE, offsetY + y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
+        if (tile === 'x') {
+          const subSize = TILE_SIZE / 4;
+          const flickerStep = Math.floor(time / 95);
+          for (let iy = 0; iy < 4; iy += 1) {
+            for (let ix = 0; ix < 4; ix += 1) {
+              const seed = (x + 1) * 73856093 + (y + 1) * 19349663 + (ix + 1) * 83492791 + (iy + 1) * 297121507 + flickerStep * 104729;
+              const noise = fract(Math.sin(seed) * 43758.5453);
+              const subRed = 210 + noise * 40;
+              const subGreen = 22 + noise * 35;
+
+              this.terrainLayer.fillStyle(rgb(subRed, subGreen, 0), 1);
+              this.terrainLayer.fillRect(
+                offsetX + x * TILE_SIZE + ix * subSize,
+                offsetY + y * TILE_SIZE + iy * subSize,
+                subSize,
+                subSize,
+              );
+            }
+          }
+        }
 
         if (tile === '!') {
           this.terrainLayer.fillStyle(rgb(0, 245, 0), 1);
