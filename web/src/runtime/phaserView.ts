@@ -40,7 +40,11 @@ class PuzzleScene extends Phaser.Scene {
 
   private entityLayer!: Phaser.GameObjects.Graphics;
 
+  private fxLayer!: Phaser.GameObjects.Graphics;
+
   private hudText!: Phaser.GameObjects.Text;
+
+  private deathText!: Phaser.GameObjects.Text;
 
   private accumulator = 0;
 
@@ -62,14 +66,25 @@ class PuzzleScene extends Phaser.Scene {
 
     this.terrainLayer = this.add.graphics().setDepth(0);
     this.entityLayer = this.add.graphics().setDepth(1);
+    this.fxLayer = this.add.graphics().setDepth(2);
     this.hudText = this.add
       .text(16, 16, '', {
         fontFamily: 'system-ui, sans-serif',
         color: '#f2f6ff',
         fontSize: '16px',
       })
-      .setDepth(2)
+      .setDepth(4)
       .setShadow(0, 1, '#000000', 2, false, true);
+    this.deathText = this.add
+      .text(0, 0, '', {
+        fontFamily: 'system-ui, sans-serif',
+        color: '#ffd6dc',
+        fontSize: '16px',
+      })
+      .setDepth(5)
+      .setOrigin(0.5, 1)
+      .setVisible(false)
+      .setShadow(0, 1, '#000000', 3, false, true);
 
     this.registerInput();
   }
@@ -185,6 +200,7 @@ class PuzzleScene extends Phaser.Scene {
 
     this.terrainLayer.clear();
     this.entityLayer.clear();
+    this.fxLayer.clear();
 
     for (let y = 0; y < levelHeight; y += 1) {
       for (let x = 0; x < levelWidth; x += 1) {
@@ -312,10 +328,110 @@ class PuzzleScene extends Phaser.Scene {
       );
     }
 
+    this.renderDeathAnimation(snapshot, offsetX, offsetY, tileSize);
+
     const isPaused = snapshot.screen === 'paused';
     this.hudText.setText(
       `Level ${state.levelIndex + 1}/${state.levelIds.length}  Moves ${state.moves}  Players ${state.players.length}/${state.totalPlayers}${isPaused ? '  [PAUSED]' : ''}`,
     );
+  }
+
+  private renderDeathAnimation(
+    snapshot: ControllerSnapshot,
+    offsetX: number,
+    offsetY: number,
+    tileSize: number,
+  ): void {
+    const death = snapshot.deathAnimation;
+    if (!death) {
+      this.deathText.setVisible(false);
+      return;
+    }
+
+    const nowMs = Date.now();
+    const elapsedMs = Math.max(0, nowMs - death.startedAtMs);
+    const progress = Phaser.Math.Clamp(elapsedMs / death.durationMs, 0, 1);
+    const easeOut = 1 - (1 - progress) * (1 - progress) * (1 - progress);
+    const fade = 1 - progress;
+    const pulse = 0.5 + 0.5 * Math.sin(nowMs / 52);
+
+    const impactCenterX = offsetX + (death.intersection.x + 0.5) * tileSize;
+    const impactCenterY = offsetY + (death.intersection.y + 0.5) * tileSize;
+    const playerFromX = offsetX + (death.playerFrom.x + 0.5) * tileSize;
+    const playerFromY = offsetY + (death.playerFrom.y + 0.5) * tileSize;
+    const enemyFromX = offsetX + (death.enemyFrom.x + 0.5) * tileSize;
+    const enemyFromY = offsetY + (death.enemyFrom.y + 0.5) * tileSize;
+
+    const lineWidth = Math.max(2, tileSize * 0.09);
+    this.fxLayer.lineStyle(lineWidth, rgb(245, 240, 255), 0.12 + fade * 0.55);
+    this.fxLayer.beginPath();
+    this.fxLayer.moveTo(playerFromX, playerFromY);
+    this.fxLayer.lineTo(impactCenterX, impactCenterY);
+    this.fxLayer.strokePath();
+
+    this.fxLayer.lineStyle(lineWidth * 0.75, rgb(255, 82, 112), 0.14 + fade * 0.68);
+    this.fxLayer.beginPath();
+    this.fxLayer.moveTo(enemyFromX, enemyFromY);
+    this.fxLayer.lineTo(impactCenterX, impactCenterY);
+    this.fxLayer.strokePath();
+
+    const shockSize = tileSize * (0.5 + easeOut * 1.9);
+    const innerSize = tileSize * (0.32 + pulse * 0.24);
+    const sparkLength = tileSize * (0.4 + easeOut * 1.1);
+    const ringSize = tileSize * (0.85 + easeOut * 2.6);
+
+    this.fxLayer.fillStyle(rgb(255, 36 + pulse * 75, 64 + pulse * 74), 0.1 + fade * 0.32);
+    this.fxLayer.fillRect(
+      impactCenterX - shockSize / 2,
+      impactCenterY - shockSize / 2,
+      shockSize,
+      shockSize,
+    );
+
+    this.fxLayer.fillStyle(rgb(255, 238, 244), 0.65 + fade * 0.35);
+    this.fxLayer.fillRect(
+      impactCenterX - innerSize / 2,
+      impactCenterY - innerSize / 2,
+      innerSize,
+      innerSize,
+    );
+
+    this.fxLayer.lineStyle(Math.max(2, tileSize * 0.07), rgb(255, 118, 146), 0.42 + fade * 0.45);
+    this.fxLayer.strokeRect(
+      impactCenterX - ringSize / 2,
+      impactCenterY - ringSize / 2,
+      ringSize,
+      ringSize,
+    );
+
+    this.fxLayer.lineStyle(Math.max(1.5, tileSize * 0.06), rgb(255, 232, 238), 0.35 + fade * 0.55);
+    this.fxLayer.beginPath();
+    this.fxLayer.moveTo(impactCenterX - sparkLength, impactCenterY);
+    this.fxLayer.lineTo(impactCenterX + sparkLength, impactCenterY);
+    this.fxLayer.moveTo(impactCenterX, impactCenterY - sparkLength);
+    this.fxLayer.lineTo(impactCenterX, impactCenterY + sparkLength);
+    this.fxLayer.strokePath();
+
+    const highlightSize = tileSize * 1.03;
+    this.fxLayer.lineStyle(Math.max(1.5, tileSize * 0.07), rgb(141, 220, 255), 0.2 + fade * 0.65);
+    this.fxLayer.strokeRect(
+      playerFromX - highlightSize / 2,
+      playerFromY - highlightSize / 2,
+      highlightSize,
+      highlightSize,
+    );
+    this.fxLayer.lineStyle(Math.max(1.5, tileSize * 0.07), rgb(255, 112, 136), 0.2 + fade * 0.68);
+    this.fxLayer.strokeRect(
+      enemyFromX - highlightSize / 2,
+      enemyFromY - highlightSize / 2,
+      highlightSize,
+      highlightSize,
+    );
+
+    this.deathText.setVisible(true);
+    this.deathText.setPosition(impactCenterX, impactCenterY - tileSize * 0.9);
+    this.deathText.setText(`P${death.playerId + 1} x E${death.enemyId + 1}`);
+    this.deathText.setAlpha(0.3 + fade * 0.7);
   }
 
   private applyLevelTransition(snapshot: ControllerSnapshot): void {

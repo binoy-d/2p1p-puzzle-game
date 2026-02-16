@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { parseLevelText } from '../../src/core/levelParser';
 import { GameController } from '../../src/app/gameController';
 
@@ -73,5 +73,53 @@ describe('game controller', () => {
     controller.setPlayerName('Ava');
     controller.startSelectedLevel();
     expect(controller.getSnapshot().screen).toBe('playing');
+  });
+
+  it('shows enemy death animation before applying level reset', () => {
+    const nowSpy = vi.spyOn(Date, 'now');
+    let now = 1000;
+    nowSpy.mockImplementation(() => now);
+
+    try {
+      const enemyLevel = parseLevelText('enemy', ['######', '#P12 #', '######'].join('\n'));
+      const controller = new GameController([enemyLevel], {
+        volume: 0.5,
+        lightingEnabled: true,
+      });
+
+      controller.finishIntro();
+      controller.setPlayerName('Ava');
+      controller.startSelectedLevel();
+
+      controller.queueDirection('right');
+      controller.fixedUpdate(16.67);
+      expect(controller.getSnapshot().gameState.moves).toBe(1);
+
+      controller.queueDirection('right');
+      controller.fixedUpdate(16.67);
+
+      const deathSnapshot = controller.getSnapshot();
+      expect(deathSnapshot.deathAnimation).not.toBeNull();
+      expect(deathSnapshot.gameState.moves).toBe(1);
+      expect(deathSnapshot.deathAnimation).toMatchObject({
+        playerId: 0,
+        enemyId: 0,
+        intersection: { x: 3, y: 1 },
+      });
+
+      const waitMs = deathSnapshot.deathAnimation?.durationMs ?? 0;
+      now += waitMs - 1;
+      controller.fixedUpdate(16.67);
+      expect(controller.getSnapshot().gameState.moves).toBe(1);
+
+      now += 2;
+      controller.fixedUpdate(16.67);
+      const resetSnapshot = controller.getSnapshot();
+      expect(resetSnapshot.deathAnimation).toBeNull();
+      expect(resetSnapshot.gameState.lastEvent).toBe('level-reset');
+      expect(resetSnapshot.gameState.moves).toBe(0);
+    } finally {
+      nowSpy.mockRestore();
+    }
   });
 });

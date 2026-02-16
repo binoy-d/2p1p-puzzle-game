@@ -74,6 +74,7 @@ npm run build
 - Pause menu: `Escape`
 - Intro cinematic: `Start` button (or `Enter` / `Space`) to skip
 - Menus: mouse + keyboard focusable buttons
+- Enemy collisions: short impact animation shows the player/enemy intersection before reset
 - Level Editor: available from main menu
 - Player name is required before starting a run
 

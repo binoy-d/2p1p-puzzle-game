@@ -2,8 +2,17 @@ import { createInitialState, restartLevel, setLevel, update } from '../core';
 import type { Direction, GameState, ParsedLevel } from '../core';
 import { submitScore } from '../runtime/backendApi';
 import { saveSettings, type GameSettings } from '../runtime/settingsStorage';
+import { detectEnemyImpact, type EnemyImpact } from './deathImpact';
 
 export type Screen = 'intro' | 'main' | 'level-select' | 'settings' | 'editor' | 'playing' | 'paused';
+
+const DEATH_ANIMATION_MS = 620;
+
+export interface DeathAnimationSnapshot extends EnemyImpact {
+  sequence: number;
+  startedAtMs: number;
+  durationMs: number;
+}
 
 export interface ControllerSnapshot {
   screen: Screen;
@@ -13,6 +22,7 @@ export interface ControllerSnapshot {
   selectedLevelIndex: number;
   playerName: string;
   statusMessage: string | null;
+  deathAnimation: DeathAnimationSnapshot | null;
 }
 
 type Subscriber = (snapshot: ControllerSnapshot) => void;
@@ -39,6 +49,14 @@ export class GameController {
   private playerName = '';
 
   private levelStartedAtMs = Date.now();
+
+  private pendingResetState: GameState | null = null;
+
+  private pendingResetDeadlineMs = 0;
+
+  private deathAnimation: DeathAnimationSnapshot | null = null;
+
+  private deathAnimationSequence = 0;
 
   public constructor(levels: ParsedLevel[], settings: GameSettings) {
     if (levels.length === 0) {
@@ -67,6 +85,7 @@ export class GameController {
       selectedLevelIndex: this.selectedLevelIndex,
       playerName: this.playerName,
       statusMessage: this.statusMessage,
+      deathAnimation: this.deathAnimation,
     };
   }
 
@@ -88,12 +107,14 @@ export class GameController {
     this.statusMessage = null;
     this.inputQueue.length = 0;
     this.levelStartedAtMs = Date.now();
+    this.clearTransientEffects();
     this.emit();
   }
 
   public openMainMenu(): void {
     this.screen = 'main';
     this.inputQueue.length = 0;
+    this.clearTransientEffects();
     this.emit();
   }
 
@@ -109,6 +130,7 @@ export class GameController {
   public openEditor(): void {
     this.screen = 'editor';
     this.inputQueue.length = 0;
+    this.clearTransientEffects();
     this.emit();
   }
 
@@ -156,11 +178,16 @@ export class GameController {
     this.statusMessage = null;
     this.inputQueue.length = 0;
     this.levelStartedAtMs = Date.now();
+    this.clearTransientEffects();
     this.emit();
   }
 
   public queueDirection(direction: Direction): void {
     if (this.screen !== 'playing') {
+      return;
+    }
+
+    if (this.pendingResetState) {
       return;
     }
 
@@ -176,6 +203,17 @@ export class GameController {
       return;
     }
 
+    const nowMs = Date.now();
+    if (this.pendingResetState) {
+      if (nowMs >= this.pendingResetDeadlineMs) {
+        this.gameState = this.pendingResetState;
+        this.levelStartedAtMs = nowMs;
+        this.clearTransientEffects();
+        this.emit();
+      }
+      return;
+    }
+
     const direction = this.inputQueue.shift() ?? null;
     if (!direction) {
       return;
@@ -186,27 +224,48 @@ export class GameController {
     const completedMoves = previous.moves + 1;
 
     const next = update(previous, { direction }, dtMs);
+    if (next.lastEvent === 'level-reset') {
+      const impact = detectEnemyImpact(previous, direction);
+      if (impact) {
+        this.pendingResetState = next;
+        this.pendingResetDeadlineMs = nowMs + DEATH_ANIMATION_MS;
+        this.deathAnimationSequence += 1;
+        this.deathAnimation = {
+          ...impact,
+          sequence: this.deathAnimationSequence,
+          startedAtMs: nowMs,
+          durationMs: DEATH_ANIMATION_MS,
+        };
+        this.statusMessage = `Player ${impact.playerId + 1} hit enemy ${impact.enemyId + 1}.`;
+        this.inputQueue.length = 0;
+        this.emit();
+        return;
+      }
+    }
+
     this.gameState = next;
+    this.deathAnimation = null;
 
     if (next.lastEvent === 'level-advanced') {
       this.selectedLevelIndex = next.levelIndex;
       this.statusMessage = `Level ${next.levelIndex + 1}`;
-      const durationMs = Math.max(0, Date.now() - this.levelStartedAtMs);
-      this.levelStartedAtMs = Date.now();
+      const durationMs = Math.max(0, nowMs - this.levelStartedAtMs);
+      this.levelStartedAtMs = nowMs;
       void this.submitCompletedScore(completedLevelId, completedMoves, durationMs);
     } else if (next.lastEvent === 'level-reset') {
-      this.levelStartedAtMs = Date.now();
+      this.levelStartedAtMs = nowMs;
     }
 
     if (next.status === 'game-complete') {
       const finalMoves = next.lastEvent === 'game-complete' ? next.moves : completedMoves;
-      const durationMs = Math.max(0, Date.now() - this.levelStartedAtMs);
+      const durationMs = Math.max(0, nowMs - this.levelStartedAtMs);
       void this.submitCompletedScore(completedLevelId, finalMoves, durationMs);
       this.screen = 'main';
       this.statusMessage = 'All levels complete.';
       this.selectedLevelIndex = this.levels.length - 1;
       this.inputQueue.length = 0;
-      this.levelStartedAtMs = Date.now();
+      this.levelStartedAtMs = nowMs;
+      this.clearTransientEffects();
     }
 
     this.emit();
@@ -240,6 +299,7 @@ export class GameController {
     this.gameState = createInitialState(this.levels, levelIndex);
     this.statusMessage = `Saved level ${level.id}`;
     this.levelStartedAtMs = Date.now();
+    this.clearTransientEffects();
     this.emit();
     return levelIndex;
   }
@@ -271,6 +331,12 @@ export class GameController {
     for (const subscriber of this.subscribers) {
       subscriber(snapshot);
     }
+  }
+
+  private clearTransientEffects(): void {
+    this.pendingResetState = null;
+    this.pendingResetDeadlineMs = 0;
+    this.deathAnimation = null;
   }
 
   private async submitCompletedScore(levelId: string, moves: number, durationMs: number): Promise<void> {
