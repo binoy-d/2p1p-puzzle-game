@@ -8,7 +8,6 @@ import {
   ensureParseableLevel,
   levelIdFromInput,
   nextCustomLevelId,
-  parseTextToGrid,
   resizeGrid,
   sanitizeDimension,
   serializeGrid,
@@ -21,6 +20,7 @@ function asElement<T extends HTMLElement>(root: ParentNode, selector: string): T
   if (!element) {
     throw new Error(`Missing required selector: ${selector}`);
   }
+
   return element as T;
 }
 
@@ -40,6 +40,7 @@ function describeTile(tile: string): string {
   if (tile === 'x') {
     return 'Lava (x)';
   }
+
   return `Enemy path (${tile})`;
 }
 
@@ -59,6 +60,7 @@ function tileClass(tile: string): string {
   if (tile === 'x') {
     return 'tile-lava';
   }
+
   return 'tile-path';
 }
 
@@ -77,19 +79,15 @@ export class OverlayUI {
 
   private readonly panels: Record<string, HTMLElement>;
 
-  private readonly editorLoadSelect: HTMLSelectElement;
+  private readonly editorSourceSelect: HTMLSelectElement;
 
   private readonly editorIdInput: HTMLInputElement;
-
-  private readonly editorNameInput: HTMLInputElement;
 
   private readonly editorWidthInput: HTMLInputElement;
 
   private readonly editorHeightInput: HTMLInputElement;
 
   private readonly editorGridRoot: HTMLElement;
-
-  private readonly editorTextArea: HTMLTextAreaElement;
 
   private readonly editorFeedback: HTMLElement;
 
@@ -99,7 +97,7 @@ export class OverlayUI {
 
   private editorPaletteButtons = new Map<string, HTMLButtonElement>();
 
-  private editorGrid: string[][] = createGrid(25, 16, '#');
+  private editorGrid: string[][] = this.createBlankGrid(25, 16);
 
   private editorTile = '#';
 
@@ -126,18 +124,17 @@ export class OverlayUI {
     this.volumeSlider = asElement<HTMLInputElement>(this.root, '#settings-volume');
     this.lightingToggle = asElement<HTMLInputElement>(this.root, '#settings-lighting');
 
-    this.editorLoadSelect = asElement<HTMLSelectElement>(this.root, '#editor-load-level');
+    this.editorSourceSelect = asElement<HTMLSelectElement>(this.root, '#editor-source-level');
     this.editorIdInput = asElement<HTMLInputElement>(this.root, '#editor-level-id');
-    this.editorNameInput = asElement<HTMLInputElement>(this.root, '#editor-level-name');
     this.editorWidthInput = asElement<HTMLInputElement>(this.root, '#editor-width');
     this.editorHeightInput = asElement<HTMLInputElement>(this.root, '#editor-height');
     this.editorGridRoot = asElement<HTMLElement>(this.root, '#editor-grid');
-    this.editorTextArea = asElement<HTMLTextAreaElement>(this.root, '#editor-text');
     this.editorFeedback = asElement<HTMLElement>(this.root, '#editor-feedback');
     this.editorSelectedTile = asElement<HTMLElement>(this.root, '#editor-selected-tile');
     this.editorPaletteRoot = asElement<HTMLElement>(this.root, '#editor-palette');
 
     this.buildPalette();
+    this.renderEditorGrid();
     this.bindEvents();
     this.controller.subscribe((snapshot) => this.render(snapshot));
   }
@@ -184,23 +181,18 @@ export class OverlayUI {
 
       <section class="menu-panel menu-panel-editor" data-panel="editor" hidden>
         <h2>Level Editor</h2>
-        <p>Edit tiles directly, validate, save locally, and export to text.</p>
+        <p>Load a level, paint tiles, then save and play.</p>
 
         <div class="editor-controls">
-          <label for="editor-load-level">Load Existing</label>
-          <select id="editor-load-level"></select>
+          <label for="editor-source-level">Source Level</label>
+          <select id="editor-source-level"></select>
           <button type="button" id="btn-editor-load">Load</button>
-          <button type="button" id="btn-editor-new">New</button>
+          <button type="button" id="btn-editor-new">New Blank</button>
         </div>
 
         <div class="editor-controls">
-          <label for="editor-level-id">Level ID</label>
+          <label for="editor-level-id">Save ID</label>
           <input id="editor-level-id" type="text" placeholder="custom-level-1" />
-          <label for="editor-level-name">Display Name</label>
-          <input id="editor-level-name" type="text" placeholder="Custom Level" />
-        </div>
-
-        <div class="editor-controls">
           <label for="editor-width">Width</label>
           <input id="editor-width" type="number" min="4" max="80" value="25" />
           <label for="editor-height">Height</label>
@@ -213,15 +205,10 @@ export class OverlayUI {
 
         <div class="editor-grid" id="editor-grid" role="grid" aria-label="Level tile grid"></div>
 
-        <label for="editor-text">Level Text</label>
-        <textarea id="editor-text" rows="6" spellcheck="false"></textarea>
-
         <div class="button-row">
-          <button type="button" id="btn-editor-apply-text">Apply Text</button>
-          <button type="button" id="btn-editor-validate">Validate</button>
           <button type="button" id="btn-editor-save">Save Local</button>
-          <button type="button" id="btn-editor-export">Download .txt</button>
           <button type="button" id="btn-editor-save-play">Save + Play</button>
+          <button type="button" id="btn-editor-export">Download .txt</button>
           <button type="button" id="btn-editor-back">Back</button>
         </div>
 
@@ -241,28 +228,6 @@ export class OverlayUI {
     `;
   }
 
-  private buildPalette(): void {
-    this.editorPaletteRoot.innerHTML = '';
-    this.editorPaletteButtons = new Map<string, HTMLButtonElement>();
-
-    for (const tile of EDITOR_TILE_PALETTE) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.tile = tile;
-      button.className = `editor-palette-tile ${tileClass(tile)}`;
-      button.textContent = tile === ' ' ? 'space' : tile;
-      button.title = describeTile(tile);
-      button.addEventListener('click', () => {
-        this.editorTile = tile;
-        this.syncSelectedTile();
-      });
-      this.editorPaletteRoot.append(button);
-      this.editorPaletteButtons.set(tile, button);
-    }
-
-    this.syncSelectedTile();
-  }
-
   private bindEvents(): void {
     asElement<HTMLButtonElement>(this.root, '#btn-play').addEventListener('click', () => {
       this.controller.startSelectedLevel();
@@ -274,8 +239,10 @@ export class OverlayUI {
 
     asElement<HTMLButtonElement>(this.root, '#btn-open-editor').addEventListener('click', () => {
       const snapshot = this.controller.getSnapshot();
-      const level = snapshot.levels[snapshot.selectedLevelIndex] ?? snapshot.levels[0];
-      this.loadLevelIntoEditor(level, false);
+      const source = snapshot.levels[snapshot.selectedLevelIndex] ?? snapshot.levels[0];
+      if (source) {
+        this.loadLevelIntoEditor(source);
+      }
       this.controller.openEditor();
     });
 
@@ -312,37 +279,16 @@ export class OverlayUI {
       this.controller.openSettings();
     });
 
-    this.levelSelect.addEventListener('change', () => {
-      const level = Number.parseInt(this.levelSelect.value, 10);
-      this.controller.setSelectedLevel(level);
-    });
-
-    this.volumeSlider.addEventListener('input', () => {
-      this.controller.setVolume(Number.parseFloat(this.volumeSlider.value));
-    });
-
-    this.lightingToggle.addEventListener('change', () => {
-      this.controller.setLightingEnabled(this.lightingToggle.checked);
+    asElement<HTMLButtonElement>(this.root, '#btn-editor-load').addEventListener('click', () => {
+      this.loadSelectedEditorLevel();
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-editor-new').addEventListener('click', () => {
       this.resetEditorGrid();
     });
 
-    asElement<HTMLButtonElement>(this.root, '#btn-editor-load').addEventListener('click', () => {
-      this.loadSelectedEditorLevel();
-    });
-
     asElement<HTMLButtonElement>(this.root, '#btn-editor-resize').addEventListener('click', () => {
       this.resizeEditorGrid();
-    });
-
-    asElement<HTMLButtonElement>(this.root, '#btn-editor-apply-text').addEventListener('click', () => {
-      this.applyEditorText();
-    });
-
-    asElement<HTMLButtonElement>(this.root, '#btn-editor-validate').addEventListener('click', () => {
-      this.validateEditorGrid();
     });
 
     asElement<HTMLButtonElement>(this.root, '#btn-editor-save').addEventListener('click', () => {
@@ -359,6 +305,19 @@ export class OverlayUI {
 
     asElement<HTMLButtonElement>(this.root, '#btn-editor-back').addEventListener('click', () => {
       this.controller.openMainMenu();
+    });
+
+    this.levelSelect.addEventListener('change', () => {
+      const level = Number.parseInt(this.levelSelect.value, 10);
+      this.controller.setSelectedLevel(level);
+    });
+
+    this.volumeSlider.addEventListener('input', () => {
+      this.controller.setVolume(Number.parseFloat(this.volumeSlider.value));
+    });
+
+    this.lightingToggle.addEventListener('change', () => {
+      this.controller.setLightingEnabled(this.lightingToggle.checked);
     });
 
     this.editorGridRoot.addEventListener('mousedown', (event) => {
@@ -414,7 +373,7 @@ export class OverlayUI {
   private render(snapshot: ControllerSnapshot): void {
     this.lastSnapshot = snapshot;
     this.syncLevelOptions(snapshot);
-    this.syncEditorLevelOptions(snapshot);
+    this.syncEditorSourceOptions(snapshot);
 
     this.volumeSlider.value = snapshot.settings.volume.toString();
     this.lightingToggle.checked = snapshot.settings.lightingEnabled;
@@ -464,27 +423,49 @@ export class OverlayUI {
     }
   }
 
-  private syncEditorLevelOptions(snapshot: ControllerSnapshot): void {
-    const customIds = new Set(loadStoredCustomLevels().map((level) => level.id));
+  private syncEditorSourceOptions(snapshot: ControllerSnapshot): void {
+    const customLevelIds = new Set(loadStoredCustomLevels().map((entry) => entry.id));
     const signature = snapshot.levels
-      .map((level) => `${level.id}:${customIds.has(level.id) ? 'custom' : 'builtin'}`)
+      .map((level) => `${level.id}:${customLevelIds.has(level.id) ? 'custom' : 'builtin'}`)
       .join('|');
 
-    if (this.editorLoadSelect.dataset.signature === signature) {
-      return;
+    if (this.editorSourceSelect.dataset.signature !== signature) {
+      this.editorSourceSelect.innerHTML = '';
+      snapshot.levels.forEach((level, index) => {
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = customLevelIds.has(level.id) ? `Custom: ${level.id}` : `Built-in: ${level.id}`;
+        this.editorSourceSelect.append(option);
+      });
+      this.editorSourceSelect.dataset.signature = signature;
     }
 
-    this.editorLoadSelect.innerHTML = '';
-    snapshot.levels.forEach((level, index) => {
-      const option = document.createElement('option');
-      option.value = String(index);
-      option.textContent = customIds.has(level.id)
-        ? `Custom: ${level.id}`
-        : `Built-in: ${level.id}`;
-      this.editorLoadSelect.append(option);
-    });
-    this.editorLoadSelect.dataset.signature = signature;
-    this.editorLoadSelect.value = String(snapshot.selectedLevelIndex);
+    const nextValue = String(snapshot.selectedLevelIndex);
+    if (this.editorSourceSelect.value !== nextValue) {
+      this.editorSourceSelect.value = nextValue;
+    }
+  }
+
+  private buildPalette(): void {
+    this.editorPaletteRoot.innerHTML = '';
+    this.editorPaletteButtons = new Map<string, HTMLButtonElement>();
+
+    for (const tile of EDITOR_TILE_PALETTE) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.tile = tile;
+      button.className = `editor-palette-tile ${tileClass(tile)}`;
+      button.textContent = tile === ' ' ? 'space' : tile;
+      button.title = describeTile(tile);
+      button.addEventListener('click', () => {
+        this.editorTile = tile;
+        this.syncSelectedTile();
+      });
+      this.editorPaletteRoot.append(button);
+      this.editorPaletteButtons.set(tile, button);
+    }
+
+    this.syncSelectedTile();
   }
 
   private syncSelectedTile(): void {
@@ -492,6 +473,30 @@ export class OverlayUI {
     for (const [tile, button] of this.editorPaletteButtons) {
       button.classList.toggle('editor-palette-selected', tile === this.editorTile);
     }
+  }
+
+  private createBlankGrid(width: number, height: number): string[][] {
+    const safeWidth = sanitizeDimension(width, 25);
+    const safeHeight = sanitizeDimension(height, 16);
+    const grid = createGrid(safeWidth, safeHeight, '#');
+
+    for (let y = 1; y < safeHeight - 1; y += 1) {
+      for (let x = 1; x < safeWidth - 1; x += 1) {
+        grid[y][x] = ' ';
+      }
+    }
+
+    if (safeWidth >= 3 && safeHeight >= 3) {
+      grid[1][1] = 'P';
+      grid[safeHeight - 2][safeWidth - 2] = '!';
+    }
+
+    return grid;
+  }
+
+  private defaultEditorId(): string {
+    const existingIds = this.lastSnapshot?.levels.map((level) => level.id) ?? [];
+    return nextCustomLevelId(existingIds);
   }
 
   private renderEditorGrid(): void {
@@ -515,7 +520,11 @@ export class OverlayUI {
 
     this.editorWidthInput.value = String(width);
     this.editorHeightInput.value = String(this.editorGrid.length);
-    this.editorTextArea.value = serializeGrid(this.editorGrid);
+  }
+
+  private showEditorFeedback(message: string, isError = false): void {
+    this.editorFeedback.textContent = message;
+    this.editorFeedback.classList.toggle('editor-feedback-error', isError);
   }
 
   private paintGridCell(target: HTMLElement): void {
@@ -533,24 +542,18 @@ export class OverlayUI {
     this.renderEditorGrid();
   }
 
-  private showEditorFeedback(message: string, isError = false): void {
-    this.editorFeedback.textContent = message;
-    this.editorFeedback.classList.toggle('editor-feedback-error', isError);
-  }
-
-  private loadLevelIntoEditor(level: ParsedLevel, keepId: boolean): void {
+  private loadLevelIntoEditor(level: ParsedLevel): void {
     this.editorGrid = cloneGrid(level.grid);
 
-    const existingIds = this.lastSnapshot?.levels.map((entry) => entry.id) ?? [];
-    if (keepId) {
+    const customLevelIds = new Set(loadStoredCustomLevels().map((entry) => entry.id));
+    if (customLevelIds.has(level.id)) {
       this.editorIdInput.value = level.id;
     } else {
-      this.editorIdInput.value = nextCustomLevelId(existingIds);
+      this.editorIdInput.value = this.defaultEditorId();
     }
 
-    this.editorNameInput.value = level.id;
     this.renderEditorGrid();
-    this.showEditorFeedback(`Loaded ${level.id} into editor.`);
+    this.showEditorFeedback(`Loaded ${level.id}`);
   }
 
   private loadSelectedEditorLevel(): void {
@@ -559,61 +562,51 @@ export class OverlayUI {
       return;
     }
 
-    const index = Number.parseInt(this.editorLoadSelect.value, 10);
+    const index = Number.parseInt(this.editorSourceSelect.value, 10);
     const level = snapshot.levels[index];
     if (!level) {
-      this.showEditorFeedback('No level selected to load.', true);
+      this.showEditorFeedback('Choose a level to load first.', true);
       return;
     }
 
-    const isCustom = loadStoredCustomLevels().some((entry) => entry.id === level.id);
-    this.loadLevelIntoEditor(level, isCustom);
+    this.loadLevelIntoEditor(level);
   }
 
   private resetEditorGrid(): void {
-    const width = sanitizeDimension(Number.parseInt(this.editorWidthInput.value, 10), 25);
-    const height = sanitizeDimension(Number.parseInt(this.editorHeightInput.value, 10), 16);
-    this.editorGrid = createGrid(width, height, '#');
+    const width = sanitizeDimension(Number.parseInt(this.editorWidthInput.value, 10), this.editorGrid[0]?.length ?? 25);
+    const height = sanitizeDimension(Number.parseInt(this.editorHeightInput.value, 10), this.editorGrid.length || 16);
 
-    const existingIds = this.lastSnapshot?.levels.map((level) => level.id) ?? [];
-    this.editorIdInput.value = nextCustomLevelId(existingIds);
-    this.editorNameInput.value = 'Custom Level';
+    this.editorGrid = this.createBlankGrid(width, height);
+    this.editorIdInput.value = this.defaultEditorId();
     this.renderEditorGrid();
-    this.showEditorFeedback('Created a new blank level.');
+    this.showEditorFeedback('Created blank level template.');
   }
 
   private resizeEditorGrid(): void {
     const width = sanitizeDimension(Number.parseInt(this.editorWidthInput.value, 10), this.editorGrid[0]?.length ?? 25);
     const height = sanitizeDimension(Number.parseInt(this.editorHeightInput.value, 10), this.editorGrid.length || 16);
+
     this.editorGrid = resizeGrid(this.editorGrid, width, height, '#');
     this.renderEditorGrid();
-    this.showEditorFeedback(`Resized level to ${width}x${height}.`);
+    this.showEditorFeedback(`Resized to ${width}x${height}.`);
   }
 
-  private applyEditorText(): void {
-    try {
-      const parsed = parseTextToGrid(this.editorTextArea.value);
-      this.editorGrid = parsed;
-      this.renderEditorGrid();
-      this.showEditorFeedback('Applied level text to grid.');
-    } catch (error) {
-      this.showEditorFeedback(String(error), true);
-    }
-  }
+  private resolveSaveId(baseId: string, snapshot: ControllerSnapshot): string {
+    const allIds = new Set(snapshot.levels.map((level) => level.id));
+    const storedIds = new Set(loadStoredCustomLevels().map((entry) => entry.id));
 
-  private validateEditorGrid(): void {
-    const validation = validateGridForEditor(this.editorGrid);
-    if (validation.errors.length > 0) {
-      this.showEditorFeedback(validation.errors.join(' '), true);
-      return;
+    let candidate = baseId || this.defaultEditorId();
+    if (allIds.has(candidate) && !storedIds.has(candidate)) {
+      candidate = `${candidate}-custom`;
     }
 
-    if (validation.warnings.length > 0) {
-      this.showEditorFeedback(`Warnings: ${validation.warnings.join(' ')}`);
-      return;
+    let suffix = 2;
+    while (allIds.has(candidate) && !storedIds.has(candidate)) {
+      candidate = `${baseId || 'custom-level'}-${suffix}`;
+      suffix += 1;
     }
 
-    this.showEditorFeedback('Level is valid.');
+    return candidate;
   }
 
   private saveEditorLevel(playAfterSave: boolean): void {
@@ -628,9 +621,8 @@ export class OverlayUI {
       return;
     }
 
-    const existingIds = snapshot.levels.map((level) => level.id);
-    const providedId = levelIdFromInput(this.editorIdInput.value);
-    const levelId = providedId || nextCustomLevelId(existingIds);
+    const requestedId = levelIdFromInput(this.editorIdInput.value);
+    const levelId = this.resolveSaveId(requestedId, snapshot);
 
     try {
       ensureParseableLevel(levelId, this.editorGrid);
@@ -640,29 +632,29 @@ export class OverlayUI {
     }
 
     const text = serializeGrid(this.editorGrid);
-    const parsedLevel = parseLevelText(levelId, text);
-    const displayName = this.editorNameInput.value.trim() || levelId;
+    const parsed = parseLevelText(levelId, text);
 
     upsertStoredCustomLevel({
       id: levelId,
-      name: displayName,
+      name: levelId,
       text,
       updatedAt: Date.now(),
     });
 
-    const index = this.controller.upsertLevel(parsedLevel);
+    const levelIndex = this.controller.upsertLevel(parsed);
+    this.editorIdInput.value = levelId;
 
     if (playAfterSave) {
-      this.controller.startLevel(index);
+      this.controller.startLevel(levelIndex);
       return;
     }
 
     if (validation.warnings.length > 0) {
-      this.showEditorFeedback(`Saved ${levelId}. Warnings: ${validation.warnings.join(' ')}`);
+      this.showEditorFeedback(`Saved ${levelId}. Warning: ${validation.warnings.join(' ')}`);
       return;
     }
 
-    this.showEditorFeedback(`Saved ${levelId} locally.`);
+    this.showEditorFeedback(`Saved ${levelId}.`);
   }
 
   private exportEditorText(): void {

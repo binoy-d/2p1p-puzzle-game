@@ -143,16 +143,22 @@ button:active {
 }
 
 .editor-controls {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
   margin-bottom: 10px;
 }
 
 .editor-controls label {
+  min-width: 72px;
   font-size: 13px;
   color: var(--muted);
+}
+
+.editor-controls input,
+.editor-controls select {
+  flex: 1 1 150px;
 }
 
 .editor-palette {
@@ -185,7 +191,7 @@ button:active {
   border-radius: 12px;
   background: rgba(6, 10, 16, 0.85);
   overflow: auto;
-  max-height: 420px;
+  max-height: 520px;
 }
 
 .editor-grid-cell {
@@ -249,10 +255,6 @@ button:active {
     width: 100%;
     border-radius: 12px;
     padding: 16px;
-  }
-
-  .editor-controls {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   button,
