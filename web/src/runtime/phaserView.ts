@@ -6,6 +6,7 @@ import {
   computePathDotScale,
   pathDistanceFromNextHit,
 } from './enemyPathVisuals';
+import { isTextInputFocused } from './inputFocus';
 
 const FIXED_STEP_MS = 1000 / 60;
 const MIN_TILE_SIZE = 22;
@@ -78,6 +79,10 @@ class PuzzleScene extends Phaser.Scene {
 
   private registerInput(): void {
     this.input.keyboard?.on('keydown', (event: KeyboardEvent) => {
+      if (isTextInputFocused(document.activeElement as Element | null)) {
+        return;
+      }
+
       switch (event.code) {
         case 'ArrowUp':
         case 'KeyW':
