@@ -100,7 +100,10 @@ body {
 
 button,
 select,
-input[type='range'] {
+input[type='range'],
+input[type='text'],
+input[type='number'],
+textarea {
   pointer-events: auto;
   border-radius: 10px;
   border: 1px solid rgba(162, 176, 194, 0.25);
@@ -133,6 +136,104 @@ button:active {
   gap: 8px;
 }
 
+.menu-panel-editor {
+  width: min(1180px, 100%);
+  max-height: calc(100vh - 56px);
+  overflow: auto;
+}
+
+.editor-controls {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.editor-controls label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.editor-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.editor-palette-tile {
+  min-width: 54px;
+  text-transform: uppercase;
+}
+
+.editor-palette-selected {
+  border-color: rgba(87, 208, 255, 0.9);
+  box-shadow: 0 0 0 1px rgba(87, 208, 255, 0.45) inset;
+}
+
+.editor-selected {
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.editor-grid {
+  display: grid;
+  gap: 2px;
+  padding: 10px;
+  border: 1px solid rgba(122, 173, 219, 0.26);
+  border-radius: 12px;
+  background: rgba(6, 10, 16, 0.85);
+  overflow: auto;
+  max-height: 420px;
+}
+
+.editor-grid-cell {
+  min-width: 20px;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  padding: 0;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.tile-wall {
+  background: #bfc6cf;
+  color: #1f252d;
+}
+
+.tile-floor {
+  background: #242a34;
+}
+
+.tile-player {
+  background: #f5f8ff;
+  color: #12161d;
+}
+
+.tile-goal {
+  background: #15a460;
+}
+
+.tile-lava {
+  background: #b84a1d;
+}
+
+.tile-path {
+  background: #521727;
+}
+
+.editor-feedback {
+  min-height: 20px;
+  margin-top: 8px;
+  color: var(--accent-2);
+}
+
+.editor-feedback-error {
+  color: var(--danger);
+}
+
 .boot-error {
   color: #ff9ca5;
   padding: 16px;
@@ -148,6 +249,10 @@ button:active {
     width: 100%;
     border-radius: 12px;
     padding: 16px;
+  }
+
+  .editor-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   button,

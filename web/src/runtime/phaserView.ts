@@ -127,6 +127,32 @@ class PuzzleScene extends Phaser.Scene {
     return clampByte(swop);
   }
 
+  private computeEnemyTint(
+    tileX: number,
+    tileY: number,
+    enemies: ControllerSnapshot['gameState']['enemies'],
+  ): number {
+    const radius = 2.2;
+    let strongest = 0;
+
+    for (const enemy of enemies) {
+      const dx = tileX - enemy.x;
+      const dy = tileY - enemy.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance > radius) {
+        continue;
+      }
+
+      const normalized = 1 - distance / radius;
+      const strength = normalized * normalized;
+      if (strength > strongest) {
+        strongest = strength;
+      }
+    }
+
+    return strongest;
+  }
+
   private renderSnapshot(
     snapshot: ControllerSnapshot,
     viewportWidth: number,
@@ -153,19 +179,32 @@ class PuzzleScene extends Phaser.Scene {
           : 140;
         const wallShade = clampByte(glowValue * 2);
         const floorShade = clampByte(glowValue / 4);
-
-        let color = rgb(floorShade, floorShade, floorShade);
+        let red = floorShade;
+        let green = floorShade;
+        let blue = floorShade;
 
         if (tile === '#') {
-          color = rgb(wallShade, wallShade, wallShade);
+          red = wallShade;
+          green = wallShade;
+          blue = wallShade;
         } else if (tile === 'x') {
           const lavaPulse = 0.5 + 0.5 * Math.sin((time + (x * 13 + y * 19) * 22) / 140);
-          color = rgb(190 + lavaPulse * 55, 32 + lavaPulse * 36, 0);
+          red = 190 + lavaPulse * 55;
+          green = 32 + lavaPulse * 36;
+          blue = 0;
         } else if (tile === '!') {
           const goalPulse = 0.5 + 0.5 * Math.sin((time + (x * 17 + y * 11) * 20) / 170);
-          color = rgb(0, 170 + goalPulse * 22, 0);
+          red = 0;
+          green = 170 + goalPulse * 22;
+          blue = 0;
         }
 
+        const enemyTint = this.computeEnemyTint(x, y, state.enemies);
+        red = clampByte(red + enemyTint * 120);
+        green = clampByte(green - enemyTint * 22);
+        blue = clampByte(blue - enemyTint * 22);
+
+        const color = rgb(red, green, blue);
         this.terrainLayer.fillStyle(color, 1);
         this.terrainLayer.fillRect(offsetX + x * TILE_SIZE, offsetY + y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 

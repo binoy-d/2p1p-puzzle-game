@@ -45,6 +45,7 @@ npm run build
 - Move: `WASD` or arrow keys
 - Pause/Resume: `Escape`
 - Menus: mouse + keyboard focusable buttons
+- Level Editor: available from main menu
 
 ## Levels
 
@@ -65,13 +66,23 @@ Level files live in `/web/public/assets/levels/*.txt` and are listed in:
    - `1-9` enemy path markers (`1` is enemy spawn)
 4. Append the new filename to `/web/public/assets/levels/manifest.json`.
 
+### In-Game Level Editor and Saver
+
+- Open from Main Menu -> `Level Editor`.
+- Paint tiles with the palette (`#`, space, `P`, `!`, `x`, `1-9`).
+- Load existing built-in/custom levels into the editor.
+- Resize maps, edit raw text, and validate before save.
+- `Save Local` stores custom levels in browser `localStorage` and adds them to level select immediately.
+- `Save + Play` saves then launches the edited level.
+- `Download .txt` exports a compatible level text file.
+
 ## Lighting (High Level)
 
 Lighting v1 is implemented as:
 
-- A darkness render texture over the scene.
-- Radial cutouts erased around players (larger) and enemies (smaller) for radius/falloff.
-- Additive glow circles layered on top for visual bloom.
+- Per-tile brightness shading that matches the original Java feel (walls/floors brighten by player proximity).
+- Short-range enemy red tint spread on surrounding tiles for hazard readability.
+- Enhanced enemy path visibility with animated red center markers on numeric path tiles.
 - Toggleable from Settings (stored in `localStorage`).
 
 ## Testing Approach

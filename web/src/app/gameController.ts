@@ -2,7 +2,7 @@ import { createInitialState, restartLevel, setLevel, update } from '../core';
 import type { Direction, GameState, ParsedLevel } from '../core';
 import { saveSettings, type GameSettings } from '../runtime/settingsStorage';
 
-export type Screen = 'main' | 'level-select' | 'settings' | 'playing' | 'paused';
+export type Screen = 'main' | 'level-select' | 'settings' | 'editor' | 'playing' | 'paused';
 
 export interface ControllerSnapshot {
   screen: Screen;
@@ -16,7 +16,7 @@ export interface ControllerSnapshot {
 type Subscriber = (snapshot: ControllerSnapshot) => void;
 
 export class GameController {
-  private readonly levels: ParsedLevel[];
+  private levels: ParsedLevel[];
 
   private gameState: GameState;
 
@@ -39,9 +39,9 @@ export class GameController {
       throw new Error('Cannot initialize controller without levels.');
     }
 
-    this.levels = levels;
+    this.levels = levels.slice();
     this.settings = settings;
-    this.gameState = createInitialState(levels, 0);
+    this.gameState = createInitialState(this.levels, 0);
   }
 
   public subscribe(subscriber: Subscriber): () => void {
@@ -79,6 +79,12 @@ export class GameController {
 
   public openMainMenu(): void {
     this.screen = 'main';
+    this.inputQueue.length = 0;
+    this.emit();
+  }
+
+  public openEditor(): void {
+    this.screen = 'editor';
     this.inputQueue.length = 0;
     this.emit();
   }
@@ -164,6 +170,22 @@ export class GameController {
     const clamped = Math.max(0, Math.min(levelIndex, this.levels.length - 1));
     this.selectedLevelIndex = clamped;
     this.emit();
+  }
+
+  public upsertLevel(level: ParsedLevel): number {
+    const existingIndex = this.levels.findIndex((entry) => entry.id === level.id);
+    if (existingIndex === -1) {
+      this.levels.push(level);
+    } else {
+      this.levels[existingIndex] = level;
+    }
+
+    const levelIndex = existingIndex === -1 ? this.levels.length - 1 : existingIndex;
+    this.selectedLevelIndex = levelIndex;
+    this.gameState = createInitialState(this.levels, levelIndex);
+    this.statusMessage = `Saved level ${level.id}`;
+    this.emit();
+    return levelIndex;
   }
 
   public setVolume(volume: number): void {

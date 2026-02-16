@@ -1,5 +1,6 @@
 import { GameController } from './app/gameController';
 import { loadLevelsFromManifest } from './runtime/levelLoader';
+import { loadStoredCustomLevels, parseStoredCustomLevels } from './runtime/customLevelStorage';
 import { PhaserGameView } from './runtime/phaserView';
 import { loadSettings } from './runtime/settingsStorage';
 import { OverlayUI } from './ui/overlay';
@@ -18,7 +19,9 @@ async function bootstrap(): Promise<void> {
     </div>
   `;
 
-  const levels = await loadLevelsFromManifest('/assets/levels/manifest.json');
+  const builtInLevels = await loadLevelsFromManifest('/assets/levels/manifest.json');
+  const customLevels = parseStoredCustomLevels(loadStoredCustomLevels());
+  const levels = [...builtInLevels, ...customLevels];
   const settings = loadSettings();
 
   const controller = new GameController(levels, settings);

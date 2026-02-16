@@ -33,11 +33,13 @@ Browser/Phaser integration and asset loading.
 - `levelLoader.ts`: loads manifest + level text files.
 - `phaserView.ts`: renders state, collects keyboard input, runs fixed-step loop.
 - `settingsStorage.ts`: persists settings to `localStorage`.
+- `customLevelStorage.ts`: persists custom editor levels to `localStorage`.
 
 ### 3) App/UI (`/web/src/app`, `/web/src/ui`)
 
 - `gameController.ts`: orchestration layer between core + runtime + menus.
-- `overlay.ts`: DOM menus (main, pause, level select, settings).
+- `overlay.ts`: DOM menus (main, pause, level select, settings, editor).
+- `editor/levelEditorUtils.ts`: pure utilities for editor grid operations and validation.
 
 ### 4) Assets
 
@@ -67,10 +69,17 @@ Turn order (matching Java behavior):
 
 ## Lighting v1
 
-- Darkness overlay via Phaser `RenderTexture`.
-- Radial light texture erased around lights (radius/falloff effect).
-- Additive glow layer for visual bloom.
-- Runtime toggle from settings.
+- Tile-based brightness shading to preserve original Java visual style.
+- Enemy short-spread red tint added per tile for threat awareness.
+- Numeric enemy path tiles rendered with strong red center markers.
+- Runtime toggle from settings (`lightingEnabled`) switches tile glow intensity behavior.
+
+## Level Editor + Saver
+
+- In-browser editor built with DOM controls and a tile grid painter.
+- Supports loading built-in/custom levels, resizing, text import/export, and validation.
+- Saving writes to browser `localStorage`, reparses through core parser, and injects into live controller level list.
+- Export path is plain `.txt` to remain compatible with repo map format.
 
 ## Testing
 
@@ -95,7 +104,10 @@ web/
       lighting.ts
       simulation.ts
       types.ts
+    editor/
+      levelEditorUtils.ts
     runtime/
+      customLevelStorage.ts
       levelLoader.ts
       phaserView.ts
       settingsStorage.ts
