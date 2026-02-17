@@ -29,6 +29,8 @@ export class ProceduralBackingTrack {
 
   private synthBus: GainNode | null = null;
 
+  private sfxBus: GainNode | null = null;
+
   private delaySend: GainNode | null = null;
 
   private noiseBuffer: AudioBuffer | null = null;
@@ -47,6 +49,8 @@ export class ProceduralBackingTrack {
 
   private currentSeed = 1;
 
+  private lastDeathAnimationSequence = 0;
+
   private readonly pulseTimeouts = new Set<number>();
 
   public constructor(controller: GameController) {
@@ -61,6 +65,12 @@ export class ProceduralBackingTrack {
           ? snapshot.gameState.levelId
           : snapshot.levels[sourceLevelIndex]?.id ?? snapshot.gameState.levelId;
       this.currentSeed = getLevelMusicSeed(sourceLevelId, sourceLevelIndex);
+
+      const deathAnimation = snapshot.deathAnimation;
+      if (deathAnimation && deathAnimation.sequence !== this.lastDeathAnimationSequence) {
+        this.lastDeathAnimationSequence = deathAnimation.sequence;
+        void this.playDeathSfx(deathAnimation.kind);
+      }
     });
 
     this.bindUnlockListeners();
@@ -78,6 +88,7 @@ export class ProceduralBackingTrack {
     this.masterGain = null;
     this.drumBus = null;
     this.synthBus = null;
+    this.sfxBus = null;
     this.delaySend = null;
     this.noiseBuffer = null;
     this.started = false;
@@ -211,6 +222,10 @@ export class ProceduralBackingTrack {
     synthBus.gain.value = 0.78;
     synthBus.connect(masterGain);
 
+    const sfxBus = context.createGain();
+    sfxBus.gain.value = 0.82;
+    sfxBus.connect(masterGain);
+
     const delaySend = context.createGain();
     delaySend.gain.value = 0.21;
     synthBus.connect(delaySend);
@@ -241,6 +256,7 @@ export class ProceduralBackingTrack {
     this.masterGain = masterGain;
     this.drumBus = drumBus;
     this.synthBus = synthBus;
+    this.sfxBus = sfxBus;
     this.delaySend = delaySend;
   }
 
@@ -511,6 +527,104 @@ export class ProceduralBackingTrack {
       window.clearTimeout(timerId);
     }
     this.pulseTimeouts.clear();
+  }
+
+  private async playDeathSfx(kind: 'enemy' | 'lava'): Promise<void> {
+    await this.ensureStarted();
+    const context = this.audioContext;
+    if (!context || context.state !== 'running') {
+      return;
+    }
+
+    const time = context.currentTime + 0.01;
+    if (kind === 'enemy') {
+      this.scheduleEnemyDeathSfx(time);
+      return;
+    }
+
+    this.scheduleLavaDeathSfx(time);
+  }
+
+  private scheduleEnemyDeathSfx(time: number): void {
+    const context = this.audioContext;
+    const sfxBus = this.sfxBus;
+    if (!context || !sfxBus) {
+      return;
+    }
+
+    const bodyOsc = context.createOscillator();
+    bodyOsc.type = 'sawtooth';
+    bodyOsc.frequency.setValueAtTime(190, time);
+    bodyOsc.frequency.exponentialRampToValueAtTime(62, time + 0.2);
+
+    const bodyGain = context.createGain();
+    bodyGain.gain.setValueAtTime(0.0001, time);
+    bodyGain.gain.exponentialRampToValueAtTime(0.24, time + 0.01);
+    bodyGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.23);
+
+    const bodyFilter = context.createBiquadFilter();
+    bodyFilter.type = 'lowpass';
+    bodyFilter.frequency.value = 900;
+    bodyFilter.Q.value = 1.3;
+
+    bodyOsc.connect(bodyFilter);
+    bodyFilter.connect(bodyGain);
+    bodyGain.connect(sfxBus);
+    bodyOsc.start(time);
+    bodyOsc.stop(time + 0.24);
+
+    const noiseSource = context.createBufferSource();
+    noiseSource.buffer = this.getNoiseBuffer(context);
+    const noiseFilter = context.createBiquadFilter();
+    noiseFilter.type = 'highpass';
+    noiseFilter.frequency.value = 1400;
+    const noiseGain = context.createGain();
+    noiseGain.gain.setValueAtTime(0.0001, time);
+    noiseGain.gain.exponentialRampToValueAtTime(0.23, time + 0.004);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.11);
+    noiseSource.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(sfxBus);
+    noiseSource.start(time);
+    noiseSource.stop(time + 0.12);
+  }
+
+  private scheduleLavaDeathSfx(time: number): void {
+    const context = this.audioContext;
+    const sfxBus = this.sfxBus;
+    if (!context || !sfxBus) {
+      return;
+    }
+
+    const noiseSource = context.createBufferSource();
+    noiseSource.buffer = this.getNoiseBuffer(context);
+    const noiseFilter = context.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(520, time);
+    noiseFilter.frequency.exponentialRampToValueAtTime(1700, time + 0.22);
+    noiseFilter.Q.value = 0.8;
+    const noiseGain = context.createGain();
+    noiseGain.gain.setValueAtTime(0.0001, time);
+    noiseGain.gain.exponentialRampToValueAtTime(0.2, time + 0.006);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.24);
+    noiseSource.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(sfxBus);
+    noiseSource.start(time);
+    noiseSource.stop(time + 0.26);
+
+    const fizzOsc = context.createOscillator();
+    fizzOsc.type = 'square';
+    fizzOsc.frequency.setValueAtTime(130, time);
+    fizzOsc.frequency.exponentialRampToValueAtTime(72, time + 0.2);
+    const fizzGain = context.createGain();
+    fizzGain.gain.setValueAtTime(0.0001, time);
+    fizzGain.gain.exponentialRampToValueAtTime(0.14, time + 0.012);
+    fizzGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.22);
+    fizzOsc.connect(fizzGain);
+    fizzGain.connect(sfxBus);
+    fizzOsc.start(time);
+    fizzOsc.stop(time + 0.24);
   }
 
   private getNoiseBuffer(context: AudioContext): AudioBuffer {

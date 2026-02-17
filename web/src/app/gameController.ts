@@ -2,17 +2,27 @@ import { createInitialState, restartLevel, setLevel, update } from '../core';
 import type { Direction, GameState, ParsedLevel } from '../core';
 import { submitScore } from '../runtime/backendApi';
 import { saveSettings, type GameSettings } from '../runtime/settingsStorage';
-import { detectEnemyImpact, type EnemyImpact } from './deathImpact';
+import { detectEnemyImpact, detectLavaImpact, type EnemyImpact, type LavaImpact } from './deathImpact';
 
 export type Screen = 'intro' | 'main' | 'level-select' | 'settings' | 'editor' | 'playing' | 'paused';
 
 const DEATH_ANIMATION_MS = 620;
 
-export interface DeathAnimationSnapshot extends EnemyImpact {
+export interface EnemyDeathAnimationSnapshot extends EnemyImpact {
+  kind: 'enemy';
   sequence: number;
   startedAtMs: number;
   durationMs: number;
 }
+
+export interface LavaDeathAnimationSnapshot extends LavaImpact {
+  kind: 'lava';
+  sequence: number;
+  startedAtMs: number;
+  durationMs: number;
+}
+
+export type DeathAnimationSnapshot = EnemyDeathAnimationSnapshot | LavaDeathAnimationSnapshot;
 
 export interface ControllerSnapshot {
   screen: Screen;
@@ -241,19 +251,24 @@ export class GameController {
 
     const next = update(previous, { direction }, dtMs);
     if (next.lastEvent === 'level-reset') {
-      const impact = detectEnemyImpact(previous, direction);
-      if (impact) {
-        this.pendingResetState = next;
-        this.pendingResetDeadlineMs = nowMs + DEATH_ANIMATION_MS;
-        this.deathAnimationSequence += 1;
-        this.deathAnimation = {
-          ...impact,
-          sequence: this.deathAnimationSequence,
-          startedAtMs: nowMs,
-          durationMs: DEATH_ANIMATION_MS,
-        };
-        this.statusMessage = `Player ${impact.playerId + 1} hit enemy ${impact.enemyId + 1}.`;
-        this.inputQueue.length = 0;
+      const enemyImpact = detectEnemyImpact(previous, direction);
+      if (enemyImpact) {
+        this.queueDeathReset(next, nowMs, {
+          kind: 'enemy',
+          ...enemyImpact,
+        });
+        this.statusMessage = `Player ${enemyImpact.playerId + 1} hit enemy ${enemyImpact.enemyId + 1}.`;
+        this.emit();
+        return;
+      }
+
+      const lavaImpact = detectLavaImpact(previous, direction);
+      if (lavaImpact) {
+        this.queueDeathReset(next, nowMs, {
+          kind: 'lava',
+          ...lavaImpact,
+        });
+        this.statusMessage = `Player ${lavaImpact.playerId + 1} fell into lava.`;
         this.emit();
         return;
       }
@@ -353,6 +368,25 @@ export class GameController {
     this.pendingResetState = null;
     this.pendingResetDeadlineMs = 0;
     this.deathAnimation = null;
+  }
+
+  private queueDeathReset(
+    pendingResetState: GameState,
+    nowMs: number,
+    deathAnimation:
+      | Omit<EnemyDeathAnimationSnapshot, 'sequence' | 'startedAtMs' | 'durationMs'>
+      | Omit<LavaDeathAnimationSnapshot, 'sequence' | 'startedAtMs' | 'durationMs'>,
+  ): void {
+    this.pendingResetState = pendingResetState;
+    this.pendingResetDeadlineMs = nowMs + DEATH_ANIMATION_MS;
+    this.deathAnimationSequence += 1;
+    this.deathAnimation = {
+      ...deathAnimation,
+      sequence: this.deathAnimationSequence,
+      startedAtMs: nowMs,
+      durationMs: DEATH_ANIMATION_MS,
+    };
+    this.inputQueue.length = 0;
   }
 
   private async submitCompletedScore(levelId: string, moves: number, durationMs: number): Promise<void> {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialState, parseLevelText, update } from '../../src/core';
-import { detectEnemyImpact } from '../../src/app/deathImpact';
+import { detectEnemyImpact, detectLavaImpact } from '../../src/app/deathImpact';
 
 function makeState(raw: string) {
   const level = parseLevelText('impact', raw);
@@ -42,6 +42,27 @@ describe('enemy impact detection', () => {
   it('returns null when reset cause is not enemy contact', () => {
     const lava = makeState(['#####', '#Px #', '#####'].join('\n'));
     const impact = detectEnemyImpact(lava, 'right');
+    expect(impact).toBeNull();
+  });
+});
+
+describe('lava impact detection', () => {
+  it('detects player stepping into lava tile', () => {
+    const state = makeState(['######', '#Px  #', '######'].join('\n'));
+    const impact = detectLavaImpact(state, 'right');
+
+    expect(impact).toEqual({
+      playerId: 0,
+      intersection: { x: 2, y: 1 },
+      playerFrom: { x: 1, y: 1 },
+    });
+  });
+
+  it('returns null when enemy touch causes the reset', () => {
+    const initial = makeState(['######', '#P12 #', '######'].join('\n'));
+    const afterFirstMove = update(initial, { direction: 'right' }, 16.67);
+
+    const impact = detectLavaImpact(afterFirstMove, 'right');
     expect(impact).toBeNull();
   });
 });

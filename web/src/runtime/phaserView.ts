@@ -1,5 +1,10 @@
 import Phaser from 'phaser';
-import type { ControllerSnapshot, GameController } from '../app/gameController';
+import type {
+  ControllerSnapshot,
+  EnemyDeathAnimationSnapshot,
+  GameController,
+  LavaDeathAnimationSnapshot,
+} from '../app/gameController';
 import {
   collectEnemyPathTargets,
   computePathDotOpacity,
@@ -351,6 +356,20 @@ class PuzzleScene extends Phaser.Scene {
       return;
     }
 
+    if (death.kind === 'enemy') {
+      this.renderEnemyDeathAnimation(death, offsetX, offsetY, tileSize);
+      return;
+    }
+
+    this.renderLavaDeathAnimation(death, offsetX, offsetY, tileSize);
+  }
+
+  private renderEnemyDeathAnimation(
+    death: EnemyDeathAnimationSnapshot,
+    offsetX: number,
+    offsetY: number,
+    tileSize: number,
+  ): void {
     const nowMs = Date.now();
     const elapsedMs = Math.max(0, nowMs - death.startedAtMs);
     const progress = Phaser.Math.Clamp(elapsedMs / death.durationMs, 0, 1);
@@ -432,8 +451,83 @@ class PuzzleScene extends Phaser.Scene {
     );
 
     this.deathText.setVisible(true);
+    this.deathText.setColor('#ffd6dc');
     this.deathText.setPosition(impactCenterX, impactCenterY - tileSize * 0.9);
     this.deathText.setText(`P${death.playerId + 1} x E${death.enemyId + 1}`);
+    this.deathText.setAlpha(0.3 + fade * 0.7);
+  }
+
+  private renderLavaDeathAnimation(
+    death: LavaDeathAnimationSnapshot,
+    offsetX: number,
+    offsetY: number,
+    tileSize: number,
+  ): void {
+    const nowMs = Date.now();
+    const elapsedMs = Math.max(0, nowMs - death.startedAtMs);
+    const progress = Phaser.Math.Clamp(elapsedMs / death.durationMs, 0, 1);
+    const easeOut = 1 - (1 - progress) * (1 - progress);
+    const fade = 1 - progress;
+    const pulse = 0.5 + 0.5 * Math.sin(nowMs / 44);
+
+    const impactCenterX = offsetX + (death.intersection.x + 0.5) * tileSize;
+    const impactCenterY = offsetY + (death.intersection.y + 0.5) * tileSize;
+    const playerFromX = offsetX + (death.playerFrom.x + 0.5) * tileSize;
+    const playerFromY = offsetY + (death.playerFrom.y + 0.5) * tileSize;
+
+    this.fxLayer.lineStyle(Math.max(2, tileSize * 0.09), rgb(255, 236, 198), 0.22 + fade * 0.62);
+    this.fxLayer.beginPath();
+    this.fxLayer.moveTo(playerFromX, playerFromY);
+    this.fxLayer.lineTo(impactCenterX, impactCenterY);
+    this.fxLayer.strokePath();
+
+    const coreSize = tileSize * (0.45 + easeOut * 1.6);
+    this.fxLayer.fillStyle(rgb(255, 112 + pulse * 85, 0), 0.22 + fade * 0.45);
+    this.fxLayer.fillRect(
+      impactCenterX - coreSize / 2,
+      impactCenterY - coreSize / 2,
+      coreSize,
+      coreSize,
+    );
+
+    const ringSize = tileSize * (0.9 + easeOut * 2.2);
+    this.fxLayer.lineStyle(Math.max(2, tileSize * 0.08), rgb(255, 170 + pulse * 40, 42), 0.26 + fade * 0.55);
+    this.fxLayer.strokeRect(
+      impactCenterX - ringSize / 2,
+      impactCenterY - ringSize / 2,
+      ringSize,
+      ringSize,
+    );
+
+    const emberCount = 12;
+    for (let i = 0; i < emberCount; i += 1) {
+      const angle = i * 0.54 + progress * 4.6;
+      const spread = tileSize * (0.18 + easeOut * (0.45 + (i % 3) * 0.16));
+      const emberSize = tileSize * (0.08 + (i % 3) * 0.03);
+      const emberX = impactCenterX + Math.cos(angle) * spread;
+      const emberY = impactCenterY + Math.sin(angle) * spread;
+      this.fxLayer.fillStyle(rgb(255, 120 + (i % 3) * 50, 0), 0.2 + fade * 0.56);
+      this.fxLayer.fillRect(
+        emberX - emberSize / 2,
+        emberY - emberSize / 2,
+        emberSize,
+        emberSize,
+      );
+    }
+
+    const highlightSize = tileSize * 1.02;
+    this.fxLayer.lineStyle(Math.max(1.5, tileSize * 0.07), rgb(255, 231, 207), 0.18 + fade * 0.62);
+    this.fxLayer.strokeRect(
+      playerFromX - highlightSize / 2,
+      playerFromY - highlightSize / 2,
+      highlightSize,
+      highlightSize,
+    );
+
+    this.deathText.setVisible(true);
+    this.deathText.setColor('#ffd79c');
+    this.deathText.setPosition(impactCenterX, impactCenterY - tileSize * 0.9);
+    this.deathText.setText(`P${death.playerId + 1} x LAVA`);
     this.deathText.setAlpha(0.3 + fade * 0.7);
   }
 

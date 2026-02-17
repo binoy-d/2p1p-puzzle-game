@@ -134,6 +134,7 @@ describe('game controller', () => {
       expect(deathSnapshot.deathAnimation).not.toBeNull();
       expect(deathSnapshot.gameState.moves).toBe(1);
       expect(deathSnapshot.deathAnimation).toMatchObject({
+        kind: 'enemy',
         playerId: 0,
         enemyId: 0,
         intersection: { x: 3, y: 1 },
@@ -146,6 +147,47 @@ describe('game controller', () => {
 
       now += 2;
       controller.fixedUpdate(16.67);
+      const resetSnapshot = controller.getSnapshot();
+      expect(resetSnapshot.deathAnimation).toBeNull();
+      expect(resetSnapshot.gameState.lastEvent).toBe('level-reset');
+      expect(resetSnapshot.gameState.moves).toBe(0);
+    } finally {
+      nowSpy.mockRestore();
+    }
+  });
+
+  it('shows lava death animation before applying level reset', () => {
+    const nowSpy = vi.spyOn(Date, 'now');
+    let now = 2000;
+    nowSpy.mockImplementation(() => now);
+
+    try {
+      const lavaLevel = parseLevelText('lava', ['#####', '#Px #', '#####'].join('\n'));
+      const controller = new GameController([lavaLevel], {
+        volume: 0.5,
+        lightingEnabled: true,
+      });
+
+      controller.finishIntro();
+      controller.setPlayerName('Ava');
+      controller.startSelectedLevel();
+
+      controller.queueDirection('right');
+      controller.fixedUpdate(16.67);
+
+      const deathSnapshot = controller.getSnapshot();
+      expect(deathSnapshot.deathAnimation).not.toBeNull();
+      expect(deathSnapshot.deathAnimation).toMatchObject({
+        kind: 'lava',
+        playerId: 0,
+        intersection: { x: 2, y: 1 },
+      });
+      expect(deathSnapshot.statusMessage).toMatch(/lava/i);
+
+      const waitMs = deathSnapshot.deathAnimation?.durationMs ?? 0;
+      now += waitMs + 1;
+      controller.fixedUpdate(16.67);
+
       const resetSnapshot = controller.getSnapshot();
       expect(resetSnapshot.deathAnimation).toBeNull();
       expect(resetSnapshot.gameState.lastEvent).toBe('level-reset');

@@ -17,6 +17,18 @@ export interface EnemyImpact {
   };
 }
 
+export interface LavaImpact {
+  playerId: number;
+  intersection: {
+    x: number;
+    y: number;
+  };
+  playerFrom: {
+    x: number;
+    y: number;
+  };
+}
+
 const DIRECTION_VECTORS: Record<Direction, { x: number; y: number }> = {
   up: { x: 0, y: -1 },
   down: { x: 0, y: 1 },
@@ -160,6 +172,65 @@ export function detectEnemyImpact(previousState: GameState, direction: Direction
     const touch = enemies.find((enemy) => enemy.x === player.x && enemy.y === player.y);
     if (touch) {
       return buildImpact({ player, enemy: touch }, playerFromMap, enemyFromMap);
+    }
+  }
+
+  return null;
+}
+
+export function detectLavaImpact(previousState: GameState, direction: Direction): LavaImpact | null {
+  const grid = cloneGrid(previousState.grid);
+  const players = clonePlayers(previousState.players);
+  const enemies = cloneEnemies(previousState.enemies);
+  const vector = DIRECTION_VECTORS[direction];
+  const playerFromMap = toMapById(players);
+
+  const initialTouch = findEnemyTouch(players, enemies);
+  if (initialTouch) {
+    return null;
+  }
+
+  for (const enemy of enemies) {
+    enemyTick(grid, enemy);
+    const touch = findEnemyTouch(players, enemies);
+    if (touch) {
+      return null;
+    }
+  }
+
+  for (const original of [...players]) {
+    const playerIndex = players.findIndex((player) => player.id === original.id);
+    if (playerIndex === -1) {
+      continue;
+    }
+
+    const player = players[playerIndex];
+    const targetX = player.x + vector.x;
+    const targetY = player.y + vector.y;
+    const targetTile = grid[targetY]?.[targetX];
+
+    if (targetTile === undefined) {
+      players.splice(playerIndex, 1);
+      continue;
+    }
+
+    if (isWalkable(targetTile) && !playerOccupies(players, targetX, targetY, player.id)) {
+      player.x = targetX;
+      player.y = targetY;
+    } else if (targetTile === '!') {
+      players.splice(playerIndex, 1);
+      continue;
+    } else if (targetTile === 'x') {
+      return {
+        playerId: player.id,
+        intersection: { x: targetX, y: targetY },
+        playerFrom: playerFromMap.get(player.id) ?? { x: player.x, y: player.y },
+      };
+    }
+
+    const enemyTouch = enemies.some((enemy) => enemy.x === player.x && enemy.y === player.y);
+    if (enemyTouch) {
+      return null;
     }
   }
 
