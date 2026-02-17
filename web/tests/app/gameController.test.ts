@@ -89,6 +89,47 @@ describe('game controller', () => {
     expect(controller.getSnapshot().screen).toBe('playing');
   });
 
+  it('emits a win transition anchored to the final goal portal when advancing levels', () => {
+    const nowSpy = vi.spyOn(Date, 'now');
+    let now = 3000;
+    nowSpy.mockImplementation(() => now);
+
+    try {
+      const levels = [
+        parseLevelText('map0', ['#####', '#P!##', '#####'].join('\n')),
+        parseLevelText('map1', ['#####', '#P ##', '#####'].join('\n')),
+      ];
+      const controller = new GameController(levels, {
+        volume: 0.5,
+        lightingEnabled: true,
+      });
+
+      controller.finishIntro();
+      controller.setPlayerName('Ava');
+      controller.startLevel(0);
+      controller.queueDirection('right');
+      controller.fixedUpdate(16.67);
+
+      const snapshot = controller.getSnapshot();
+      expect(snapshot.gameState.levelId).toBe('map1');
+      expect(snapshot.gameState.lastEvent).toBe('level-advanced');
+      expect(snapshot.winTransition).toMatchObject({
+        sourceLevelId: 'map0',
+        sourceLevelWidth: 5,
+        sourceLevelHeight: 3,
+        portal: { x: 2, y: 1 },
+        playerId: 0,
+      });
+
+      now += (snapshot.winTransition?.durationMs ?? 0) + 1;
+      controller.queueDirection('right');
+      controller.fixedUpdate(16.67);
+      expect(controller.getSnapshot().winTransition).toBeNull();
+    } finally {
+      nowSpy.mockRestore();
+    }
+  });
+
   it('allows level select from intro and pause screens', () => {
     const levels = [
       parseLevelText('map0', ['#####', '#P!##', '#####'].join('\n')),

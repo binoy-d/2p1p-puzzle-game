@@ -4,6 +4,7 @@ import type {
   EnemyDeathAnimationSnapshot,
   GameController,
   LavaDeathAnimationSnapshot,
+  WinTransitionSnapshot,
 } from '../app/gameController';
 import {
   collectEnemyPathTargets,
@@ -48,9 +49,13 @@ class PuzzleScene extends Phaser.Scene {
 
   private fxLayer!: Phaser.GameObjects.Graphics;
 
+  private transitionLayer!: Phaser.GameObjects.Graphics;
+
   private hudText!: Phaser.GameObjects.Text;
 
   private deathText!: Phaser.GameObjects.Text;
+
+  private transitionText!: Phaser.GameObjects.Text;
 
   private accumulator = 0;
 
@@ -64,6 +69,8 @@ class PuzzleScene extends Phaser.Scene {
 
   private lastRumbleAtMs = 0;
 
+  private winTransitionVisualActive = false;
+
   public constructor(controller: GameController) {
     super('PuzzleScene');
     this.controller = controller;
@@ -75,6 +82,7 @@ class PuzzleScene extends Phaser.Scene {
     this.terrainLayer = this.add.graphics().setDepth(0);
     this.entityLayer = this.add.graphics().setDepth(1);
     this.fxLayer = this.add.graphics().setDepth(2);
+    this.transitionLayer = this.add.graphics().setDepth(6).setScrollFactor(0);
     this.hudText = this.add
       .text(16, 16, '', {
         fontFamily: 'system-ui, sans-serif',
@@ -82,6 +90,7 @@ class PuzzleScene extends Phaser.Scene {
         fontSize: '16px',
       })
       .setDepth(4)
+      .setScrollFactor(0)
       .setShadow(0, 1, '#000000', 2, false, true);
     this.deathText = this.add
       .text(0, 0, '', {
@@ -93,6 +102,18 @@ class PuzzleScene extends Phaser.Scene {
       .setOrigin(0.5, 1)
       .setVisible(false)
       .setShadow(0, 1, '#000000', 3, false, true);
+    this.transitionText = this.add
+      .text(0, 0, '', {
+        fontFamily: 'system-ui, sans-serif',
+        color: '#d8ffe9',
+        fontSize: '42px',
+        fontStyle: '700',
+      })
+      .setDepth(7)
+      .setScrollFactor(0)
+      .setOrigin(0.5, 0.5)
+      .setVisible(false)
+      .setShadow(0, 2, '#00130d', 12, false, true);
 
     this.registerInput();
   }
@@ -209,6 +230,7 @@ class PuzzleScene extends Phaser.Scene {
     this.terrainLayer.clear();
     this.entityLayer.clear();
     this.fxLayer.clear();
+    this.transitionLayer.clear();
 
     for (let y = 0; y < levelHeight; y += 1) {
       for (let x = 0; x < levelWidth; x += 1) {
@@ -337,11 +359,155 @@ class PuzzleScene extends Phaser.Scene {
     }
 
     this.renderDeathAnimation(snapshot, offsetX, offsetY, tileSize);
+    const winTransitionActive = this.renderWinTransition(snapshot, viewportWidth, viewportHeight, time);
+    this.hudText.setAlpha(winTransitionActive ? 0 : 1);
+    if (winTransitionActive) {
+      this.deathText.setVisible(false);
+    }
 
     const isPaused = snapshot.screen === 'paused';
     this.hudText.setText(
       `${getLevelLabel(state.levelId, state.levelIndex)} (${state.levelIndex + 1}/${state.levelIds.length})  Moves ${state.moves}  Players ${state.players.length}/${state.totalPlayers}${isPaused ? '  [PAUSED]' : ''}`,
     );
+  }
+
+  private computeBoardPlacement(
+    viewportWidth: number,
+    viewportHeight: number,
+    levelWidth: number,
+    levelHeight: number,
+  ): { tileSize: number; offsetX: number; offsetY: number } {
+    const tileSize = this.computeTileSize(viewportWidth, viewportHeight, levelWidth, levelHeight);
+    const boardWidth = levelWidth * tileSize;
+    const boardHeight = levelHeight * tileSize;
+    return {
+      tileSize,
+      offsetX: Math.floor((viewportWidth - boardWidth) / 2),
+      offsetY: Math.floor((viewportHeight - boardHeight) / 2),
+    };
+  }
+
+  private isWinTransitionActive(transition: WinTransitionSnapshot | null): boolean {
+    if (!transition) {
+      return false;
+    }
+
+    const elapsedMs = Date.now() - transition.startedAtMs;
+    return elapsedMs >= 0 && elapsedMs < transition.durationMs;
+  }
+
+  private renderWinTransition(
+    snapshot: ControllerSnapshot,
+    viewportWidth: number,
+    viewportHeight: number,
+    time: number,
+  ): boolean {
+    const transition = snapshot.winTransition;
+    const camera = this.cameras.main;
+    if (!transition || !this.isWinTransitionActive(transition)) {
+      if (this.winTransitionVisualActive) {
+        this.winTransitionVisualActive = false;
+        this.transitionText.setVisible(false);
+        camera.setZoom(1);
+        camera.setRotation(0);
+        camera.centerOn(viewportWidth * 0.5, viewportHeight * 0.5);
+      }
+      return false;
+    }
+
+    this.winTransitionVisualActive = true;
+    const elapsedMs = Math.max(0, Date.now() - transition.startedAtMs);
+    const progress = Phaser.Math.Clamp(elapsedMs / transition.durationMs, 0, 1);
+
+    const placement = this.computeBoardPlacement(
+      viewportWidth,
+      viewportHeight,
+      transition.sourceLevelWidth,
+      transition.sourceLevelHeight,
+    );
+    const portalX = placement.offsetX + (transition.portal.x + 0.5) * placement.tileSize;
+    const portalY = placement.offsetY + (transition.portal.y + 0.5) * placement.tileSize;
+    const centerX = viewportWidth * 0.5;
+    const centerY = viewportHeight * 0.5;
+
+    const approach = Phaser.Math.Easing.Cubic.Out(Phaser.Math.Clamp(progress / 0.42, 0, 1));
+    const tunnel = Phaser.Math.Easing.Cubic.InOut(Phaser.Math.Clamp((progress - 0.18) / 0.82, 0, 1));
+    const settle = Phaser.Math.Easing.Cubic.Out(Phaser.Math.Clamp((progress - 0.88) / 0.12, 0, 1));
+
+    const cameraAnchorX = Phaser.Math.Linear(portalX, centerX, approach * 0.64);
+    const cameraAnchorY = Phaser.Math.Linear(portalY, centerY, approach * 0.64);
+    camera.centerOn(cameraAnchorX, cameraAnchorY);
+
+    const entryZoom = Phaser.Math.Linear(1, 1.9, approach);
+    const diveZoom = Phaser.Math.Linear(entryZoom, 3.45, tunnel);
+    camera.setZoom(Phaser.Math.Linear(diveZoom, 1, settle));
+    const spinTurns = Phaser.Math.Linear(0, 1.85, tunnel) + settle * 0.25;
+    camera.setRotation(Phaser.Math.Linear(spinTurns * Math.PI * 0.22, 0, settle));
+
+    const portalPulse = 0.5 + 0.5 * Math.sin(time / 95);
+    const portalSize = placement.tileSize * (0.9 + portalPulse * 0.25 + approach * 1.9);
+    this.transitionLayer.fillStyle(rgb(46, 255, 175), 0.16 + (1 - progress) * 0.35);
+    this.transitionLayer.fillRect(
+      portalX - portalSize * 0.5,
+      portalY - portalSize * 0.5,
+      portalSize,
+      portalSize,
+    );
+
+    const ringCount = 24;
+    for (let i = 0; i < ringCount; i += 1) {
+      const depth = (i / ringCount + progress * 2.65) % 1;
+      const ringSize = placement.tileSize * (1.1 + depth * depth * 24);
+      const ringAlpha = (1 - depth) * (0.2 + (1 - progress) * 0.35);
+      const ringWidth = Math.max(1.2, placement.tileSize * (0.032 + (1 - depth) * 0.05));
+      const ringCenterX =
+        Phaser.Math.Linear(portalX, centerX, tunnel) +
+        Math.cos(depth * 17 + time * 0.0032) * placement.tileSize * (0.04 + (1 - depth) * 0.22);
+      const ringCenterY =
+        Phaser.Math.Linear(portalY, centerY, tunnel) +
+        Math.sin(depth * 19 + time * 0.0036) * placement.tileSize * (0.04 + (1 - depth) * 0.22);
+
+      const green = 170 + depth * 70;
+      const blue = 105 + depth * 90;
+      this.transitionLayer.lineStyle(ringWidth, rgb(30, green, blue), ringAlpha);
+      this.transitionLayer.strokeRect(
+        ringCenterX - ringSize * 0.5,
+        ringCenterY - ringSize * 0.5,
+        ringSize,
+        ringSize,
+      );
+    }
+
+    const streakCount = 18;
+    const tunnelBase = placement.tileSize * (1.3 + tunnel * 4.2);
+    const tunnelReach = Math.max(viewportWidth, viewportHeight) * (0.16 + tunnel * 0.62);
+    this.transitionLayer.lineStyle(Math.max(1, placement.tileSize * 0.05), rgb(92, 245, 220), 0.16 + tunnel * 0.34);
+    this.transitionLayer.beginPath();
+    for (let i = 0; i < streakCount; i += 1) {
+      const angle = (i / streakCount) * Math.PI * 2 + progress * 7.2;
+      const innerX = centerX + Math.cos(angle) * tunnelBase;
+      const innerY = centerY + Math.sin(angle) * tunnelBase;
+      const outerX = centerX + Math.cos(angle) * (tunnelBase + tunnelReach);
+      const outerY = centerY + Math.sin(angle) * (tunnelBase + tunnelReach);
+      this.transitionLayer.moveTo(innerX, innerY);
+      this.transitionLayer.lineTo(outerX, outerY);
+    }
+    this.transitionLayer.strokePath();
+
+    const overlayAlpha =
+      progress < 0.72
+        ? progress * 0.34
+        : 0.34 + Phaser.Math.Easing.Cubic.In((progress - 0.72) / 0.28) * 0.56;
+    this.transitionLayer.fillStyle(rgb(2, 10, 15), overlayAlpha);
+    this.transitionLayer.fillRect(0, 0, viewportWidth, viewportHeight);
+
+    this.transitionText.setVisible(true);
+    this.transitionText.setPosition(centerX, viewportHeight * 0.22);
+    this.transitionText.setText(progress < 0.55 ? 'PORTAL LOCK' : 'LOCKSTEP');
+    this.transitionText.setAlpha(0.18 + (1 - Math.abs(progress - 0.5) * 2) * 0.82);
+    this.transitionText.setScale(1 + tunnel * 0.3 - settle * 0.22);
+
+    return true;
   }
 
   private renderDeathAnimation(
@@ -532,15 +698,21 @@ class PuzzleScene extends Phaser.Scene {
   }
 
   private applyLevelTransition(snapshot: ControllerSnapshot): void {
-    const shouldTransition = shouldTriggerLevelTransition({
-      previousScreen: this.lastScreenRef,
-      nextScreen: snapshot.screen,
-      previousLevelId: this.lastLevelIdRef,
-      nextLevelId: snapshot.gameState.levelId,
-    });
-
+    const previousScreen = this.lastScreenRef;
+    const previousLevelId = this.lastLevelIdRef;
     this.lastScreenRef = snapshot.screen;
     this.lastLevelIdRef = snapshot.gameState.levelId;
+
+    if (this.isWinTransitionActive(snapshot.winTransition)) {
+      return;
+    }
+
+    const shouldTransition = shouldTriggerLevelTransition({
+      previousScreen,
+      nextScreen: snapshot.screen,
+      previousLevelId,
+      nextLevelId: snapshot.gameState.levelId,
+    });
 
     if (!shouldTransition) {
       return;
@@ -566,6 +738,11 @@ class PuzzleScene extends Phaser.Scene {
   }
 
   private applyCameraRumble(snapshot: ControllerSnapshot): void {
+    if (this.isWinTransitionActive(snapshot.winTransition)) {
+      this.lastStateRef = snapshot.gameState;
+      return;
+    }
+
     const profile = resolveCameraRumble(snapshot.screen, this.lastStateRef, snapshot.gameState);
     if (profile) {
       const nowMs = Date.now();

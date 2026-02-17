@@ -55,6 +55,8 @@ export class ProceduralBackingTrack {
 
   private lastDeathAnimationSequence = 0;
 
+  private lastWinTransitionSequence = 0;
+
   private lastMoveSignature = '';
 
   private moveTempoBoost = 0;
@@ -82,6 +84,12 @@ export class ProceduralBackingTrack {
       if (deathAnimation && deathAnimation.sequence !== this.lastDeathAnimationSequence) {
         this.lastDeathAnimationSequence = deathAnimation.sequence;
         void this.playDeathSfx(deathAnimation.kind);
+      }
+
+      const winTransition = snapshot.winTransition;
+      if (winTransition && winTransition.sequence !== this.lastWinTransitionSequence) {
+        this.lastWinTransitionSequence = winTransition.sequence;
+        void this.playWinTransitionSfx(winTransition.durationMs);
       }
 
       if (snapshot.screen === 'playing' && snapshot.gameState.lastEvent === 'turn-processed') {
@@ -637,6 +645,84 @@ export class ProceduralBackingTrack {
     }
 
     this.scheduleLavaDeathSfx(time);
+  }
+
+  private async playWinTransitionSfx(durationMs: number): Promise<void> {
+    await this.ensureStarted();
+    const context = this.audioContext;
+    const sfxBus = this.sfxBus;
+    if (!context || !sfxBus || context.state !== 'running') {
+      return;
+    }
+
+    const time = context.currentTime + 0.015;
+    const durationSec = clamp(durationMs / 1000, 0.6, 1.5);
+
+    const bedOsc = context.createOscillator();
+    bedOsc.type = 'triangle';
+    bedOsc.frequency.setValueAtTime(188, time);
+    bedOsc.frequency.exponentialRampToValueAtTime(292, time + durationSec * 0.58);
+    bedOsc.frequency.exponentialRampToValueAtTime(348, time + durationSec * 0.94);
+    const bedGain = context.createGain();
+    bedGain.gain.setValueAtTime(0.0001, time);
+    bedGain.gain.exponentialRampToValueAtTime(0.17, time + durationSec * 0.16);
+    bedGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec);
+    const bedFilter = context.createBiquadFilter();
+    bedFilter.type = 'lowpass';
+    bedFilter.frequency.setValueAtTime(1500, time);
+    bedFilter.frequency.exponentialRampToValueAtTime(4200, time + durationSec * 0.74);
+    bedOsc.connect(bedFilter);
+    bedFilter.connect(bedGain);
+    bedGain.connect(sfxBus);
+    bedOsc.start(time);
+    bedOsc.stop(time + durationSec + 0.03);
+
+    const whoosh = context.createBufferSource();
+    whoosh.buffer = this.getNoiseBuffer(context);
+    const whooshFilter = context.createBiquadFilter();
+    whooshFilter.type = 'bandpass';
+    whooshFilter.frequency.setValueAtTime(420, time);
+    whooshFilter.frequency.exponentialRampToValueAtTime(2400, time + durationSec * 0.82);
+    whooshFilter.Q.value = 0.74;
+    const whooshGain = context.createGain();
+    whooshGain.gain.setValueAtTime(0.0001, time);
+    whooshGain.gain.exponentialRampToValueAtTime(0.16, time + durationSec * 0.18);
+    whooshGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec * 0.96);
+    whoosh.connect(whooshFilter);
+    whooshFilter.connect(whooshGain);
+    whooshGain.connect(sfxBus);
+    whoosh.start(time);
+    whoosh.stop(time + durationSec);
+
+    const arpeggio = [0, 4, 7, 12, 16];
+    for (let i = 0; i < arpeggio.length; i += 1) {
+      const noteTime = time + (durationSec * 0.62 * i) / (arpeggio.length - 1);
+      const midi = 68 + arpeggio[i];
+      const osc = context.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(midiToFrequency(midi), noteTime);
+      const gain = context.createGain();
+      gain.gain.setValueAtTime(0.0001, noteTime);
+      gain.gain.exponentialRampToValueAtTime(0.12 - i * 0.014, noteTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, noteTime + durationSec * 0.22);
+      osc.connect(gain);
+      gain.connect(sfxBus);
+      osc.start(noteTime);
+      osc.stop(noteTime + durationSec * 0.24);
+    }
+
+    const tailOsc = context.createOscillator();
+    tailOsc.type = 'square';
+    tailOsc.frequency.setValueAtTime(midiToFrequency(84), time + durationSec * 0.7);
+    tailOsc.frequency.exponentialRampToValueAtTime(midiToFrequency(91), time + durationSec * 0.94);
+    const tailGain = context.createGain();
+    tailGain.gain.setValueAtTime(0.0001, time + durationSec * 0.7);
+    tailGain.gain.exponentialRampToValueAtTime(0.09, time + durationSec * 0.74);
+    tailGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec);
+    tailOsc.connect(tailGain);
+    tailGain.connect(sfxBus);
+    tailOsc.start(time + durationSec * 0.7);
+    tailOsc.stop(time + durationSec + 0.02);
   }
 
   private scheduleEnemyDeathSfx(time: number): void {

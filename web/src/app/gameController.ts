@@ -2,11 +2,18 @@ import { createInitialState, restartLevel, setLevel, update } from '../core';
 import type { Direction, GameState, ParsedLevel } from '../core';
 import { submitScore } from '../runtime/backendApi';
 import { saveSettings, type GameSettings } from '../runtime/settingsStorage';
-import { detectEnemyImpact, detectLavaImpact, type EnemyImpact, type LavaImpact } from './deathImpact';
+import {
+  detectEnemyImpact,
+  detectGoalFinishImpact,
+  detectLavaImpact,
+  type EnemyImpact,
+  type LavaImpact,
+} from './deathImpact';
 
 export type Screen = 'intro' | 'main' | 'level-select' | 'settings' | 'editor' | 'playing' | 'paused';
 
 const DEATH_ANIMATION_MS = 620;
+const WIN_TRANSITION_MS = 980;
 
 export interface EnemyDeathAnimationSnapshot extends EnemyImpact {
   kind: 'enemy';
@@ -24,6 +31,20 @@ export interface LavaDeathAnimationSnapshot extends LavaImpact {
 
 export type DeathAnimationSnapshot = EnemyDeathAnimationSnapshot | LavaDeathAnimationSnapshot;
 
+export interface WinTransitionSnapshot {
+  sequence: number;
+  startedAtMs: number;
+  durationMs: number;
+  sourceLevelId: string;
+  sourceLevelWidth: number;
+  sourceLevelHeight: number;
+  portal: {
+    x: number;
+    y: number;
+  };
+  playerId: number;
+}
+
 export interface ControllerSnapshot {
   screen: Screen;
   gameState: GameState;
@@ -33,6 +54,7 @@ export interface ControllerSnapshot {
   playerName: string;
   statusMessage: string | null;
   deathAnimation: DeathAnimationSnapshot | null;
+  winTransition: WinTransitionSnapshot | null;
 }
 
 type Subscriber = (snapshot: ControllerSnapshot) => void;
@@ -70,6 +92,10 @@ export class GameController {
 
   private deathAnimationSequence = 0;
 
+  private winTransition: WinTransitionSnapshot | null = null;
+
+  private winTransitionSequence = 0;
+
   public constructor(levels: ParsedLevel[], settings: GameSettings) {
     if (levels.length === 0) {
       throw new Error('Cannot initialize controller without levels.');
@@ -98,6 +124,7 @@ export class GameController {
       playerName: this.playerName,
       statusMessage: this.statusMessage,
       deathAnimation: this.deathAnimation,
+      winTransition: this.winTransition,
     };
   }
 
@@ -230,6 +257,10 @@ export class GameController {
     }
 
     const nowMs = Date.now();
+    if (this.winTransition && nowMs >= this.winTransition.startedAtMs + this.winTransition.durationMs) {
+      this.winTransition = null;
+    }
+
     if (this.pendingResetState) {
       if (nowMs >= this.pendingResetDeadlineMs) {
         this.gameState = this.pendingResetState;
@@ -278,6 +309,30 @@ export class GameController {
     this.deathAnimation = null;
 
     if (next.lastEvent === 'level-advanced') {
+      const finishImpact = detectGoalFinishImpact(previous, direction);
+      const sourceLevel = previous.levels[previous.levelId];
+      if (sourceLevel) {
+        const fallbackPortal =
+          sourceLevel.grid
+            .flatMap((row, y) => row.map((tile, x) => ({ tile, x, y })))
+            .find((cell) => cell.tile === '!') ?? null;
+
+        const portal = finishImpact?.portal ?? (fallbackPortal ? { x: fallbackPortal.x, y: fallbackPortal.y } : null);
+        if (portal) {
+          this.winTransitionSequence += 1;
+          this.winTransition = {
+            sequence: this.winTransitionSequence,
+            startedAtMs: nowMs,
+            durationMs: WIN_TRANSITION_MS,
+            sourceLevelId: previous.levelId,
+            sourceLevelWidth: sourceLevel.width,
+            sourceLevelHeight: sourceLevel.height,
+            portal,
+            playerId: finishImpact?.playerId ?? 0,
+          };
+        }
+      }
+
       this.selectedLevelIndex = next.levelIndex;
       this.statusMessage = `Level ${next.levelIndex + 1}`;
       const durationMs = Math.max(0, nowMs - this.levelStartedAtMs);
@@ -368,6 +423,7 @@ export class GameController {
     this.pendingResetState = null;
     this.pendingResetDeadlineMs = 0;
     this.deathAnimation = null;
+    this.winTransition = null;
   }
 
   private queueDeathReset(

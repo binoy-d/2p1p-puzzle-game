@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialState, parseLevelText, update } from '../../src/core';
-import { detectEnemyImpact, detectLavaImpact } from '../../src/app/deathImpact';
+import { detectEnemyImpact, detectGoalFinishImpact, detectLavaImpact } from '../../src/app/deathImpact';
 
 function makeState(raw: string) {
   const level = parseLevelText('impact', raw);
@@ -63,6 +63,25 @@ describe('lava impact detection', () => {
     const afterFirstMove = update(initial, { direction: 'right' }, 16.67);
 
     const impact = detectLavaImpact(afterFirstMove, 'right');
+    expect(impact).toBeNull();
+  });
+});
+
+describe('goal finish impact detection', () => {
+  it('detects the final player entering the goal tile', () => {
+    const state = makeState(['#####', '#P! #', '#####'].join('\n'));
+    const impact = detectGoalFinishImpact(state, 'right');
+
+    expect(impact).toEqual({
+      playerId: 0,
+      portal: { x: 2, y: 1 },
+      playerFrom: { x: 1, y: 1 },
+    });
+  });
+
+  it('returns null when move does not complete the level', () => {
+    const state = makeState(['######', '#P ! #', '######'].join('\n'));
+    const impact = detectGoalFinishImpact(state, 'right');
     expect(impact).toBeNull();
   });
 });
