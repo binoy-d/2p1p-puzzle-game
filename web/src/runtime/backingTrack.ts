@@ -6,6 +6,10 @@ const BPM = 124;
 const STEP_DURATION_SECONDS = 60 / BPM / 4;
 const SCHEDULE_AHEAD_SECONDS = 0.22;
 const SCHEDULER_INTERVAL_MS = 36;
+const MOVE_TEMPO_BOOST_MAX = 0.18;
+const MOVE_TEMPO_BOOST_PER_MOVE = 0.055;
+const MOVE_TEMPO_DECAY_PER_SECOND = 0.42;
+const MOVE_SFX_MIN_INTERVAL_MS = 60;
 
 function resolveAudioContextCtor(): typeof AudioContext | null {
   const withWebkit = window as Window & {
@@ -51,6 +55,14 @@ export class ProceduralBackingTrack {
 
   private lastDeathAnimationSequence = 0;
 
+  private lastMoveSignature = '';
+
+  private moveTempoBoost = 0;
+
+  private lastTempoDecayTime = 0;
+
+  private lastMoveSfxAtMs = 0;
+
   private readonly pulseTimeouts = new Set<number>();
 
   public constructor(controller: GameController) {
@@ -70,6 +82,16 @@ export class ProceduralBackingTrack {
       if (deathAnimation && deathAnimation.sequence !== this.lastDeathAnimationSequence) {
         this.lastDeathAnimationSequence = deathAnimation.sequence;
         void this.playDeathSfx(deathAnimation.kind);
+      }
+
+      if (snapshot.screen === 'playing' && snapshot.gameState.lastEvent === 'turn-processed') {
+        const moveSignature = `${snapshot.gameState.levelId}:${snapshot.gameState.tick}:${snapshot.gameState.moves}`;
+        if (moveSignature !== this.lastMoveSignature) {
+          this.lastMoveSignature = moveSignature;
+          this.applyMovePulse();
+        }
+      } else {
+        this.lastMoveSignature = '';
       }
     });
 
@@ -166,6 +188,7 @@ export class ProceduralBackingTrack {
     this.nextStepTime = this.audioContext.currentTime + 0.08;
     this.stepInBar = 0;
     this.barIndex = 0;
+    this.lastTempoDecayTime = this.audioContext.currentTime;
     this.applyVolume();
     this.startScheduler();
     this.unbindUnlockListeners();
@@ -285,15 +308,41 @@ export class ProceduralBackingTrack {
       return;
     }
 
+    this.decayMoveTempo(this.audioContext.currentTime);
     while (this.nextStepTime < this.audioContext.currentTime + SCHEDULE_AHEAD_SECONDS) {
       this.scheduleStep(this.nextStepTime, this.stepInBar, this.barIndex);
-      this.nextStepTime += STEP_DURATION_SECONDS;
+      const tempoFactor = 1 + this.moveTempoBoost;
+      this.nextStepTime += STEP_DURATION_SECONDS / tempoFactor;
       this.stepInBar += 1;
       if (this.stepInBar >= STEPS_PER_BAR) {
         this.stepInBar = 0;
         this.barIndex = (this.barIndex + 1) % 4;
       }
     }
+  }
+
+  private decayMoveTempo(currentTime: number): void {
+    if (this.lastTempoDecayTime <= 0) {
+      this.lastTempoDecayTime = currentTime;
+      return;
+    }
+
+    const elapsed = Math.max(0, currentTime - this.lastTempoDecayTime);
+    this.lastTempoDecayTime = currentTime;
+    if (elapsed <= 0 || this.moveTempoBoost <= 0) {
+      return;
+    }
+
+    this.moveTempoBoost = Math.max(0, this.moveTempoBoost - elapsed * MOVE_TEMPO_DECAY_PER_SECOND);
+  }
+
+  private applyMovePulse(): void {
+    this.moveTempoBoost = clamp(
+      this.moveTempoBoost + MOVE_TEMPO_BOOST_PER_MOVE,
+      0,
+      MOVE_TEMPO_BOOST_MAX,
+    );
+    this.playMoveSfx();
   }
 
   private scheduleStep(time: number, step: number, bar: number): void {
@@ -529,6 +578,51 @@ export class ProceduralBackingTrack {
     this.pulseTimeouts.clear();
   }
 
+  private playMoveSfx(): void {
+    const context = this.audioContext;
+    const sfxBus = this.sfxBus;
+    if (!context || !sfxBus || context.state !== 'running') {
+      return;
+    }
+
+    const nowMs = performance.now();
+    if (nowMs - this.lastMoveSfxAtMs < MOVE_SFX_MIN_INTERVAL_MS) {
+      return;
+    }
+    this.lastMoveSfxAtMs = nowMs;
+
+    const time = context.currentTime + 0.003;
+    const tickOsc = context.createOscillator();
+    tickOsc.type = 'triangle';
+    tickOsc.frequency.setValueAtTime(560, time);
+    tickOsc.frequency.exponentialRampToValueAtTime(820, time + 0.028);
+
+    const tickGain = context.createGain();
+    tickGain.gain.setValueAtTime(0.0001, time);
+    tickGain.gain.exponentialRampToValueAtTime(0.06, time + 0.003);
+    tickGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.05);
+
+    tickOsc.connect(tickGain);
+    tickGain.connect(sfxBus);
+    tickOsc.start(time);
+    tickOsc.stop(time + 0.06);
+
+    const clickSource = context.createBufferSource();
+    clickSource.buffer = this.getNoiseBuffer(context);
+    const clickFilter = context.createBiquadFilter();
+    clickFilter.type = 'highpass';
+    clickFilter.frequency.value = 4200;
+    const clickGain = context.createGain();
+    clickGain.gain.setValueAtTime(0.0001, time);
+    clickGain.gain.exponentialRampToValueAtTime(0.035, time + 0.001);
+    clickGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.03);
+    clickSource.connect(clickFilter);
+    clickFilter.connect(clickGain);
+    clickGain.connect(sfxBus);
+    clickSource.start(time);
+    clickSource.stop(time + 0.035);
+  }
+
   private async playDeathSfx(kind: 'enemy' | 'lava'): Promise<void> {
     await this.ensureStarted();
     const context = this.audioContext;
@@ -552,41 +646,59 @@ export class ProceduralBackingTrack {
       return;
     }
 
-    const bodyOsc = context.createOscillator();
-    bodyOsc.type = 'sawtooth';
-    bodyOsc.frequency.setValueAtTime(190, time);
-    bodyOsc.frequency.exponentialRampToValueAtTime(62, time + 0.2);
+    const impactOsc = context.createOscillator();
+    impactOsc.type = 'sawtooth';
+    impactOsc.frequency.setValueAtTime(260, time);
+    impactOsc.frequency.exponentialRampToValueAtTime(78, time + 0.19);
 
-    const bodyGain = context.createGain();
-    bodyGain.gain.setValueAtTime(0.0001, time);
-    bodyGain.gain.exponentialRampToValueAtTime(0.24, time + 0.01);
-    bodyGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.23);
+    const impactFilter = context.createBiquadFilter();
+    impactFilter.type = 'lowpass';
+    impactFilter.frequency.setValueAtTime(2100, time);
+    impactFilter.frequency.exponentialRampToValueAtTime(520, time + 0.18);
+    impactFilter.Q.value = 1.25;
 
-    const bodyFilter = context.createBiquadFilter();
-    bodyFilter.type = 'lowpass';
-    bodyFilter.frequency.value = 900;
-    bodyFilter.Q.value = 1.3;
+    const impactGain = context.createGain();
+    impactGain.gain.setValueAtTime(0.0001, time);
+    impactGain.gain.exponentialRampToValueAtTime(0.28, time + 0.007);
+    impactGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.22);
 
-    bodyOsc.connect(bodyFilter);
-    bodyFilter.connect(bodyGain);
-    bodyGain.connect(sfxBus);
-    bodyOsc.start(time);
-    bodyOsc.stop(time + 0.24);
+    impactOsc.connect(impactFilter);
+    impactFilter.connect(impactGain);
+    impactGain.connect(sfxBus);
+    impactOsc.start(time);
+    impactOsc.stop(time + 0.23);
+
+    const harmonicOsc = context.createOscillator();
+    harmonicOsc.type = 'square';
+    harmonicOsc.frequency.setValueAtTime(430, time + 0.004);
+    harmonicOsc.frequency.exponentialRampToValueAtTime(145, time + 0.12);
+
+    const harmonicGain = context.createGain();
+    harmonicGain.gain.setValueAtTime(0.0001, time + 0.004);
+    harmonicGain.gain.exponentialRampToValueAtTime(0.1, time + 0.012);
+    harmonicGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.13);
+
+    harmonicOsc.connect(harmonicGain);
+    harmonicGain.connect(sfxBus);
+    harmonicOsc.start(time + 0.004);
+    harmonicOsc.stop(time + 0.14);
 
     const noiseSource = context.createBufferSource();
     noiseSource.buffer = this.getNoiseBuffer(context);
     const noiseFilter = context.createBiquadFilter();
-    noiseFilter.type = 'highpass';
-    noiseFilter.frequency.value = 1400;
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(2200, time);
+    noiseFilter.frequency.exponentialRampToValueAtTime(1100, time + 0.08);
+    noiseFilter.Q.value = 0.9;
     const noiseGain = context.createGain();
     noiseGain.gain.setValueAtTime(0.0001, time);
-    noiseGain.gain.exponentialRampToValueAtTime(0.23, time + 0.004);
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.11);
+    noiseGain.gain.exponentialRampToValueAtTime(0.21, time + 0.002);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.1);
     noiseSource.connect(noiseFilter);
     noiseFilter.connect(noiseGain);
     noiseGain.connect(sfxBus);
     noiseSource.start(time);
-    noiseSource.stop(time + 0.12);
+    noiseSource.stop(time + 0.11);
   }
 
   private scheduleLavaDeathSfx(time: number): void {
@@ -596,35 +708,55 @@ export class ProceduralBackingTrack {
       return;
     }
 
-    const noiseSource = context.createBufferSource();
-    noiseSource.buffer = this.getNoiseBuffer(context);
-    const noiseFilter = context.createBiquadFilter();
-    noiseFilter.type = 'bandpass';
-    noiseFilter.frequency.setValueAtTime(520, time);
-    noiseFilter.frequency.exponentialRampToValueAtTime(1700, time + 0.22);
-    noiseFilter.Q.value = 0.8;
-    const noiseGain = context.createGain();
-    noiseGain.gain.setValueAtTime(0.0001, time);
-    noiseGain.gain.exponentialRampToValueAtTime(0.2, time + 0.006);
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.24);
-    noiseSource.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(sfxBus);
-    noiseSource.start(time);
-    noiseSource.stop(time + 0.26);
+    const whooshNoise = context.createBufferSource();
+    whooshNoise.buffer = this.getNoiseBuffer(context);
+    const whooshFilter = context.createBiquadFilter();
+    whooshFilter.type = 'bandpass';
+    whooshFilter.frequency.setValueAtTime(420, time);
+    whooshFilter.frequency.exponentialRampToValueAtTime(2400, time + 0.2);
+    whooshFilter.Q.value = 0.78;
+    const whooshGain = context.createGain();
+    whooshGain.gain.setValueAtTime(0.0001, time);
+    whooshGain.gain.exponentialRampToValueAtTime(0.24, time + 0.01);
+    whooshGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.24);
+    whooshNoise.connect(whooshFilter);
+    whooshFilter.connect(whooshGain);
+    whooshGain.connect(sfxBus);
+    whooshNoise.start(time);
+    whooshNoise.stop(time + 0.26);
 
     const fizzOsc = context.createOscillator();
-    fizzOsc.type = 'square';
-    fizzOsc.frequency.setValueAtTime(130, time);
-    fizzOsc.frequency.exponentialRampToValueAtTime(72, time + 0.2);
+    fizzOsc.type = 'sawtooth';
+    fizzOsc.frequency.setValueAtTime(165, time);
+    fizzOsc.frequency.exponentialRampToValueAtTime(68, time + 0.21);
     const fizzGain = context.createGain();
     fizzGain.gain.setValueAtTime(0.0001, time);
-    fizzGain.gain.exponentialRampToValueAtTime(0.14, time + 0.012);
-    fizzGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.22);
+    fizzGain.gain.exponentialRampToValueAtTime(0.15, time + 0.01);
+    fizzGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.23);
     fizzOsc.connect(fizzGain);
     fizzGain.connect(sfxBus);
     fizzOsc.start(time);
     fizzOsc.stop(time + 0.24);
+
+    const popDelays = [0.04, 0.095, 0.15];
+    const popFrequencies = [430, 510, 620];
+    for (let i = 0; i < popDelays.length; i += 1) {
+      const popTime = time + popDelays[i];
+      const popOsc = context.createOscillator();
+      popOsc.type = 'sine';
+      popOsc.frequency.setValueAtTime(popFrequencies[i], popTime);
+      popOsc.frequency.exponentialRampToValueAtTime(popFrequencies[i] * 0.52, popTime + 0.03);
+
+      const popGain = context.createGain();
+      popGain.gain.setValueAtTime(0.0001, popTime);
+      popGain.gain.exponentialRampToValueAtTime(0.1 - i * 0.015, popTime + 0.005);
+      popGain.gain.exponentialRampToValueAtTime(0.0001, popTime + 0.045);
+
+      popOsc.connect(popGain);
+      popGain.connect(sfxBus);
+      popOsc.start(popTime);
+      popOsc.stop(popTime + 0.05);
+    }
   }
 
   private getNoiseBuffer(context: AudioContext): AudioBuffer {
