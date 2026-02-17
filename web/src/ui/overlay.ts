@@ -427,7 +427,6 @@ export class OverlayUI {
       if (source) {
         this.loadLevelIntoEditor(source);
       }
-      this.introCinematic.skip();
       this.controller.openEditor();
     });
 
@@ -641,7 +640,6 @@ export class OverlayUI {
     }
 
     this.closeIntroSettings();
-    this.introCinematic.skip();
     this.controller.startSelectedLevel();
   }
 
