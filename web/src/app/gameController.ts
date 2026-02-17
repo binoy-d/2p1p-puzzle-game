@@ -147,7 +147,7 @@ export class GameController {
   }
 
   public openLevelSelect(): void {
-    if (this.screen !== 'paused') {
+    if (this.screen !== 'paused' && this.screen !== 'intro') {
       return;
     }
 

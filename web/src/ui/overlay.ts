@@ -67,6 +67,26 @@ function tileClass(tile: string): string {
   return 'tile-path';
 }
 
+function levelPreviewTileClass(tile: string): string {
+  if (tile === '#') {
+    return 'level-card-cell-wall';
+  }
+  if (tile === ' ') {
+    return 'level-card-cell-floor';
+  }
+  if (tile === 'P') {
+    return 'level-card-cell-player';
+  }
+  if (tile === '!') {
+    return 'level-card-cell-goal';
+  }
+  if (tile === 'x') {
+    return 'level-card-cell-lava';
+  }
+
+  return 'level-card-cell-path';
+}
+
 function isIntroStartKey(event: KeyboardEvent): boolean {
   if (event.altKey || event.ctrlKey || event.metaKey) {
     return false;
@@ -81,6 +101,10 @@ export class OverlayUI {
   private readonly controller: GameController;
 
   private readonly levelSelect: HTMLSelectElement;
+
+  private readonly levelSelectGrid: HTMLElement;
+
+  private readonly levelSelectCurrentText: HTMLElement;
 
   private readonly statusText: HTMLElement;
 
@@ -168,6 +192,8 @@ export class OverlayUI {
 
   private lastRenderedHudLevelId: string | null = null;
 
+  private levelSelectCardButtons = new Map<number, HTMLButtonElement>();
+
   public constructor(root: HTMLElement, controller: GameController) {
     this.root = root;
     this.controller = controller;
@@ -206,6 +232,8 @@ export class OverlayUI {
     });
 
     this.levelSelect = asElement<HTMLSelectElement>(this.root, '#level-select-input');
+    this.levelSelectGrid = asElement<HTMLElement>(this.root, '#level-select-grid');
+    this.levelSelectCurrentText = asElement<HTMLElement>(this.root, '#level-select-current');
     this.statusText = asElement<HTMLElement>(this.root, '#menu-status');
     this.playerNameInput = asElement<HTMLInputElement>(this.root, '#player-name-input');
     this.mainCurrentLevelText = asElement<HTMLElement>(this.root, '#main-current-level');
@@ -273,6 +301,7 @@ export class OverlayUI {
           </div>
           <div class="button-row intro-button-row">
             <button type="button" id="btn-intro-start">Start</button>
+            <button type="button" id="btn-intro-level-select">Levels</button>
           </div>
         </aside>
       </section>
@@ -299,19 +328,29 @@ export class OverlayUI {
         </div>
       </section>
 
-      <section class="menu-panel" data-panel="level-select" hidden>
-        <h2>Level Select</h2>
-        <label for="level-select-input">Choose a level</label>
-        <select id="level-select-input"></select>
+      <section class="menu-panel menu-panel-level-select-page" data-panel="level-select" hidden>
+        <header class="level-select-header">
+          <div>
+            <h2>Level Select</h2>
+            <p>Pick a map and chase faster solves. Lower moves and time rank higher.</p>
+          </div>
+          <div class="level-select-header-actions">
+            <button type="button" id="btn-level-start">Play Selected</button>
+            <button type="button" id="btn-level-back">Back</button>
+          </div>
+        </header>
 
-        <div class="scoreboard">
-          <div id="score-status" class="score-status">Top 10 scores (lower is better)</div>
-          <ol id="score-list" class="score-list"></ol>
-        </div>
+        <div class="level-select-layout">
+          <section class="level-select-grid-panel">
+            <select id="level-select-input" class="level-select-hidden-input" aria-hidden="true" tabindex="-1"></select>
+            <div id="level-select-grid" class="level-select-grid" role="listbox" aria-label="Level grid"></div>
+          </section>
 
-        <div class="button-row">
-          <button type="button" id="btn-level-start">Start</button>
-          <button type="button" id="btn-level-back">Back</button>
+          <aside class="level-select-score-panel">
+            <h3 id="level-select-current">Level 1</h3>
+            <div id="score-status" class="score-status">Top 10 scores (lower is better)</div>
+            <ol id="score-list" class="score-list level-select-score-list"></ol>
+          </aside>
         </div>
       </section>
 
@@ -428,6 +467,12 @@ export class OverlayUI {
         this.loadLevelIntoEditor(source);
       }
       this.controller.openEditor();
+    });
+
+    asElement<HTMLButtonElement>(this.root, '#btn-intro-level-select').addEventListener('click', () => {
+      this.closeIntroSettings();
+      this.controller.openLevelSelect();
+      void this.loadScoresForSelectedLevel(true);
     });
 
     this.introSettingsButton.addEventListener('click', () => {
@@ -673,6 +718,7 @@ export class OverlayUI {
       const label = getLevelLabel(currentLevel.id, snapshot.selectedLevelIndex);
       this.introCurrentLevelText.textContent = label;
       this.mainCurrentLevelText.textContent = label;
+      this.levelSelectCurrentText.textContent = `${label} (${currentLevel.id})`;
     }
 
     const canPlay = snapshot.playerName.trim().length > 0;
@@ -717,6 +763,15 @@ export class OverlayUI {
       this.volumeSlider.focus();
     }
 
+    if (screenChanged && snapshot.screen === 'level-select') {
+      const selectedCard = this.levelSelectCardButtons.get(snapshot.selectedLevelIndex);
+      if (selectedCard) {
+        selectedCard.focus();
+      } else {
+        this.levelStartButton.focus();
+      }
+    }
+
     if (screenChanged && snapshot.screen === 'editor') {
       if (!canPlay) {
         this.editorPlayerNameInput.focus();
@@ -741,9 +796,11 @@ export class OverlayUI {
 
     this.root.classList.toggle('overlay-hidden', snapshot.screen === 'playing');
     this.root.classList.toggle('editor-screen-active', snapshot.screen === 'editor');
+    this.root.classList.toggle('level-select-screen-active', snapshot.screen === 'level-select');
     const gameShell = document.querySelector<HTMLElement>('#game-shell');
     if (gameShell) {
       gameShell.classList.toggle('editor-screen-active', snapshot.screen === 'editor');
+      gameShell.classList.toggle('level-select-screen-active', snapshot.screen === 'level-select');
     }
     this.lastRenderedScreen = snapshot.screen;
   }
@@ -752,11 +809,17 @@ export class OverlayUI {
     const signature = snapshot.levels.map((level) => level.id).join('|');
     if (this.levelSelect.dataset.signature !== signature) {
       this.levelSelect.innerHTML = '';
+      this.levelSelectGrid.innerHTML = '';
+      this.levelSelectCardButtons.clear();
       snapshot.levels.forEach((level, index) => {
         const menuOption = document.createElement('option');
         menuOption.value = String(index);
         menuOption.textContent = `${getLevelLabel(level.id, index)} (${level.id})`;
         this.levelSelect.append(menuOption);
+
+        const levelCard = this.createLevelSelectCard(level, index);
+        this.levelSelectGrid.append(levelCard);
+        this.levelSelectCardButtons.set(index, levelCard);
       });
       this.levelSelect.dataset.signature = signature;
     }
@@ -765,6 +828,55 @@ export class OverlayUI {
     if (this.levelSelect.value !== nextValue) {
       this.levelSelect.value = nextValue;
     }
+
+    for (const [index, button] of this.levelSelectCardButtons) {
+      const isSelected = index === snapshot.selectedLevelIndex;
+      button.classList.toggle('level-card-selected', isSelected);
+      button.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+    }
+  }
+
+  private createLevelSelectCard(level: ParsedLevel, index: number): HTMLButtonElement {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'level-card';
+    card.dataset.levelIndex = String(index);
+    card.setAttribute('role', 'option');
+    card.addEventListener('click', () => {
+      this.controller.setSelectedLevel(index);
+      void this.loadScoresForSelectedLevel(true);
+    });
+    card.addEventListener('dblclick', () => {
+      this.controller.startLevel(index);
+    });
+
+    const cardHeader = document.createElement('div');
+    cardHeader.className = 'level-card-header';
+
+    const cardTitle = document.createElement('strong');
+    cardTitle.textContent = getLevelLabel(level.id, index);
+    cardHeader.append(cardTitle);
+
+    const cardId = document.createElement('span');
+    cardId.textContent = level.id;
+    cardHeader.append(cardId);
+    card.append(cardHeader);
+
+    const preview = document.createElement('div');
+    preview.className = 'level-card-preview';
+    preview.style.gridTemplateColumns = `repeat(${level.width}, 1fr)`;
+    for (let y = 0; y < level.height; y += 1) {
+      const row = level.grid[y];
+      for (let x = 0; x < level.width; x += 1) {
+        const tile = row?.[x] ?? '#';
+        const cell = document.createElement('span');
+        cell.className = `level-card-cell ${levelPreviewTileClass(tile)}`;
+        preview.append(cell);
+      }
+    }
+    card.append(preview);
+
+    return card;
   }
 
   private syncEditorSourceOptions(snapshot: ControllerSnapshot): void {

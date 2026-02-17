@@ -89,12 +89,23 @@ describe('game controller', () => {
     expect(controller.getSnapshot().screen).toBe('playing');
   });
 
-  it('allows level select only from pause flow', () => {
+  it('allows level select from intro and pause screens', () => {
+    const levels = [
+      parseLevelText('map0', ['#####', '#P!##', '#####'].join('\n')),
+      parseLevelText('map1', ['#####', '#P ##', '#####'].join('\n')),
+    ];
+    const introController = new GameController(levels, {
+      volume: 0.5,
+      lightingEnabled: true,
+    });
+
+    expect(introController.getSnapshot().screen).toBe('intro');
+    introController.openLevelSelect();
+    expect(introController.getSnapshot().screen).toBe('level-select');
+    introController.closeLevelSelect();
+    expect(introController.getSnapshot().screen).toBe('intro');
+
     const controller = makeController();
-
-    controller.openLevelSelect();
-    expect(controller.getSnapshot().screen).toBe('main');
-
     controller.setPlayerName('Ava');
     controller.startSelectedLevel();
     controller.openPauseMenu();
