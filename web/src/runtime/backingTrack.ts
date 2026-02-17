@@ -27,7 +27,9 @@ export class ProceduralBackingTrack {
 
   private audioContext: AudioContext | null = null;
 
-  private masterGain: GainNode | null = null;
+  private musicGain: GainNode | null = null;
+
+  private sfxGain: GainNode | null = null;
 
   private drumBus: GainNode | null = null;
 
@@ -49,7 +51,9 @@ export class ProceduralBackingTrack {
 
   private started = false;
 
-  private desiredVolume = 0.6;
+  private desiredMusicVolume = 0.6;
+
+  private desiredSfxVolume = 0.85;
 
   private currentSeed = 1;
 
@@ -69,7 +73,8 @@ export class ProceduralBackingTrack {
 
   public constructor(controller: GameController) {
     this.unsubscribeFromController = controller.subscribe((snapshot) => {
-      this.setVolume(snapshot.settings.volume);
+      this.setMusicVolume(snapshot.settings.musicVolume);
+      this.setSfxVolume(snapshot.settings.sfxVolume);
       const sourceLevelIndex =
         snapshot.screen === 'playing' || snapshot.screen === 'paused'
           ? snapshot.gameState.levelIndex
@@ -115,7 +120,8 @@ export class ProceduralBackingTrack {
     this.unsubscribeFromController();
     const context = this.audioContext;
     this.audioContext = null;
-    this.masterGain = null;
+    this.musicGain = null;
+    this.sfxGain = null;
     this.drumBus = null;
     this.synthBus = null;
     this.sfxBus = null;
@@ -227,35 +233,50 @@ export class ProceduralBackingTrack {
     }
   }
 
-  private setVolume(volume: number): void {
-    this.desiredVolume = clamp(volume, 0, 1);
+  private setMusicVolume(volume: number): void {
+    this.desiredMusicVolume = clamp(volume, 0, 1);
+    this.applyVolume();
+  }
+
+  private setSfxVolume(volume: number): void {
+    this.desiredSfxVolume = clamp(volume, 0, 1);
     this.applyVolume();
   }
 
   private applyVolume(): void {
-    if (!this.audioContext || !this.masterGain) {
+    if (!this.audioContext || !this.musicGain || !this.sfxGain) {
       return;
     }
 
-    const gain = Math.pow(this.desiredVolume, 1.2) * 0.24;
-    this.masterGain.gain.setTargetAtTime(gain, this.audioContext.currentTime, 0.04);
+    const musicGain = Math.pow(this.desiredMusicVolume, 1.2) * 0.24;
+    const sfxGain = Math.pow(this.desiredSfxVolume, 1.05) * 0.36;
+    this.musicGain.gain.setTargetAtTime(musicGain, this.audioContext.currentTime, 0.04);
+    this.sfxGain.gain.setTargetAtTime(sfxGain, this.audioContext.currentTime, 0.03);
   }
 
   private buildAudioGraph(context: AudioContext): void {
-    const masterGain = context.createGain();
-    masterGain.gain.value = 0;
+    const mixGain = context.createGain();
+    mixGain.gain.value = 1;
+
+    const musicGain = context.createGain();
+    musicGain.gain.value = 0;
+    musicGain.connect(mixGain);
+
+    const sfxGain = context.createGain();
+    sfxGain.gain.value = 0;
+    sfxGain.connect(mixGain);
 
     const drumBus = context.createGain();
     drumBus.gain.value = 0.9;
-    drumBus.connect(masterGain);
+    drumBus.connect(musicGain);
 
     const synthBus = context.createGain();
     synthBus.gain.value = 0.78;
-    synthBus.connect(masterGain);
+    synthBus.connect(musicGain);
 
     const sfxBus = context.createGain();
     sfxBus.gain.value = 0.82;
-    sfxBus.connect(masterGain);
+    sfxBus.connect(sfxGain);
 
     const delaySend = context.createGain();
     delaySend.gain.value = 0.21;
@@ -273,7 +294,7 @@ export class ProceduralBackingTrack {
     const wet = context.createGain();
     wet.gain.value = 0.3;
     delay.connect(wet);
-    wet.connect(masterGain);
+    wet.connect(musicGain);
 
     const compressor = context.createDynamicsCompressor();
     compressor.threshold.value = -20;
@@ -281,10 +302,11 @@ export class ProceduralBackingTrack {
     compressor.ratio.value = 2.8;
     compressor.attack.value = 0.006;
     compressor.release.value = 0.22;
-    masterGain.connect(compressor);
+    mixGain.connect(compressor);
     compressor.connect(context.destination);
 
-    this.masterGain = masterGain;
+    this.musicGain = musicGain;
+    this.sfxGain = sfxGain;
     this.drumBus = drumBus;
     this.synthBus = synthBus;
     this.sfxBus = sfxBus;
@@ -660,33 +682,46 @@ export class ProceduralBackingTrack {
 
     const bedOsc = context.createOscillator();
     bedOsc.type = 'triangle';
-    bedOsc.frequency.setValueAtTime(188, time);
-    bedOsc.frequency.exponentialRampToValueAtTime(292, time + durationSec * 0.58);
-    bedOsc.frequency.exponentialRampToValueAtTime(348, time + durationSec * 0.94);
+    bedOsc.frequency.setValueAtTime(178, time);
+    bedOsc.frequency.exponentialRampToValueAtTime(288, time + durationSec * 0.55);
+    bedOsc.frequency.exponentialRampToValueAtTime(372, time + durationSec * 0.95);
     const bedGain = context.createGain();
     bedGain.gain.setValueAtTime(0.0001, time);
-    bedGain.gain.exponentialRampToValueAtTime(0.17, time + durationSec * 0.16);
+    bedGain.gain.exponentialRampToValueAtTime(0.2, time + durationSec * 0.14);
     bedGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec);
     const bedFilter = context.createBiquadFilter();
     bedFilter.type = 'lowpass';
-    bedFilter.frequency.setValueAtTime(1500, time);
-    bedFilter.frequency.exponentialRampToValueAtTime(4200, time + durationSec * 0.74);
+    bedFilter.frequency.setValueAtTime(1300, time);
+    bedFilter.frequency.exponentialRampToValueAtTime(4600, time + durationSec * 0.72);
     bedOsc.connect(bedFilter);
     bedFilter.connect(bedGain);
     bedGain.connect(sfxBus);
     bedOsc.start(time);
     bedOsc.stop(time + durationSec + 0.03);
 
+    const subRiseOsc = context.createOscillator();
+    subRiseOsc.type = 'sine';
+    subRiseOsc.frequency.setValueAtTime(58, time);
+    subRiseOsc.frequency.exponentialRampToValueAtTime(104, time + durationSec * 0.82);
+    const subRiseGain = context.createGain();
+    subRiseGain.gain.setValueAtTime(0.0001, time);
+    subRiseGain.gain.exponentialRampToValueAtTime(0.12, time + durationSec * 0.2);
+    subRiseGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec * 0.96);
+    subRiseOsc.connect(subRiseGain);
+    subRiseGain.connect(sfxBus);
+    subRiseOsc.start(time);
+    subRiseOsc.stop(time + durationSec);
+
     const whoosh = context.createBufferSource();
     whoosh.buffer = this.getNoiseBuffer(context);
     const whooshFilter = context.createBiquadFilter();
     whooshFilter.type = 'bandpass';
-    whooshFilter.frequency.setValueAtTime(420, time);
-    whooshFilter.frequency.exponentialRampToValueAtTime(2400, time + durationSec * 0.82);
-    whooshFilter.Q.value = 0.74;
+    whooshFilter.frequency.setValueAtTime(360, time);
+    whooshFilter.frequency.exponentialRampToValueAtTime(3100, time + durationSec * 0.82);
+    whooshFilter.Q.value = 0.76;
     const whooshGain = context.createGain();
     whooshGain.gain.setValueAtTime(0.0001, time);
-    whooshGain.gain.exponentialRampToValueAtTime(0.16, time + durationSec * 0.18);
+    whooshGain.gain.exponentialRampToValueAtTime(0.2, time + durationSec * 0.18);
     whooshGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec * 0.96);
     whoosh.connect(whooshFilter);
     whooshFilter.connect(whooshGain);
@@ -694,34 +729,65 @@ export class ProceduralBackingTrack {
     whoosh.start(time);
     whoosh.stop(time + durationSec);
 
-    const arpeggio = [0, 4, 7, 12, 16];
+    const shimmer = context.createBufferSource();
+    shimmer.buffer = this.getNoiseBuffer(context);
+    const shimmerFilter = context.createBiquadFilter();
+    shimmerFilter.type = 'highpass';
+    shimmerFilter.frequency.value = 4200;
+    const shimmerGain = context.createGain();
+    shimmerGain.gain.setValueAtTime(0.0001, time);
+    shimmerGain.gain.exponentialRampToValueAtTime(0.1, time + durationSec * 0.32);
+    shimmerGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec * 0.94);
+    shimmer.connect(shimmerFilter);
+    shimmerFilter.connect(shimmerGain);
+    shimmerGain.connect(sfxBus);
+    shimmer.start(time + durationSec * 0.16);
+    shimmer.stop(time + durationSec);
+
+    const arpeggio = [0, 4, 7, 12, 16, 19];
     for (let i = 0; i < arpeggio.length; i += 1) {
-      const noteTime = time + (durationSec * 0.62 * i) / (arpeggio.length - 1);
-      const midi = 68 + arpeggio[i];
+      const noteTime = time + (durationSec * 0.68 * i) / (arpeggio.length - 1);
+      const midi = 69 + arpeggio[i];
       const osc = context.createOscillator();
-      osc.type = 'sine';
+      osc.type = i % 2 === 0 ? 'sine' : 'triangle';
       osc.frequency.setValueAtTime(midiToFrequency(midi), noteTime);
       const gain = context.createGain();
       gain.gain.setValueAtTime(0.0001, noteTime);
-      gain.gain.exponentialRampToValueAtTime(0.12 - i * 0.014, noteTime + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.0001, noteTime + durationSec * 0.22);
+      gain.gain.exponentialRampToValueAtTime(0.14 - i * 0.013, noteTime + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, noteTime + durationSec * 0.2);
       osc.connect(gain);
       gain.connect(sfxBus);
       osc.start(noteTime);
-      osc.stop(noteTime + durationSec * 0.24);
+      osc.stop(noteTime + durationSec * 0.22);
+    }
+
+    const liftChord = [76, 79, 83];
+    for (let i = 0; i < liftChord.length; i += 1) {
+      const startTime = time + durationSec * 0.62;
+      const osc = context.createOscillator();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(midiToFrequency(liftChord[i]), startTime);
+      const gain = context.createGain();
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.08, startTime + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + durationSec * 0.24);
+      osc.connect(gain);
+      gain.connect(sfxBus);
+      osc.start(startTime);
+      osc.stop(startTime + durationSec * 0.26);
     }
 
     const tailOsc = context.createOscillator();
     tailOsc.type = 'square';
-    tailOsc.frequency.setValueAtTime(midiToFrequency(84), time + durationSec * 0.7);
-    tailOsc.frequency.exponentialRampToValueAtTime(midiToFrequency(91), time + durationSec * 0.94);
+    tailOsc.frequency.setValueAtTime(midiToFrequency(84), time + durationSec * 0.72);
+    tailOsc.frequency.exponentialRampToValueAtTime(midiToFrequency(93), time + durationSec * 0.96);
     const tailGain = context.createGain();
-    tailGain.gain.setValueAtTime(0.0001, time + durationSec * 0.7);
-    tailGain.gain.exponentialRampToValueAtTime(0.09, time + durationSec * 0.74);
+    tailGain.gain.setValueAtTime(0.0001, time + durationSec * 0.72);
+    tailGain.gain.exponentialRampToValueAtTime(0.11, time + durationSec * 0.76);
     tailGain.gain.exponentialRampToValueAtTime(0.0001, time + durationSec);
     tailOsc.connect(tailGain);
     tailGain.connect(sfxBus);
-    tailOsc.start(time + durationSec * 0.7);
+    tailOsc.start(time + durationSec * 0.72);
     tailOsc.stop(time + durationSec + 0.02);
   }
 

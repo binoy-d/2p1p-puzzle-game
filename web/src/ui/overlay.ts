@@ -116,7 +116,9 @@ export class OverlayUI {
 
   private readonly mainCurrentLevelText: HTMLElement;
 
-  private readonly volumeSlider: HTMLInputElement;
+  private readonly musicVolumeSlider: HTMLInputElement;
+
+  private readonly sfxVolumeSlider: HTMLInputElement;
 
   private readonly lightingToggle: HTMLInputElement;
 
@@ -136,7 +138,9 @@ export class OverlayUI {
 
   private readonly introSettingsCloseButton: HTMLButtonElement;
 
-  private readonly introVolumeSlider: HTMLInputElement;
+  private readonly introMusicVolumeSlider: HTMLInputElement;
+
+  private readonly introSfxVolumeSlider: HTMLInputElement;
 
   private readonly introLightingToggle: HTMLInputElement;
 
@@ -216,7 +220,8 @@ export class OverlayUI {
     this.introSettingsPanel = asElement<HTMLElement>(this.root, '#intro-settings-panel');
     this.introSettingsButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-settings-toggle');
     this.introSettingsCloseButton = asElement<HTMLButtonElement>(this.root, '#btn-intro-settings-close');
-    this.introVolumeSlider = asElement<HTMLInputElement>(this.root, '#intro-settings-volume');
+    this.introMusicVolumeSlider = asElement<HTMLInputElement>(this.root, '#intro-settings-music-volume');
+    this.introSfxVolumeSlider = asElement<HTMLInputElement>(this.root, '#intro-settings-sfx-volume');
     this.introLightingToggle = asElement<HTMLInputElement>(this.root, '#intro-settings-lighting');
     this.introCinematic = new LockstepIntroCinematic({
       elements: {
@@ -239,7 +244,8 @@ export class OverlayUI {
     this.mainCurrentLevelText = asElement<HTMLElement>(this.root, '#main-current-level');
     this.playButton = asElement<HTMLButtonElement>(this.root, '#btn-play');
     this.levelStartButton = asElement<HTMLButtonElement>(this.root, '#btn-level-start');
-    this.volumeSlider = asElement<HTMLInputElement>(this.root, '#settings-volume');
+    this.musicVolumeSlider = asElement<HTMLInputElement>(this.root, '#settings-music-volume');
+    this.sfxVolumeSlider = asElement<HTMLInputElement>(this.root, '#settings-sfx-volume');
     this.lightingToggle = asElement<HTMLInputElement>(this.root, '#settings-lighting');
     this.scoreList = asElement<HTMLOListElement>(this.root, '#score-list');
     this.scoreStatus = asElement<HTMLElement>(this.root, '#score-status');
@@ -273,8 +279,10 @@ export class OverlayUI {
           <button type="button" id="btn-intro-settings-toggle" aria-label="Open intro settings">Tune</button>
           <div class="intro-settings-panel" id="intro-settings-panel" hidden>
             <h3>Settings</h3>
-            <label for="intro-settings-volume">Volume</label>
-            <input id="intro-settings-volume" type="range" min="0" max="1" step="0.05" />
+            <label for="intro-settings-music-volume">Music Volume</label>
+            <input id="intro-settings-music-volume" type="range" min="0" max="1" step="0.05" />
+            <label for="intro-settings-sfx-volume">SFX Volume</label>
+            <input id="intro-settings-sfx-volume" type="range" min="0" max="1" step="0.05" />
             <label class="checkbox-row">
               <input id="intro-settings-lighting" type="checkbox" />
               Lighting effects
@@ -356,8 +364,11 @@ export class OverlayUI {
 
       <section class="menu-panel" data-panel="settings" hidden>
         <h2>Settings</h2>
-        <label for="settings-volume">Volume</label>
-        <input id="settings-volume" type="range" min="0" max="1" step="0.05" />
+        <label for="settings-music-volume">Music Volume</label>
+        <input id="settings-music-volume" type="range" min="0" max="1" step="0.05" />
+
+        <label for="settings-sfx-volume">SFX Volume</label>
+        <input id="settings-sfx-volume" type="range" min="0" max="1" step="0.05" />
 
         <label class="checkbox-row">
           <input id="settings-lighting" type="checkbox" />
@@ -478,7 +489,7 @@ export class OverlayUI {
     this.introSettingsButton.addEventListener('click', () => {
       this.introSettingsPanel.hidden = !this.introSettingsPanel.hidden;
       if (!this.introSettingsPanel.hidden) {
-        this.introVolumeSlider.focus();
+        this.introMusicVolumeSlider.focus();
       }
     });
 
@@ -601,12 +612,20 @@ export class OverlayUI {
       void this.loadScoresForSelectedLevel(true);
     });
 
-    this.volumeSlider.addEventListener('input', () => {
-      this.controller.setVolume(Number.parseFloat(this.volumeSlider.value));
+    this.musicVolumeSlider.addEventListener('input', () => {
+      this.controller.setMusicVolume(Number.parseFloat(this.musicVolumeSlider.value));
     });
 
-    this.introVolumeSlider.addEventListener('input', () => {
-      this.controller.setVolume(Number.parseFloat(this.introVolumeSlider.value));
+    this.introMusicVolumeSlider.addEventListener('input', () => {
+      this.controller.setMusicVolume(Number.parseFloat(this.introMusicVolumeSlider.value));
+    });
+
+    this.sfxVolumeSlider.addEventListener('input', () => {
+      this.controller.setSfxVolume(Number.parseFloat(this.sfxVolumeSlider.value));
+    });
+
+    this.introSfxVolumeSlider.addEventListener('input', () => {
+      this.controller.setSfxVolume(Number.parseFloat(this.introSfxVolumeSlider.value));
     });
 
     this.lightingToggle.addEventListener('change', () => {
@@ -708,8 +727,10 @@ export class OverlayUI {
       this.editorPlayerNameInput.value = snapshot.playerName;
     }
 
-    this.volumeSlider.value = snapshot.settings.volume.toString();
-    this.introVolumeSlider.value = snapshot.settings.volume.toString();
+    this.musicVolumeSlider.value = snapshot.settings.musicVolume.toString();
+    this.introMusicVolumeSlider.value = snapshot.settings.musicVolume.toString();
+    this.sfxVolumeSlider.value = snapshot.settings.sfxVolume.toString();
+    this.introSfxVolumeSlider.value = snapshot.settings.sfxVolume.toString();
     this.lightingToggle.checked = snapshot.settings.lightingEnabled;
     this.introLightingToggle.checked = snapshot.settings.lightingEnabled;
     this.statusText.textContent = snapshot.statusMessage ?? '';
@@ -760,7 +781,7 @@ export class OverlayUI {
     }
 
     if (screenChanged && snapshot.screen === 'settings') {
-      this.volumeSlider.focus();
+      this.musicVolumeSlider.focus();
     }
 
     if (screenChanged && snapshot.screen === 'level-select') {

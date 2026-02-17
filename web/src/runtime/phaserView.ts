@@ -430,82 +430,93 @@ class PuzzleScene extends Phaser.Scene {
     const centerX = viewportWidth * 0.5;
     const centerY = viewportHeight * 0.5;
 
-    const approach = Phaser.Math.Easing.Cubic.Out(Phaser.Math.Clamp(progress / 0.42, 0, 1));
-    const tunnel = Phaser.Math.Easing.Cubic.InOut(Phaser.Math.Clamp((progress - 0.18) / 0.82, 0, 1));
-    const settle = Phaser.Math.Easing.Cubic.Out(Phaser.Math.Clamp((progress - 0.88) / 0.12, 0, 1));
+    const dive = Phaser.Math.Easing.Cubic.Out(Phaser.Math.Clamp(progress / 0.55, 0, 1));
+    const fill = Phaser.Math.Easing.Cubic.InOut(Phaser.Math.Clamp((progress - 0.1) / 0.66, 0, 1));
+    const reveal = Phaser.Math.Easing.Cubic.Out(Phaser.Math.Clamp((progress - 0.64) / 0.36, 0, 1));
 
-    const cameraAnchorX = Phaser.Math.Linear(portalX, centerX, approach * 0.64);
-    const cameraAnchorY = Phaser.Math.Linear(portalY, centerY, approach * 0.64);
-    camera.centerOn(cameraAnchorX, cameraAnchorY);
+    const focusX = Phaser.Math.Linear(portalX, centerX, reveal * 0.92);
+    const focusY = Phaser.Math.Linear(portalY, centerY, reveal * 0.92);
+    camera.centerOn(focusX, focusY);
+    const zoomIn = Phaser.Math.Linear(1, 6.2, dive);
+    camera.setZoom(Phaser.Math.Linear(zoomIn, 1, reveal));
+    camera.setRotation(0);
 
-    const entryZoom = Phaser.Math.Linear(1, 1.9, approach);
-    const diveZoom = Phaser.Math.Linear(entryZoom, 3.45, tunnel);
-    camera.setZoom(Phaser.Math.Linear(diveZoom, 1, settle));
-    const spinTurns = Phaser.Math.Linear(0, 1.85, tunnel) + settle * 0.25;
-    camera.setRotation(Phaser.Math.Linear(spinTurns * Math.PI * 0.22, 0, settle));
+    const layerCenterX = Phaser.Math.Linear(portalX, centerX, reveal * 0.7);
+    const layerCenterY = Phaser.Math.Linear(portalY, centerY, reveal * 0.7);
+    const maxDim = Math.hypot(viewportWidth, viewportHeight) * 1.24;
 
-    const portalPulse = 0.5 + 0.5 * Math.sin(time / 95);
-    const portalSize = placement.tileSize * (0.9 + portalPulse * 0.25 + approach * 1.9);
-    this.transitionLayer.fillStyle(rgb(46, 255, 175), 0.16 + (1 - progress) * 0.35);
+    const portalPulse = 0.5 + 0.5 * Math.sin(time / 90);
+    const portalSize = placement.tileSize * (0.95 + portalPulse * 0.22 + dive * 1.65);
+    this.transitionLayer.fillStyle(rgb(68, 255, 176), 0.24 + (1 - progress) * 0.3);
     this.transitionLayer.fillRect(
-      portalX - portalSize * 0.5,
-      portalY - portalSize * 0.5,
+      layerCenterX - portalSize * 0.5,
+      layerCenterY - portalSize * 0.5,
       portalSize,
       portalSize,
     );
 
-    const ringCount = 24;
-    for (let i = 0; i < ringCount; i += 1) {
-      const depth = (i / ringCount + progress * 2.65) % 1;
-      const ringSize = placement.tileSize * (1.1 + depth * depth * 24);
-      const ringAlpha = (1 - depth) * (0.2 + (1 - progress) * 0.35);
-      const ringWidth = Math.max(1.2, placement.tileSize * (0.032 + (1 - depth) * 0.05));
-      const ringCenterX =
-        Phaser.Math.Linear(portalX, centerX, tunnel) +
-        Math.cos(depth * 17 + time * 0.0032) * placement.tileSize * (0.04 + (1 - depth) * 0.22);
-      const ringCenterY =
-        Phaser.Math.Linear(portalY, centerY, tunnel) +
-        Math.sin(depth * 19 + time * 0.0036) * placement.tileSize * (0.04 + (1 - depth) * 0.22);
+    const layerCount = 8;
+    for (let i = 0; i < layerCount; i += 1) {
+      const depth = (i + 1) / layerCount;
+      const layerFill = Phaser.Math.Clamp(fill - depth * 0.08, 0, 1);
+      if (layerFill <= 0) {
+        continue;
+      }
 
-      const green = 170 + depth * 70;
-      const blue = 105 + depth * 90;
-      this.transitionLayer.lineStyle(ringWidth, rgb(30, green, blue), ringAlpha);
+      const startSize = portalSize * (1 + depth * 0.7);
+      const endSize = maxDim * (0.5 + depth * 0.76);
+      const size = Phaser.Math.Linear(startSize, endSize, Math.pow(layerFill, 0.7));
+      const red = 18 + depth * 30;
+      const green = 88 + depth * 145;
+      const blue = 52 + depth * 110;
+      const alpha = (0.04 + (1 - depth) * 0.17) * (1 - reveal * 0.82);
+
+      this.transitionLayer.fillStyle(rgb(red, green, blue), alpha);
+      this.transitionLayer.fillRect(
+        layerCenterX - size * 0.5,
+        layerCenterY - size * 0.5,
+        size,
+        size,
+      );
+    }
+
+    const ringCount = 6;
+    for (let i = 0; i < ringCount; i += 1) {
+      const depth = i / Math.max(1, ringCount - 1);
+      const ringFill = Phaser.Math.Clamp(fill - depth * 0.11, 0, 1);
+      if (ringFill <= 0) {
+        continue;
+      }
+
+      const ringSize = Phaser.Math.Linear(portalSize * (1.05 + depth * 0.25), maxDim * (0.42 + depth * 0.48), ringFill * ringFill);
+      const alpha = (0.08 + (1 - depth) * 0.2) * (1 - reveal * 0.8);
+      this.transitionLayer.lineStyle(
+        Math.max(1.2, placement.tileSize * (0.05 - depth * 0.016)),
+        rgb(62, 255 - depth * 36, 170 - depth * 48),
+        alpha,
+      );
       this.transitionLayer.strokeRect(
-        ringCenterX - ringSize * 0.5,
-        ringCenterY - ringSize * 0.5,
+        layerCenterX - ringSize * 0.5,
+        layerCenterY - ringSize * 0.5,
         ringSize,
         ringSize,
       );
     }
 
-    const streakCount = 18;
-    const tunnelBase = placement.tileSize * (1.3 + tunnel * 4.2);
-    const tunnelReach = Math.max(viewportWidth, viewportHeight) * (0.16 + tunnel * 0.62);
-    this.transitionLayer.lineStyle(Math.max(1, placement.tileSize * 0.05), rgb(92, 245, 220), 0.16 + tunnel * 0.34);
-    this.transitionLayer.beginPath();
-    for (let i = 0; i < streakCount; i += 1) {
-      const angle = (i / streakCount) * Math.PI * 2 + progress * 7.2;
-      const innerX = centerX + Math.cos(angle) * tunnelBase;
-      const innerY = centerY + Math.sin(angle) * tunnelBase;
-      const outerX = centerX + Math.cos(angle) * (tunnelBase + tunnelReach);
-      const outerY = centerY + Math.sin(angle) * (tunnelBase + tunnelReach);
-      this.transitionLayer.moveTo(innerX, innerY);
-      this.transitionLayer.lineTo(outerX, outerY);
-    }
-    this.transitionLayer.strokePath();
-
-    const overlayAlpha =
-      progress < 0.72
-        ? progress * 0.34
-        : 0.34 + Phaser.Math.Easing.Cubic.In((progress - 0.72) / 0.28) * 0.56;
-    this.transitionLayer.fillStyle(rgb(2, 10, 15), overlayAlpha);
+    const washAlpha = (0.08 + fill * 0.54) * (1 - reveal * 0.96);
+    this.transitionLayer.fillStyle(rgb(8, 70, 38), washAlpha);
     this.transitionLayer.fillRect(0, 0, viewportWidth, viewportHeight);
 
-    this.transitionText.setVisible(true);
-    this.transitionText.setPosition(centerX, viewportHeight * 0.22);
-    this.transitionText.setText(progress < 0.55 ? 'PORTAL LOCK' : 'LOCKSTEP');
-    this.transitionText.setAlpha(0.18 + (1 - Math.abs(progress - 0.5) * 2) * 0.82);
-    this.transitionText.setScale(1 + tunnel * 0.3 - settle * 0.22);
+    const apertureSize = Phaser.Math.Linear(portalSize * 0.8, maxDim * 0.95, fill);
+    this.transitionLayer.fillStyle(rgb(110, 255, 198), (0.06 + (1 - reveal) * 0.18) * (1 - reveal * 0.82));
+    this.transitionLayer.fillRect(
+      layerCenterX - apertureSize * 0.5,
+      layerCenterY - apertureSize * 0.5,
+      apertureSize,
+      apertureSize,
+    );
+
+    this.transitionText.setVisible(false);
 
     return true;
   }

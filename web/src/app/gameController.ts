@@ -390,10 +390,19 @@ export class GameController {
     return levelIndex;
   }
 
-  public setVolume(volume: number): void {
+  public setMusicVolume(volume: number): void {
     this.settings = {
       ...this.settings,
-      volume: Math.min(1, Math.max(0, volume)),
+      musicVolume: Math.min(1, Math.max(0, volume)),
+    };
+    saveSettings(this.settings);
+    this.emit();
+  }
+
+  public setSfxVolume(volume: number): void {
+    this.settings = {
+      ...this.settings,
+      sfxVolume: Math.min(1, Math.max(0, volume)),
     };
     saveSettings(this.settings);
     this.emit();

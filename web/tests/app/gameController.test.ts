@@ -9,7 +9,8 @@ function makeController() {
   ];
 
   const controller = new GameController(levels, {
-    volume: 0.5,
+    musicVolume: 0.5,
+    sfxVolume: 0.85,
     lightingEnabled: true,
   });
 
@@ -21,7 +22,8 @@ describe('game controller', () => {
   it('starts on intro screen and transitions to main when intro completes', () => {
     const levels = [parseLevelText('map0', ['#####', '#P!##', '#####'].join('\n'))];
     const controller = new GameController(levels, {
-      volume: 0.4,
+      musicVolume: 0.4,
+      sfxVolume: 0.85,
       lightingEnabled: true,
     });
 
@@ -100,7 +102,8 @@ describe('game controller', () => {
         parseLevelText('map1', ['#####', '#P ##', '#####'].join('\n')),
       ];
       const controller = new GameController(levels, {
-        volume: 0.5,
+        musicVolume: 0.5,
+        sfxVolume: 0.85,
         lightingEnabled: true,
       });
 
@@ -136,7 +139,8 @@ describe('game controller', () => {
       parseLevelText('map1', ['#####', '#P ##', '#####'].join('\n')),
     ];
     const introController = new GameController(levels, {
-      volume: 0.5,
+      musicVolume: 0.5,
+      sfxVolume: 0.85,
       lightingEnabled: true,
     });
 
@@ -167,7 +171,8 @@ describe('game controller', () => {
     try {
       const enemyLevel = parseLevelText('enemy', ['######', '#P12 #', '######'].join('\n'));
       const controller = new GameController([enemyLevel], {
-        volume: 0.5,
+        musicVolume: 0.5,
+        sfxVolume: 0.85,
         lightingEnabled: true,
       });
 
@@ -216,7 +221,8 @@ describe('game controller', () => {
     try {
       const lavaLevel = parseLevelText('lava', ['#####', '#Px #', '#####'].join('\n'));
       const controller = new GameController([lavaLevel], {
-        volume: 0.5,
+        musicVolume: 0.5,
+        sfxVolume: 0.85,
         lightingEnabled: true,
       });
 
