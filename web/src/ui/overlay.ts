@@ -251,6 +251,7 @@ export class OverlayUI {
               <input id="intro-settings-lighting" type="checkbox" />
               Lighting effects
             </label>
+            <button type="button" id="btn-intro-open-editor">Level Editor</button>
             <button type="button" id="btn-intro-settings-close">Done</button>
           </div>
         </div>
@@ -272,7 +273,6 @@ export class OverlayUI {
           </div>
           <div class="button-row intro-button-row">
             <button type="button" id="btn-intro-start">Start</button>
-            <button type="button" id="btn-intro-open-editor">Editor</button>
           </div>
         </aside>
       </section>
@@ -412,11 +412,15 @@ export class OverlayUI {
   }
 
   private bindEvents(): void {
-    this.introStartButton.addEventListener('click', () => {
+    this.introStartButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       this.startFromIntro();
     });
 
-    asElement<HTMLButtonElement>(this.root, '#btn-intro-open-editor').addEventListener('click', () => {
+    asElement<HTMLButtonElement>(this.root, '#btn-intro-open-editor').addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       this.closeIntroSettings();
       const snapshot = this.controller.getSnapshot();
       const source = snapshot.levels[snapshot.selectedLevelIndex] ?? snapshot.levels[0];

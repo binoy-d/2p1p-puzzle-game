@@ -218,6 +218,11 @@ body::after {
   width: 100%;
 }
 
+#btn-intro-open-editor {
+  margin-top: 8px;
+  width: 100%;
+}
+
 #btn-intro-settings-close {
   margin-top: 8px;
   width: 100%;
