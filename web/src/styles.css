@@ -500,6 +500,9 @@ button:disabled {
     radial-gradient(circle at 82% 74%, rgba(90, 247, 190, 0.12), transparent 40%),
     linear-gradient(145deg, rgba(4, 12, 22, 0.95), rgba(6, 20, 34, 0.93));
   box-shadow: none;
+}
+
+.menu-panel-editor-page:not([hidden]) {
   display: flex;
   flex-direction: column;
   gap: 14px;
